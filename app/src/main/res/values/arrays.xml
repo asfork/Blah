@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tab_titles">
+        <item>Chat</item>
+        <item>Friends</item>
+    </string-array>
+</resources>
