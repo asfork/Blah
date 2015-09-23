@@ -23,21 +23,21 @@ import java.util.Map;
  * 2015/9/23.
  * If it works, I created this. If not, I didn't.
  */
-public class FriendsFragment extends ListFragment {
-    private FriendsFragAdapter adapter;
+public class FriendsListFragment extends ListFragment {
+    private FriendsListAdapter mAdapter;
     private ListView mListView;
-    private List<FriendsBean> list;
+    private List<FriendsListBean> mList;
     private AsyncQueryHandler asyncQueryHandler; // 异步查询数据库类对象
 
     //    private static final String ARG_POSITION = "position";
-    private Map<Integer, FriendsBean> contactIdMap = null;
+    private Map<Integer, FriendsListBean> contactIdMap = null;
 
-    public static FriendsFragment newInstance(int position) {
-        FriendsFragment friendsFragment = new FriendsFragment();
+    public static FriendsListFragment newInstance(int position) {
+        FriendsListFragment friendsListFragment = new FriendsListFragment();
         Bundle bundle = new Bundle();
 //        bundle.putInt(ARG_POSITION, position);
-        friendsFragment.setArguments(bundle);
-        return friendsFragment;
+        friendsListFragment.setArguments(bundle);
+        return friendsListFragment;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class FriendsFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("friendsFrag", "Hello in FriendsFragment onCreate");
+        Log.d("friendsFrag", "Hello in FriendsListFragment onCreate");
 
         View friendsView = inflater.inflate(R.layout.frag_friends, container, false);
         mListView = (ListView) friendsView.findViewById(android.R.id.list);
@@ -85,8 +85,8 @@ public class FriendsFragment extends ListFragment {
         @Override
         protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
             if (cursor != null && cursor.getCount() > 0) {
-                contactIdMap = new HashMap<Integer, FriendsBean>();
-                list = new ArrayList<FriendsBean>();
+                contactIdMap = new HashMap<Integer, FriendsListBean>();
+                mList = new ArrayList<FriendsListBean>();
                 cursor.moveToFirst(); // 游标移动到第一项
                 for (int i = 0; i < cursor.getCount(); i++) {
                     cursor.moveToPosition(i);
@@ -101,27 +101,27 @@ public class FriendsFragment extends ListFragment {
                         // 无操作
                     } else {
                         // 创建联系人对象
-                        FriendsBean contact = new FriendsBean();
+                        FriendsListBean contact = new FriendsListBean();
                         contact.setDesplayName(name);
                         contact.setPhoneNum(number);
                         contact.setSortKey(sortKey);
                         contact.setPhotoId(photoId);
                         contact.setLookUpKey(lookUpKey);
-                        list.add(contact);
+                        mList.add(contact);
 
                         contactIdMap.put(contactId, contact);
                     }
                 }
-                if (list.size() > 0) {
-                    setAdapter(list);
+                if (mList.size() > 0) {
+                    setAdapter(mList);
                 }
             }
             super.onQueryComplete(token, cookie, cursor);
         }
     }
 
-    private void setAdapter(List<FriendsBean> list) {
-        adapter = new FriendsFragAdapter(getActivity(), list);
-        mListView.setAdapter(adapter);
+    private void setAdapter(List<FriendsListBean> list) {
+        mAdapter = new FriendsListAdapter(getActivity(), list);
+        mListView.setAdapter(mAdapter);
     }
 }

@@ -5,7 +5,7 @@ package com.v2cc.im.blah;
  * 2015/9/23.
  * If it works, I created this. If not, I didn't.
  */
-public class FriendsBean {
+public class FriendsListBean {
     private int contactId; //id
     private String desplayName;//姓名
     private String phoneNum; // 电话号码

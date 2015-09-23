@@ -26,17 +26,17 @@ import java.util.regex.Pattern;
  * 2015/9/23.
  * If it works, I created this. If not, I didn't.
  */
-public class FriendsFragAdapter extends BaseAdapter {
+public class FriendsListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
-    private List<FriendsBean> list;
+    private List<FriendsListBean> mList;
     private HashMap<String, Integer> alphaIndexer; // 字母索引
     private String[] sections; // 存储每个章节
     private Context ctx; // 上下文
 
-    public FriendsFragAdapter(Context context, List<FriendsBean> list) {
+    public FriendsListAdapter(Context context, List<FriendsListBean> list) {
         this.ctx = context;
         this.mInflater = LayoutInflater.from(context);
-        this.list = list;
+        this.mList = list;
         this.alphaIndexer = new HashMap<String, Integer>();
         this.sections = new String[list.size()];
 
@@ -57,12 +57,12 @@ public class FriendsFragAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return list.size();
+        return mList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        return mList.get(position);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class FriendsFragAdapter extends BaseAdapter {
     }
 
     public void remove(int position) {
-        list.remove(position);
+        mList.remove(position);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class FriendsFragAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        FriendsBean contact = list.get(position);
+        FriendsListBean contact = mList.get(position);
         String name = contact.getDesplayName();
 //        String number = contact.getPhoneNum();
         holder.name.setText(name);
@@ -110,7 +110,7 @@ public class FriendsFragAdapter extends BaseAdapter {
         // 当前字母
         String currentStr = getAlpha(contact.getSortKey());
         // 前面的字母
-        String previewStr = (position - 1) >= 0 ? getAlpha(list.get(
+        String previewStr = (position - 1) >= 0 ? getAlpha(mList.get(
                 position - 1).getSortKey()) : " ";
 
         if (!previewStr.equals(currentStr)) {

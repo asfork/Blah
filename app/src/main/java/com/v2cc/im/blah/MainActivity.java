@@ -88,9 +88,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                     mFragments.add(i, fragmentTest);
                     break;
                 case 1:
-                    FriendsFragment friendsFragment = new FriendsFragment();
-                    friendsFragment.setArguments(mBundle);
-                    mFragments.add(i, friendsFragment);
+                    FriendsListFragment friendsListFragment = new FriendsListFragment();
+                    friendsListFragment.setArguments(mBundle);
+                    mFragments.add(i, friendsListFragment);
                     break;
                 default:
                     FragmentTest mFragment = new FragmentTest();

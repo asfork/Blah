@@ -33,7 +33,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return FragmentTest.newInstance();
             case 1:
-                return FriendsFragment.newInstance(position);
+                return FriendsListFragment.newInstance(position);
             default:
                 return FragmentTest.newInstance();
         }
