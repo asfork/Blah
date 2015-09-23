@@ -3,5 +3,6 @@
     <string-array name="tab_titles">
         <item>Chat</item>
         <item>Friends</item>
+        <item>More</item>
     </string-array>
 </resources>

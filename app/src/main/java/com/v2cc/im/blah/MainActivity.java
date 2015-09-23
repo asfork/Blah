@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,9 +81,23 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         for (int i = 0; i < mTitles.length; i++) {
             Bundle mBundle = new Bundle();
             mBundle.putInt("flag", i);
-            FragmentTest mFragment = new FragmentTest();
-            mFragment.setArguments(mBundle);
-            mFragments.add(i, mFragment);
+            switch (i) {
+                case 0:
+                    FragmentTest fragmentTest = new FragmentTest();
+                    fragmentTest.setArguments(mBundle);
+                    mFragments.add(i, fragmentTest);
+                    break;
+                case 1:
+                    FriendsFragment friendsFragment = new FriendsFragment();
+                    friendsFragment.setArguments(mBundle);
+                    mFragments.add(i, friendsFragment);
+                    break;
+                default:
+                    FragmentTest mFragment = new FragmentTest();
+                    mFragment.setArguments(mBundle);
+                    mFragments.add(i, mFragment);
+                    break;
+            }
         }
     }
 
@@ -128,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             // FloatingActionButton的点击事件
             case R.id.id_floatingactionbutton:
 //                SnackbarUtil.show(v, getString(R.string.plusone), 0);
+                Log.d(String.valueOf(v), getString(R.string.plusone));
                 break;
         }
     }
@@ -164,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
                 // android-support-design兼容包中新添加的一个类似Toast的控件。
 //                SnackbarUtil.show(mViewPager, msgString, 0);
+                Log.d(String.valueOf(mViewPager), msgString);
 
                 return true;
             }

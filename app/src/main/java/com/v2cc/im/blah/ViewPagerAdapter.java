@@ -29,7 +29,14 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return mFragments.get(position);
+        switch (position) {
+            case 0:
+                return FragmentTest.newInstance();
+            case 1:
+                return FriendsFragment.newInstance(position);
+            default:
+                return FragmentTest.newInstance();
+        }
     }
 
     @Override

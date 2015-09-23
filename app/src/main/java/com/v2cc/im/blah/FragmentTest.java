@@ -14,6 +14,12 @@ import android.view.ViewGroup;
  */
 public class FragmentTest extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    public static FragmentTest newInstance() {
+        FragmentTest fragmentTest = new FragmentTest();
+        Bundle bundle = new Bundle();
+        fragmentTest.setArguments(bundle);
+        return fragmentTest;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.frag_test, container, false);
