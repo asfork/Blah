@@ -27,16 +27,16 @@ import java.util.regex.Pattern;
  * If it works, I created this. If not, I didn't.
  */
 public class FriendsListAdapter extends BaseAdapter {
-    private LayoutInflater mInflater;
-    private List<FriendsListBean> mList;
+    private LayoutInflater inflater;
+    private List<FriendsListBean> list;
     private HashMap<String, Integer> alphaIndexer; // 字母索引
     private String[] sections; // 存储每个章节
     private Context ctx; // 上下文
 
     public FriendsListAdapter(Context context, List<FriendsListBean> list) {
         this.ctx = context;
-        this.mInflater = LayoutInflater.from(context);
-        this.mList = list;
+        this.inflater = LayoutInflater.from(context);
+        this.list = list;
         this.alphaIndexer = new HashMap<String, Integer>();
         this.sections = new String[list.size()];
 
@@ -57,12 +57,12 @@ public class FriendsListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mList.size();
+        return list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mList.get(position);
+        return list.get(position);
     }
 
     @Override
@@ -71,14 +71,14 @@ public class FriendsListAdapter extends BaseAdapter {
     }
 
     public void remove(int position) {
-        mList.remove(position);
+        list.remove(position);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_friends_list, null);
+            convertView = inflater.inflate(R.layout.item_friends_list, null);
             holder = new ViewHolder();
             holder.quickContactBadge = (QuickContactBadge) convertView
                     .findViewById(R.id.qcb);
@@ -89,7 +89,7 @@ public class FriendsListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        FriendsListBean contact = mList.get(position);
+        FriendsListBean contact = list.get(position);
         String name = contact.getDesplayName();
 //        String number = contact.getPhoneNum();
         holder.name.setText(name);
@@ -110,7 +110,7 @@ public class FriendsListAdapter extends BaseAdapter {
         // 当前字母
         String currentStr = getAlpha(contact.getSortKey());
         // 前面的字母
-        String previewStr = (position - 1) >= 0 ? getAlpha(mList.get(
+        String previewStr = (position - 1) >= 0 ? getAlpha(list.get(
                 position - 1).getSortKey()) : " ";
 
         if (!previewStr.equals(currentStr)) {
@@ -132,8 +132,10 @@ public class FriendsListAdapter extends BaseAdapter {
     /**
      * 获取首字母
      *
-     * @param str
      * @return
+     *
+     *
+     * Todo 分离提取首字母功能到单独的 Util 类中
      */
     private String getAlpha(String str) {
         if (str == null) {

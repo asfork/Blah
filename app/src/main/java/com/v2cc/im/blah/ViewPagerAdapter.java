@@ -31,7 +31,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return FragmentTest.newInstance();
+                return ChatListFragment.newInstance(position);
             case 1:
                 return FriendsListFragment.newInstance(position);
             default:

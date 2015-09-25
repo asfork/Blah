@@ -30,7 +30,7 @@ public class FriendsListFragment extends ListFragment {
     private AsyncQueryHandler asyncQueryHandler; // 异步查询数据库类对象
 
     //    private static final String ARG_POSITION = "position";
-    private Map<Integer, FriendsListBean> contactIdMap = null;
+    private Map<Integer, FriendsListBean> friendIdMap = null;
 
     public static FriendsListFragment newInstance(int position) {
         FriendsListFragment friendsListFragment = new FriendsListFragment();
@@ -49,7 +49,7 @@ public class FriendsListFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("friendsFrag", "Hello in FriendsListFragment onCreate");
 
-        View friendsView = inflater.inflate(R.layout.frag_friends, container, false);
+        View friendsView = inflater.inflate(R.layout.frag_friends_list, container, false);
         mListView = (ListView) friendsView.findViewById(android.R.id.list);
 
         // 实例化
@@ -85,7 +85,7 @@ public class FriendsListFragment extends ListFragment {
         @Override
         protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
             if (cursor != null && cursor.getCount() > 0) {
-                contactIdMap = new HashMap<Integer, FriendsListBean>();
+                friendIdMap = new HashMap<Integer, FriendsListBean>();
                 mList = new ArrayList<FriendsListBean>();
                 cursor.moveToFirst(); // 游标移动到第一项
                 for (int i = 0; i < cursor.getCount(); i++) {
@@ -93,11 +93,11 @@ public class FriendsListFragment extends ListFragment {
                     String name = cursor.getString(1);
                     String number = cursor.getString(2);
                     String sortKey = cursor.getString(3);
-                    int contactId = cursor.getInt(4);
+                    int friendId = cursor.getInt(4);
                     Long photoId = cursor.getLong(5);
                     String lookUpKey = cursor.getString(6);
 
-                    if (contactIdMap.containsKey(contactId)) {
+                    if (friendIdMap.containsKey(friendId)) {
                         // 无操作
                     } else {
                         // 创建联系人对象
@@ -109,7 +109,7 @@ public class FriendsListFragment extends ListFragment {
                         contact.setLookUpKey(lookUpKey);
                         mList.add(contact);
 
-                        contactIdMap.put(contactId, contact);
+                        friendIdMap.put(friendId, contact);
                     }
                 }
                 if (mList.size() > 0) {
