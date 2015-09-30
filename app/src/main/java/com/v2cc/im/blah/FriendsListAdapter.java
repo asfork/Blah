@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -119,7 +120,7 @@ public class FriendsListAdapter extends BaseAdapter {
         } else {
             holder.alpha.setVisibility(View.GONE);
         }
-        addListener(convertView);
+//        addListener(convertView);
         return convertView;
     }
 
@@ -157,7 +158,13 @@ public class FriendsListAdapter extends BaseAdapter {
     /**
      * 设置监听事件的组件写在下面这方法里
      */
-    public void addListener(View convertView) {
-
-    }
+//    public void addListener(View convertView) {
+//        ((TextView)convertView.findViewById(R.id.text_view)).setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                    }
+//                }
+//    }
 }

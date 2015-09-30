@@ -2,6 +2,7 @@ package com.v2cc.im.blah;
 
 import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -123,5 +125,22 @@ public class FriendsListFragment extends ListFragment {
     private void setAdapter(List<FriendsListBean> list) {
         mAdapter = new FriendsListAdapter(getActivity(), list);
         mListView.setAdapter(mAdapter);
+
+        //添加ListView每一行的点击监听事件，此处可设置监听处理操作
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getActivity(),
+//                        "position = " + position + "\n" + "第" + id
+//                                + "行", Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("name", mList.get(position).getDesplayName());
+//                bundle.putString("passName", mList.get(position).getDesplayName());
+
+                Intent intent = new Intent(getActivity(), MessageActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 }

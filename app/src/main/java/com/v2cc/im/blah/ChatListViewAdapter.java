@@ -15,14 +15,14 @@ import java.util.ArrayList;
  * 2015/9/23.
  * If it works, I created this. If not, I didn't.
  */
-public class ChatListAdapter extends BaseAdapter {
-    private ArrayList<ChatListBean> mList;
+public class ChatListViewAdapter extends BaseAdapter {
+    private ArrayList<MessageBean> mList;
     private Context mContext;
     private LayoutInflater inflater;
 
     //    private HolderView holderView;
     //    private FaceUtil faceUtil;
-    public ChatListAdapter(Context context, ArrayList<ChatListBean> list) {
+    public ChatListViewAdapter(Context context, ArrayList<MessageBean> list) {
         this.mContext = context;
         this.mList = list;
         inflater = LayoutInflater.from(mContext);
@@ -57,10 +57,10 @@ public class ChatListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        ChatListBean chatListBean = mList.get(position);
-        holder.tv_name.setText(chatListBean.getName());
-        holder.tv_record.setText(chatListBean.getContent());
-        holder.tv_time.setText(displayTime(chatListBean.getTime()));
+        MessageBean messageBean = mList.get(position);
+        holder.tv_name.setText(messageBean.getName());
+        holder.tv_record.setText(messageBean.getContent());
+        holder.tv_time.setText(displayTime(messageBean.getTime()));
         return convertView;
     }
 
@@ -76,7 +76,7 @@ public class ChatListAdapter extends BaseAdapter {
      * @return String
      * 2015-8-6 下午6:09:02
      * <p/>
-     * Todo 分离格式化时间功能到单独的 Util 类
+     * Todo 分离格式化时间功能到单独的 Util 类，另时间功能计算结果不合预期
      */
     private String displayTime(String time) {
         long ti = Long.valueOf(time);

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    CoordinatorLayout是这次新添加的一个增强型的FrameLayout，通过它可以实现很多东西：
+        例如：
+            1.界面向上滚动逐渐隐藏Toolbar；
+            2.在其中可以放置浮动的View，就像Floating Action Button。
+-->
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/id_coordinatorlayout_chat"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/id_toolbar_message"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title="Blah"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <ListView
+        android:id="@+id/listView_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/id_floatingactionbutton_send"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="25dp"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/plus"
+        app:backgroundTint="@color/accent"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"/>
+
+</android.support.design.widget.CoordinatorLayout>

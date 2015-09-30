@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+
+    <RelativeLayout
+        android:id="@+id/rl_chat_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_chat_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="65dp"
+            android:background="@drawable/selector_chat_input"
+            android:gravity="left|center_vertical"
+            android:lineSpacingExtra="3dp"
+            android:maxWidth="@dimen/width_chat_tv"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/primary_text"
+            android:textScaleX="1"
+            android:textSize="@dimen/text_size_chat"/>
+
+        <ImageView
+            android:id="@+id/img_chat_input_head"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_head_04"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_chat_output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_chat_output"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="65dp"
+            android:background="@drawable/selector_chat_output"
+            android:lineSpacingExtra="3dp"
+            android:maxWidth="@dimen/width_chat_tv"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:gravity="center_vertical"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textColor="@color/primary_text"
+            android:textScaleX="1"
+            android:textSize="@dimen/text_size_chat"/>
+
+        <ImageView
+            android:id="@+id/img_chat_output_head"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_head_03"/>
+    </RelativeLayout>
+
+</RelativeLayout>

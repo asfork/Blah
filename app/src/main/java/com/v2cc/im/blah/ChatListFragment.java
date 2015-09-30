@@ -1,5 +1,6 @@
 package com.v2cc.im.blah;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,21 +19,21 @@ import java.util.ArrayList;
  * 2015/9/23.
  * If it works, I created this. If not, I didn't.
  */
-public class ChatListFragment extends ListFragment implements AdapterView.OnItemClickListener {
+public class ChatListFragment extends ListFragment {
     private ListView mListView;// 聊天记录列表
-    private ChatListAdapter mAdapter;
-    private ArrayList<ChatListBean> mList;
+    private ChatListViewAdapter mAdapter;
+    private ArrayList<MessageBean> mList;
     private DataBaseHelperUtil util;
     private final static int DATA_SUCCESS = 10000;// 数据查询成功标识
 //    private static final String ARG_POSITION = "position";
 //    private static final String mACTION = "android.provider.Telephony.SMS_RECEIVED";
 
     public static ChatListFragment newInstance(int position) {
-        ChatListFragment chatFragment = new ChatListFragment();
+        ChatListFragment chatListFragment = new ChatListFragment();
         Bundle bundle = new Bundle();
 //        bundle.putInt(ARG_POSITION, position);
-        chatFragment.setArguments(bundle);
-        return chatFragment;
+        chatListFragment.setArguments(bundle);
+        return chatListFragment;
     }
 
     @Override
@@ -46,12 +48,23 @@ public class ChatListFragment extends ListFragment implements AdapterView.OnItem
         View chatView = inflater.inflate(R.layout.frag_chat_list, container, false);
         mListView = (ListView) chatView.findViewById(android.R.id.list);
 
-        mListView.setOnItemClickListener(this);
-
-        mList = new ArrayList<ChatListBean>();
-        mAdapter = new ChatListAdapter(getActivity(), mList);
+        mList = new ArrayList<MessageBean>();
+        mAdapter = new ChatListViewAdapter(getActivity(), mList);
         mListView.setAdapter(mAdapter);
+//        mListView.setOnItemClickListener(this);
 
+        //Todo OnItemClickListener unavailable
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("ChatListFrag", "onItemClick");
+                Bundle bundle = new Bundle();
+                bundle.putString("name", mList.get(position).getName());
+                Intent intent = new Intent(getActivity(), MessageActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         return chatView;
     }
 
@@ -71,7 +84,7 @@ public class ChatListFragment extends ListFragment implements AdapterView.OnItem
 //            @Override
 //            public void run() {
 //                if (content.equals("")|| from .equals("")) {
-//                    handler.obtainMessage(DATA_SUCCESS, util.searchNewRecord()).sendToTarget();
+//                    handler.obtainMessage(DATA_SUCCESS, util.searchRecentChat()).sendToTarget();
 //                    return;
 //                }
 //                ChatsBean chatRecord = new ChatsBean();
@@ -81,10 +94,10 @@ public class ChatListFragment extends ListFragment implements AdapterView.OnItem
 //                chatRecord.setSource("you");
 //                chatRecord.setTime(System.currentTimeMillis() + "");
 //                chatRecord.setStatus("0");
-//                util.insertNewRecord(chatRecord);
+//                util.insertRecentChat(chatRecord);
 //                util.insertToTable(DataBaseHelperUtil.TABLE_NAME_CHAT_RECORD, chatRecord);
 //                // 查询数据并展示
-//                handler.obtainMessage(DATA_SUCCESS, util.searchNewRecord()).sendToTarget();
+//                handler.obtainMessage(DATA_SUCCESS, util.searchRecentChat()).sendToTarget();
 //            }
 //        };
 //        ThreadPoolUtil.insertTaskToCatchPool(runnable);
@@ -120,17 +133,6 @@ public class ChatListFragment extends ListFragment implements AdapterView.OnItem
         util.closeDataBase();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Bundle bundle = new Bundle();
-        bundle.putString("name", mList.get(position).getName());
-        bundle.putString("passName", mList.get(position).getPassName());
-//        showActivity(getActivity(), ChatActivity.class, bundle);
-//        Intent intent = new Intent(getActivity(), ChatActivity.class);
-//        intent.putExtras(bundle);
-//        startActivity(intent);
-    }
-
     /**
      * 查询数据并展示
      * <p/>
@@ -142,9 +144,24 @@ public class ChatListFragment extends ListFragment implements AdapterView.OnItem
             @Override
             public void run() {
                 mList.clear();
-                mList.addAll(util.searchNewRecord());
+                mList.addAll(util.searchRecentChat());
             }
         };
         ThreadPoolUtil.insertTaskToCatchPool(runnable);
     }
+
+//    @Override
+//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        Log.d("ChatListFrag","onItemClick");
+//        Toast.makeText(getActivity(),
+//                "position = " + position + "\n" + "第" + id
+//                        + "行", Toast.LENGTH_SHORT).show();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("name", mList.get(position).getName());
+//        bundle.putString("passName", mList.get(position).getPassName());
+//        showActivity(getActivity(), MessageActivity.class, bundle);
+//        Intent intent = new Intent(getActivity(), MessageActivity.class);
+//        intent.putExtras(bundle);
+//        startActivity(intent);
+//    }
 }

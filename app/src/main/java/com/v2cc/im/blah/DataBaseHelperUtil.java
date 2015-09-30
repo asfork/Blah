@@ -15,17 +15,20 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @author yeliangliang
  * @ClassName: DataBaseHelperUtil
  * @date 2015-8-5 上午10:48:03
+ *
+ * Modify by Steve ZHANG
+ * 2015-9-29
  */
 
 public class DataBaseHelperUtil extends SQLiteOpenHelper {
 
     private static Context mContext;
     private static DataBaseHelperUtil mInstance;
-    //    private static final String DB_NAME = "MessageRecord" + User.getInstance().getUserName() + ".db";// 数据库名称
-    private static final String DB_NAME = "MessageRecordTester.db";
+    //    private static final String DB_NAME = "MessageHistory" + User.getInstance().getUserName() + ".db";// 数据库名称
+    private static final String DB_NAME = "MessageHistoryTester.db";
     private static final int DB_VERSION = 1;// 数据库版本
-    public static final String TABLE_NAME_MESSAGE_RECORD = "MessageRecord";// 聊天记录主库
-    public static final String TABLE_NAME_MESSAGE_NEW_RECORD = "NewMessageRecord";// 最近聊天记录
+    public static final String TABLE_NAME_MESSAGE = "Message";// 聊天记录主库
+    public static final String TABLE_NAME_RECENT_CHAT = "RecentChat";// 最近聊天记录
     private int openCount = 0;// 数据库打开次数
     private SQLiteDatabase database;
 
@@ -96,23 +99,31 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
      * 2015-8-5 上午11:07:28
      */
     public synchronized void creatTable(SQLiteDatabase db) {
-        db.execSQL("drop table if exists " + TABLE_NAME_MESSAGE_RECORD);// 如果存在先干掉
-        db.execSQL("drop table if exists " + TABLE_NAME_MESSAGE_NEW_RECORD);
+        db.execSQL("drop table if exists " + TABLE_NAME_MESSAGE);// 如果存在先干掉
+        db.execSQL("drop table if exists " + TABLE_NAME_RECENT_CHAT);
         db.execSQL("create table "
-                + TABLE_NAME_MESSAGE_RECORD
+                + TABLE_NAME_MESSAGE
                 + " (_id integer primary key autoincrement,name char,passName char,time char,content char,imgPath char,status char,source char)");
 
         db.execSQL("create table "
-                + TABLE_NAME_MESSAGE_NEW_RECORD
+                + TABLE_NAME_RECENT_CHAT
                 + " (_id integer primary key autoincrement,name char,passName char,time char,content char,imgPath char,status char,source char)");
 
         // Todo insert testing data
-        db.execSQL("insert into NewMessageRecord (name,time,content,source)" +
-                " values ('Char', 1242047966, 'Blah blah', 0)");
-        db.execSQL("insert into NewMessageRecord (name,time,content,source)" +
+        db.execSQL("insert into RecentChat (name,time,content,source)" +
+                " values ('Char', 1242047966, 'Blah blah', 1)");
+        db.execSQL("insert into RecentChat (name,time,content,source)" +
                 " values ('Coco', 1843047966, 'Blah blah', 0)");
-        db.execSQL("insert into NewMessageRecord (name,time,content,source)" +
-                " values ('Tom', 1942047966, 'Blah blah', 0)");
+        db.execSQL("insert into RecentChat (name,time,content,source)" +
+                " values ('Tom', 1942047966, 'Blah blah', 1)");
+        db.execSQL("insert into Message (name,time,content,source)" +
+                " values ('Char', 1242047966, 'Blah blah', 1)");
+        db.execSQL("insert into Message (name,time,content,source)" +
+                " values ('Char', 1252047966, 'Blah blah', 0)");
+        db.execSQL("insert into Message (name,time,content,source)" +
+                " values ('Coco', 1843047966, 'Blah blah', 0)");
+        db.execSQL("insert into Message (name,time,content,source)" +
+                " values ('Tom', 1942047966, 'Blah blah', 1)");
     }
 
     /**
@@ -120,14 +131,14 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
      * <p/>
      * 2015-8-5 上午11:19:13
      */
-    public synchronized void insertToTable(String tableName, ChatListBean chatRecord) {
+    public synchronized void insertToTable(String tableName, MessageBean messageBean) {
         database.execSQL(
                 "insert into "
                         + tableName
                         + " (_id,name,passName,time,content,imgPath,status,source) values(?,?,?,?,?,?,?,?)",
-                new Object[]{chatRecord.getId(), chatRecord.getName(), chatRecord.getPassName(),
-                        chatRecord.getTime(), chatRecord.getContent(), chatRecord.getImgPath(),
-                        chatRecord.getStatus(), chatRecord.getSource()});
+                new Object[]{messageBean.getId(), messageBean.getName(), messageBean.getPassName(),
+                        messageBean.getTime(), messageBean.getContent(), messageBean.getImgPath(),
+                        messageBean.getStatus(), messageBean.getSource()});
     }
 
     /**
@@ -138,26 +149,26 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
      * @date 2015-8-5 上午11:31:34
      * @version V1.0
      */
-    public synchronized void insertNewRecord(ChatListBean chatRecord) {
-        Cursor cursor = database.rawQuery("select * from " + TABLE_NAME_MESSAGE_NEW_RECORD
-                + " where name = ? ", new String[]{chatRecord.getName()});
+    public synchronized void insertRecentChat(MessageBean messageBean) {
+        Cursor cursor = database.rawQuery("select * from " + TABLE_NAME_RECENT_CHAT
+                + " where name = ? ", new String[]{messageBean.getName()});
         if (cursor.moveToNext()) {
             // 存在数据 修改时间和内容、来源即可
             database.execSQL(
-                    "update " + TABLE_NAME_MESSAGE_NEW_RECORD
+                    "update " + TABLE_NAME_RECENT_CHAT
                             + " set time= ? , content = ? , source = ? where name = '"
-                            + chatRecord.getName() + "'", new Object[]{chatRecord.getTime(),
-                            chatRecord.getContent(), chatRecord.getSource()});
+                            + messageBean.getName() + "'", new Object[]{messageBean.getTime(),
+                            messageBean.getContent(), messageBean.getSource()});
         } else {
             // 不存在，新创建
             database.execSQL(
                     "insert into "
-                            + TABLE_NAME_MESSAGE_NEW_RECORD
+                            + TABLE_NAME_RECENT_CHAT
                             + " (_id,name,passName,time,content,imgPath,status,source) values(?,?,?,?,?,?,?,?)",
-                    new Object[]{chatRecord.getId(), chatRecord.getName(),
-                            chatRecord.getPassName(), chatRecord.getTime(),
-                            chatRecord.getContent(), chatRecord.getImgPath(),
-                            chatRecord.getStatus(), chatRecord.getSource()});
+                    new Object[]{messageBean.getId(), messageBean.getName(),
+                            messageBean.getPassName(), messageBean.getTime(),
+                            messageBean.getContent(), messageBean.getImgPath(),
+                            messageBean.getStatus(), messageBean.getSource()});
         }
         if (cursor != null) {
             cursor.close();
@@ -172,12 +183,12 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
      * @date 2015-8-5 上午11:31:34
      * @version V1.0
      */
-    public synchronized ArrayList<ChatListBean> searchNewRecord() {
-        ArrayList<ChatListBean> cList = new ArrayList<ChatListBean>();
-        Cursor cursor = database.rawQuery("select * from " + TABLE_NAME_MESSAGE_NEW_RECORD
+    public synchronized ArrayList<MessageBean> searchRecentChat() {
+        ArrayList<MessageBean> cList = new ArrayList<MessageBean>();
+        Cursor cursor = database.rawQuery("select * from " + TABLE_NAME_RECENT_CHAT
                 + " order by time desc", null);
         while (cursor != null && cursor.moveToNext()) {
-            cList.add(new ChatListBean(cursor));
+            cList.add(new MessageBean(cursor));
         }
         if (cursor != null) {
             cursor.close();
@@ -188,18 +199,18 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
     /**
      * 获取当前账户人的聊天记录
      *
-     * @param passName
+     * @param name
      * @return ArrayList<ChatRecord>
      * @author yeliangliang
      * @date 2015-8-6 下午6:19:15
      * @version V1.0
      */
-    public synchronized ArrayList<ChatListBean> searchNowChatRecord(String passName) {
-        ArrayList<ChatListBean> mList = new ArrayList<ChatListBean>();
-        Cursor cursor = database.rawQuery("select * from " + TABLE_NAME_MESSAGE_RECORD
-                + " where passName = ?", new String[]{passName});
+    public synchronized ArrayList<MessageBean> searchMessageHistory(String name) {
+        ArrayList<MessageBean> mList = new ArrayList<MessageBean>();
+        Cursor cursor = database.rawQuery("select * from " + TABLE_NAME_MESSAGE
+                + " where name = ?", new String[]{name});
         while (cursor != null && cursor.moveToNext()) {
-            mList.add(new ChatListBean(cursor));
+            mList.add(new MessageBean(cursor));
         }
         if (cursor != null) {
             cursor.close();
@@ -213,9 +224,9 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
      * <p/>
      * 2015-8-21 下午6:05:11
      */
-    public synchronized void deleteRecordByName(String name) {
-        database.execSQL("delete from " + TABLE_NAME_MESSAGE_NEW_RECORD + " where name = '" + name + "'");
-        database.execSQL("delete from " + TABLE_NAME_MESSAGE_RECORD + " where name = '" + name + "'");
+    public synchronized void deleteMessageHistoryByName(String name) {
+        database.execSQL("delete from " + TABLE_NAME_RECENT_CHAT + " where name = '" + name + "'");
+        database.execSQL("delete from " + TABLE_NAME_MESSAGE + " where name = '" + name + "'");
     }
 
 }

@@ -17,6 +17,9 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".MessageActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
     <uses-permission android:name="android.permission.READ_CONTACTS"/>

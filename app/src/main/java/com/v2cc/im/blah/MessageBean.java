@@ -6,24 +6,24 @@ import android.database.Cursor;
  * 聊天记录bean
  *
  * @author yeliangliang
- *         ChatListBean
+ *         MessageBean
  *         2015-8-5 上午10:33:52
  */
-public class ChatListBean {
+public class MessageBean {
     private String id;// id
     private String name;// 姓名
     private String passName;// 账户
     private String time;// 时间
     private String content;// 内容
     private String imgPath;// 图片地址
-    private String source;// 来源 you or me
+    private String source;// 来源 1(input) or 0(output)
     private String status;// 状态 0已读 1未读
 
-    public ChatListBean() {
+    public MessageBean() {
     }
 
-    public ChatListBean(String id, String name, String passName, String time, String content,
-                        String imgPath, String source, String status) {
+    public MessageBean(String id, String name, String passName, String time, String content,
+                       String imgPath, String source, String status) {
         super();
         this.id = id;
         this.name = name;
@@ -35,7 +35,7 @@ public class ChatListBean {
         this.status = status;
     }
 
-    public ChatListBean(Cursor cursor) {
+    public MessageBean(Cursor cursor) {
         this.id = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
         this.name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
         this.passName = cursor.getString(cursor.getColumnIndexOrThrow("passName"));
