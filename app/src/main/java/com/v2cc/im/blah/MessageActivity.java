@@ -1,5 +1,7 @@
 package com.v2cc.im.blah;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
@@ -29,6 +31,12 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     private ListView mListView;// 聊天信息列表
     private MessageListViewAdapter mAdapter;// 聊天信息列表适配器
     private FloatingActionButton mFloatingActionButton;
+
+    public static void actionStart(Context context, Bundle bundle) {
+        Intent intent = new Intent(context, MessageActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
 
     @Override
     public void initViews() {

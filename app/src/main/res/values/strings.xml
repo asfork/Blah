@@ -1,13 +1,15 @@
 <resources>
     <string name="app_name">Blah</string>
 
+    <!--Toolbar-->
     <string name="toolbar_title">Blah</string>
     <string name="action_settings">Settings</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+
+    <!--Navigation Menu-->
     <string name="header_author_name">Steve ZHANG</string>
     <string name="header_author_email">stevzhg@gmail.com</string>
-
     <string name="home">Blah</string>
 
     <string name="plusone">+1</string>

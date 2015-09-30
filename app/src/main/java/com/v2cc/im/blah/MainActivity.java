@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import static android.support.design.widget.TabLayout.*;
  * 2015/9/22.
  * If it works, I created this. If not, I didn't.
  */
-public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
     //初始化各种控件，照着xml中的顺序写
     private DrawerLayout mDrawerLayout;
     private CoordinatorLayout mCoordinatorLayout;
@@ -46,22 +47,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private ViewPagerAdapter mViewPagerAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initViews() {
         setContentView(R.layout.activity_main);
-
-        // 初始化各种控件
-        initViews();
-
-        // 初始化mTitles、mFragments等ViewPager需要的数据
-        //这里的数据都是模拟出来了，自己手动生成的，在项目中需要从网络获取数据
-        initData();
-
-        // 对各种控件进行设置、适配、填充数据
-        configViews();
-    }
-
-    private void initViews() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawerlayout);
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.id_coordinatorlayout);
         mAppBarLayout = (AppBarLayout) findViewById(R.id.id_appbarlayout);
@@ -72,7 +59,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mNavigationView = (NavigationView) findViewById(R.id.id_navigationview);
     }
 
-    private void initData() {
+    @Override
+    public void initData() {
         // Tab的标题采用string-array的方法保存，在res/values/arrays.xml中写
         mTitles = getResources().getStringArray(R.array.tab_titles);
 
@@ -101,7 +89,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     }
 
-    private void configViews() {
+    @Override
+    public void configViews() {
         // 设置显示Toolbar
         setSupportActionBar(mToolbar);
 
@@ -143,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             // FloatingActionButton的点击事件
             case R.id.id_floatingactionbutton:
 //                SnackbarUtil.show(v, getString(R.string.plusone), 0);
+                Toast.makeText(this, "FLoating Action Button is clicked.", Toast.LENGTH_LONG).show();
                 Log.d(String.valueOf(v), getString(R.string.plusone));
                 break;
         }
@@ -180,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
                 // android-support-design兼容包中新添加的一个类似Toast的控件。
 //                SnackbarUtil.show(mViewPager, msgString, 0);
+                Toast.makeText(MainActivity.this, "Menu item is clicked.", Toast.LENGTH_LONG).show();
                 Log.d(String.valueOf(mViewPager), msgString);
 
                 return true;
@@ -187,19 +178,19 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        return id == R.id.action_settings || super.onOptionsItemSelected(item);
+//
+//    }
 
     @Override
     public void onPageSelected(int position) {

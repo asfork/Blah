@@ -130,16 +130,11 @@ public class FriendsListFragment extends ListFragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getActivity(),
-//                        "position = " + position + "\n" + "第" + id
-//                                + "行", Toast.LENGTH_SHORT).show();
                 Bundle bundle = new Bundle();
                 bundle.putString("name", mList.get(position).getDesplayName());
 //                bundle.putString("passName", mList.get(position).getDesplayName());
 
-                Intent intent = new Intent(getActivity(), MessageActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                MessageActivity.actionStart(getActivity(), bundle);
             }
         });
     }
