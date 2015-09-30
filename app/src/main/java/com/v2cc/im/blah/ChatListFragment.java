@@ -19,14 +19,11 @@ import java.util.ArrayList;
  * 2015/9/23.
  * If it works, I created this. If not, I didn't.
  */
-public class ChatListFragment extends ListFragment {
+public class ChatListFragment extends BaseFragment {
     private ListView mListView;// 聊天记录列表
-    private ChatListViewAdapter mAdapter;
     private ArrayList<MessageBean> mList;
     private DataBaseHelperUtil util;
-    private final static int DATA_SUCCESS = 10000;// 数据查询成功标识
-//    private static final String ARG_POSITION = "position";
-//    private static final String mACTION = "android.provider.Telephony.SMS_RECEIVED";
+    private ChatListViewAdapter mAdapter;
 
     public static ChatListFragment newInstance(int position) {
         ChatListFragment chatListFragment = new ChatListFragment();
@@ -37,17 +34,18 @@ public class ChatListFragment extends ListFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int setRootViewId() {
+        return R.layout.frag_chat_list;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("chatFrag", "Hello in ChatListFragment onCreateView");
+    protected void initViews(View rootView) {
+        mListView = (ListView) rootView.findViewById(android.R.id.list);
+    }
 
-        View chatView = inflater.inflate(R.layout.frag_chat_list, container, false);
-        mListView = (ListView) chatView.findViewById(android.R.id.list);
 
+    @Override
+    protected void initData() {
         mList = new ArrayList<MessageBean>();
         mAdapter = new ChatListViewAdapter(getActivity(), mList);
         mListView.setAdapter(mAdapter);
@@ -65,43 +63,8 @@ public class ChatListFragment extends ListFragment {
                 startActivity(intent);
             }
         });
-        return chatView;
     }
 
-//    /**
-//     * 存储接收到的消息
-//     *
-//     * @param from
-//     * @param content
-//     * @author yeliangliang
-//     * @date 2015-8-6 下午4:32:42
-//     * @version V1.0
-//     * @return void
-//     */
-//    private void saveChatRecord(final String from, final String content) {
-//        Runnable runnable = new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                if (content.equals("")|| from .equals("")) {
-//                    handler.obtainMessage(DATA_SUCCESS, util.searchRecentChat()).sendToTarget();
-//                    return;
-//                }
-//                ChatsBean chatRecord = new ChatsBean();
-//                chatRecord.setContent(content);
-//                chatRecord.setName(from.split("@")[0]);
-//                chatRecord.setPassName(from);
-//                chatRecord.setSource("you");
-//                chatRecord.setTime(System.currentTimeMillis() + "");
-//                chatRecord.setStatus("0");
-//                util.insertRecentChat(chatRecord);
-//                util.insertToTable(DataBaseHelperUtil.TABLE_NAME_CHAT_RECORD, chatRecord);
-//                // 查询数据并展示
-//                handler.obtainMessage(DATA_SUCCESS, util.searchRecentChat()).sendToTarget();
-//            }
-//        };
-//        ThreadPoolUtil.insertTaskToCatchPool(runnable);
-//    }
 
     @Override
     public void onResume() {
@@ -139,7 +102,6 @@ public class ChatListFragment extends ListFragment {
      * 2015-8-7 上午11:23:10
      */
     private void searchDataAndDisplay() {
-        // 查询数据并展示
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

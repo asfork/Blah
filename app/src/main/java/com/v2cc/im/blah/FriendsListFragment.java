@@ -2,12 +2,10 @@ package com.v2cc.im.blah;
 
 import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,14 +23,12 @@ import java.util.Map;
  * 2015/9/23.
  * If it works, I created this. If not, I didn't.
  */
-public class FriendsListFragment extends ListFragment {
-    private FriendsListAdapter mAdapter;
+public class FriendsListFragment extends BaseFragment {
     private ListView mListView;
     private List<FriendsListBean> mList;
     private AsyncQueryHandler asyncQueryHandler; // 异步查询数据库类对象
-
-    //    private static final String ARG_POSITION = "position";
     private Map<Integer, FriendsListBean> friendIdMap = null;
+    private FriendsListAdapter mAdapter;
 
     public static FriendsListFragment newInstance(int position) {
         FriendsListFragment friendsListFragment = new FriendsListFragment();
@@ -43,28 +39,20 @@ public class FriendsListFragment extends ListFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int setRootViewId() {
+        return R.layout.frag_friends_list;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("friendsFrag", "Hello in FriendsListFragment onCreate");
-
-        View friendsView = inflater.inflate(R.layout.frag_friends_list, container, false);
-        mListView = (ListView) friendsView.findViewById(android.R.id.list);
-
-        // 实例化
-        asyncQueryHandler = new MyAsyncQueryHandler(getActivity().getContentResolver());
-        initData();
-
-        return friendsView;
+    protected void initViews(View rootView) {
+        mListView = (ListView) rootView.findViewById(android.R.id.list);
     }
 
-    /**
-     * 初始化数据库查询参数
-     */
-    private void initData() {
+    @Override
+    protected void initData() {
+        // 实例化
+        asyncQueryHandler = new MyAsyncQueryHandler(getActivity().getContentResolver());
+
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI; // 联系人Uri；
         // 查询的字段
         String[] projection = {ContactsContract.CommonDataKinds.Phone._ID,
