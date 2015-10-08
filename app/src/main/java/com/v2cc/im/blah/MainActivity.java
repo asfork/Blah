@@ -93,6 +93,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     public void configViews() {
         // 设置显示Toolbar
         setSupportActionBar(mToolbar);
+        // 透明状态栏
+        StatusBarCompat.compat(this);
 
         // 设置Drawerlayout开关指示器，即Toolbar最左边的那个icon
         ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close);

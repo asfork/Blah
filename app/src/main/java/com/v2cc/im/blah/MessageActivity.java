@@ -62,6 +62,8 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     @Override
     public void configViews() {
         mToolbar.setTitle(name);
+        // 透明状态栏
+        StatusBarCompat.compat(this);
     }
 
     private void SetClick() {

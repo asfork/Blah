@@ -43,6 +43,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="left"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Light"
         app:itemTextColor="@color/selector_nav_menu_textcolor"/>
 
 </android.support.v4.widget.DrawerLayout>
