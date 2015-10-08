@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 字体大小-很小 -->
-    <dimen name="text_size_vvsmall">13sp</dimen>
+    <dimen name="text_size_vvsmall">12sp</dimen>
     <!-- 字体大小-很小 -->
     <dimen name="text_size_vsmall">14sp</dimen>
     <!-- 字体大小-小 -->
