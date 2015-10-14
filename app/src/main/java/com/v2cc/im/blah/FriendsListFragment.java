@@ -7,10 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -74,6 +71,9 @@ public class FriendsListFragment extends BaseFragment {
 
         @Override
         protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
+            Log.d("FriendsFrag", "QueryComplete");
+            super.onQueryComplete(token, cookie, cursor);
+
             if (cursor != null && cursor.getCount() > 0) {
                 friendIdMap = new HashMap<Integer, FriendsListBean>();
                 mList = new ArrayList<FriendsListBean>();
@@ -103,27 +103,24 @@ public class FriendsListFragment extends BaseFragment {
                     }
                 }
                 if (mList.size() > 0) {
-                    setAdapter(mList);
+                    setMyAdapter(mList);
                 }
             }
-            super.onQueryComplete(token, cookie, cursor);
         }
     }
 
-    private void setAdapter(List<FriendsListBean> list) {
+    private void setMyAdapter(List<FriendsListBean> list) {
         mAdapter = new FriendsListAdapter(getActivity(), list);
-        mListView.setAdapter(mAdapter);
+        setListAdapter(mAdapter);
+    }
 
-        //添加ListView每一行的点击监听事件，此处可设置监听处理操作
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Bundle bundle = new Bundle();
-                bundle.putString("name", mList.get(position).getDesplayName());
-//                bundle.putString("passName", mList.get(position).getDesplayName());
-
-                MessageActivity.actionStart(getActivity(), bundle);
-            }
-        });
+    @Override
+    public void onListItemClick(ListView listView, View view, int position, long id) {
+        super.onListItemClick(listView, view, position, id);
+        Bundle bundle = new Bundle();
+        bundle.putString("name", mList.get(position).getDesplayName());
+        bundle.putString("phoneNum", mList.get(position).getPhoneNum());
+        // start up MessageActivity
+        MessageActivity.actionStart(getActivity(), bundle);
     }
 }

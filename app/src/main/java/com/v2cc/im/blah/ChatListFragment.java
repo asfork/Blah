@@ -1,16 +1,9 @@
 package com.v2cc.im.blah;
 
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -47,61 +40,18 @@ public class ChatListFragment extends BaseFragment {
     @Override
     protected void initData() {
         mList = new ArrayList<MessageBean>();
+        getChatList();
         mAdapter = new ChatListViewAdapter(getActivity(), mList);
-        mListView.setAdapter(mAdapter);
-//        mListView.setOnItemClickListener(this);
-
-        //Todo OnItemClickListener unavailable
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("ChatListFrag", "onItemClick");
-                Bundle bundle = new Bundle();
-                bundle.putString("name", mList.get(position).getName());
-                Intent intent = new Intent(getActivity(), MessageActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+        setListAdapter(mAdapter);
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // 注册广播
-//        if (mReceiver == null) {
-//            mReceiver = new SMSBroadcastReceiver();
-//        }
+    private void getChatList() {
         util = DataBaseHelperUtil.getInstance(getActivity());
         // 打开数据库
         util.openDataBase();
-
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.setPriority(800);
-//        intentFilter.addAction(mACTION);
-//        getActivity().registerReceiver(mReceiver, intentFilter);
-        // 查询数据并展示
-        searchDataAndDisplay();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // 注销广播 关闭数据库
-//        if (mReceiver != null) {
-//            getActivity().unregisterReceiver(mReceiver);
-//        }
-        // 关闭数据库
-        util.closeDataBase();
-    }
-
-    /**
-     * 查询数据并展示
-     * <p/>
-     * 2015-8-7 上午11:23:10
-     */
-    private void searchDataAndDisplay() {
+        // 另开线程查询数据并展示
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -110,20 +60,18 @@ public class ChatListFragment extends BaseFragment {
             }
         };
         ThreadPoolUtil.insertTaskToCatchPool(runnable);
+        // 关闭数据库
+        util.closeDataBase();
     }
 
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        Log.d("ChatListFrag","onItemClick");
-//        Toast.makeText(getActivity(),
-//                "position = " + position + "\n" + "第" + id
-//                        + "行", Toast.LENGTH_SHORT).show();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("name", mList.get(position).getName());
-//        bundle.putString("passName", mList.get(position).getPassName());
-//        showActivity(getActivity(), MessageActivity.class, bundle);
-//        Intent intent = new Intent(getActivity(), MessageActivity.class);
-//        intent.putExtras(bundle);
-//        startActivity(intent);
-//    }
+    @Override
+    public void onListItemClick(ListView listView, View view, int position, long id) {
+        super.onListItemClick(listView, view, position, id);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("name", mList.get(position).getName());
+        bundle.putString("phoneNum", mList.get(position).getPhoneNum());
+        // start up MessageActivity
+        MessageActivity.actionStart(getActivity(), bundle);
+    }
 }
