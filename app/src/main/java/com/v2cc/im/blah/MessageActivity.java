@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 public class MessageActivity extends BaseActivity implements OnClickListener {
     private Toolbar mToolbar;
     private String name;// 昵称
-    private String passName;// 用户名
+    private String phoneNum;
     private DataBaseHelperUtil util;
     private final static int DATA_SUCCESS = 10000;
     private ArrayList<MessageBean> messageHistories;// 聊天信息集合
@@ -51,12 +50,11 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
 
     @Override
     public void initData() {
+        messageHistories = new ArrayList<MessageBean>();
         // 获取聊天记录
         getMessageHistory();
-        messageHistories = new ArrayList<MessageBean>();
         mAdapter = new MessageListViewAdapter(MessageActivity.this, messageHistories);
         mListView.setAdapter(mAdapter);
-
     }
 
     @Override
@@ -75,9 +73,8 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.id_floatingactionbutton_send:// 发送按钮
-                Toast.makeText(this, "FLoating Action Button is clicked.", Toast.LENGTH_SHORT).show();
-                postMessage(new MessageBean("", name, passName,
-                        System.currentTimeMillis() + "", "Blah", "", "0", "0"));
+                postMessage(new MessageBean("", name, phoneNum,
+                        System.currentTimeMillis() + "", "blah blah", "", "0", "0"));
                 break;
         }
     }
@@ -85,6 +82,7 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     private void getMessageHistory() {
 //        passName = getIntent().getStringExtra("passName");
         name = getIntent().getStringExtra("name");
+        phoneNum = getIntent().getStringExtra("phoneNum");
         util = DataBaseHelperUtil.getInstance(this);
 
         // 打开数据库
@@ -108,15 +106,18 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
                 }
                 messageHistories.clear();
                 messageHistories.addAll(util.searchMessageHistory(name));
-//                mAdapter.notifyDataSetChanged();
-                mListView.setSelection(messageHistories.size() - 1);
+//                mListView.setSelection(messageHistories.size() - 1);
             }
         };
         ThreadPoolUtil.insertTaskToCatchPool(runnable);
     }
 
     private void postMessage(final MessageBean messageBean) {
-
+        messageHistories.add(messageBean);
+        mAdapter.notifyDataSetChanged();
+//        mListView.setSelection(messageHistories.size() - 1);
+        SMSUtil.sendSMS(phoneNum);
+        Toast.makeText(this, name + System.currentTimeMillis(), Toast.LENGTH_LONG).show();
     }
 
     @Override

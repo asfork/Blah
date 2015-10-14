@@ -56,7 +56,7 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // 创建表
-        creatTable(db);
+        createTable(db);
     }
 
     @Override
@@ -98,32 +98,41 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
      * <p/>
      * 2015-8-5 上午11:07:28
      */
-    public synchronized void creatTable(SQLiteDatabase db) {
+    public synchronized void createTable(SQLiteDatabase db) {
         db.execSQL("drop table if exists " + TABLE_NAME_MESSAGE);// 如果存在先干掉
         db.execSQL("drop table if exists " + TABLE_NAME_RECENT_CHAT);
         db.execSQL("create table "
                 + TABLE_NAME_MESSAGE
-                + " (_id integer primary key autoincrement,name char,passName char,time char,content char,imgPath char,status char,source char)");
+                + " (_id integer primary key autoincrement,name char,phoneNum char,time char,content char,imgPath char,status char,source char)");
 
         db.execSQL("create table "
                 + TABLE_NAME_RECENT_CHAT
-                + " (_id integer primary key autoincrement,name char,passName char,time char,content char,imgPath char,status char,source char)");
+                + " (_id integer primary key autoincrement,name char,phoneNum char,time char,content char,imgPath char,status char,source char)");
 
         // Todo insert testing data
-        db.execSQL("insert into RecentChat (name,time,content,source)" +
-                " values ('Char', 1242047966, 'Blah blah', 1)");
-        db.execSQL("insert into RecentChat (name,time,content,source)" +
-                " values ('Coco', 1843047966, 'Blah blah', 0)");
-        db.execSQL("insert into RecentChat (name,time,content,source)" +
-                " values ('Tom', 1942047966, 'Blah blah', 1)");
-        db.execSQL("insert into Message (name,time,content,source)" +
-                " values ('Char', 1242047966, 'Blah blah', 1)");
-        db.execSQL("insert into Message (name,time,content,source)" +
-                " values ('Char', 1252047966, 'Blah blah', 0)");
-        db.execSQL("insert into Message (name,time,content,source)" +
-                " values ('Coco', 1843047966, 'Blah blah', 0)");
-        db.execSQL("insert into Message (name,time,content,source)" +
-                " values ('Tom', 1942047966, 'Blah blah', 1)");
+        db.execSQL("insert into RecentChat (name,phoneNum,time,content,source)" +
+                " values ('HAL', 9000, 1444806933688, 'Blah blah', 0)");
+        db.execSQL("insert into RecentChat (name,phoneNum,time,content,source)" +
+                " values ('Hubot', 10101, 1442806920125, 'Blah blah', 0)");
+        db.execSQL("insert into RecentChat (name,phoneNum,time,content,source)" +
+                " values ('Peter', 233, 1444816922125, 'Blah blah', 0)");
+
+        db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
+                " values ('HAL', 9000, 1444805933688, 'Blah blah', 0)");
+        db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
+                " values ('HAL', 9000, 1444806533688, 'Blah blah', 1)");
+        db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
+                " values ('HAL', 9000, 1444806833688, 'Blah blah', 1)");
+        db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
+                " values ('HAL', 9000, 1444806933688, 'Blah blah', 0)");
+        db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
+                " values ('Hubot', 10101, 1444806720125, 'Blah blah', 0)");
+        db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
+                " values ('Peter', 233, 1444803922125, 'Blah blah', 1)");
+        db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
+                " values ('Hubot', 10101, 1442806920125, 'Blah blah', 0)");
+        db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
+                " values ('Peter', 233, 1444816922125, 'Blah blah', 0)");
     }
 
     /**
@@ -135,8 +144,8 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
         database.execSQL(
                 "insert into "
                         + tableName
-                        + " (_id,name,passName,time,content,imgPath,status,source) values(?,?,?,?,?,?,?,?)",
-                new Object[]{messageBean.getId(), messageBean.getName(), messageBean.getPassName(),
+                        + " (_id,name,phoneNum,time,content,imgPath,status,source) values(?,?,?,?,?,?,?,?)",
+                new Object[]{messageBean.getId(), messageBean.getName(), messageBean.getPhoneNum(),
                         messageBean.getTime(), messageBean.getContent(), messageBean.getImgPath(),
                         messageBean.getStatus(), messageBean.getSource()});
     }
@@ -164,9 +173,9 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
             database.execSQL(
                     "insert into "
                             + TABLE_NAME_RECENT_CHAT
-                            + " (_id,name,passName,time,content,imgPath,status,source) values(?,?,?,?,?,?,?,?)",
+                            + " (_id,name,phoneNum,time,content,imgPath,status,source) values(?,?,?,?,?,?,?,?)",
                     new Object[]{messageBean.getId(), messageBean.getName(),
-                            messageBean.getPassName(), messageBean.getTime(),
+                            messageBean.getPhoneNum(), messageBean.getTime(),
                             messageBean.getContent(), messageBean.getImgPath(),
                             messageBean.getStatus(), messageBean.getSource()});
         }

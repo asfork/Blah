@@ -12,7 +12,7 @@ import android.database.Cursor;
 public class MessageBean {
     private String id;// id
     private String name;// 姓名
-    private String passName;// 账户
+    private String phoneNum;// 账户
     private String time;// 时间
     private String content;// 内容
     private String imgPath;// 图片地址
@@ -22,12 +22,12 @@ public class MessageBean {
     public MessageBean() {
     }
 
-    public MessageBean(String id, String name, String passName, String time, String content,
+    public MessageBean(String id, String name, String phoneNum, String time, String content,
                        String imgPath, String source, String status) {
         super();
         this.id = id;
         this.name = name;
-        this.passName = passName;
+        this.phoneNum = phoneNum;
         this.time = time;
         this.content = content;
         this.imgPath = imgPath;
@@ -38,7 +38,7 @@ public class MessageBean {
     public MessageBean(Cursor cursor) {
         this.id = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
         this.name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-        this.passName = cursor.getString(cursor.getColumnIndexOrThrow("passName"));
+        this.phoneNum = cursor.getString(cursor.getColumnIndexOrThrow("phoneNum"));
         this.time = cursor.getString(cursor.getColumnIndexOrThrow("time"));
         this.content = cursor.getString(cursor.getColumnIndexOrThrow("content"));
         this.imgPath = cursor.getString(cursor.getColumnIndexOrThrow("imgPath"));
@@ -62,12 +62,12 @@ public class MessageBean {
         this.name = name;
     }
 
-    public String getPassName() {
-        return passName;
+    public String getPhoneNum() {
+        return phoneNum;
     }
 
-    public void setPassName(String passName) {
-        this.passName = passName;
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
     public String getTime() {
