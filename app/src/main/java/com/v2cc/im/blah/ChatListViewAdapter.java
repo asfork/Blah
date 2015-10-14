@@ -60,7 +60,7 @@ public class ChatListViewAdapter extends BaseAdapter {
         MessageBean messageBean = mList.get(position);
         holder.tv_name.setText(messageBean.getName());
         holder.tv_record.setText(messageBean.getContent());
-        holder.tv_time.setText(displayTime(messageBean.getTime()));
+        holder.tv_time.setText(TimeFormattingUtil.displayTime(messageBean.getTime()));
         return convertView;
     }
 
@@ -68,36 +68,5 @@ public class ChatListViewAdapter extends BaseAdapter {
         private TextView tv_name;
         private TextView tv_record;
         private TextView tv_time;
-    }
-
-    /**
-     * 计算最近记录中应该显示的时间
-     *
-     * @return String
-     * 2015-8-6 下午6:09:02
-     * <p/>
-     * Todo 分离格式化时间功能到单独的 Util 类，另时间功能计算结果不合预期
-     */
-    private String displayTime(String time) {
-        long ti = Long.valueOf(time);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String t1 = dateFormat.format(ti);
-        String t2 = dateFormat.format(System.currentTimeMillis());
-        if (t1.equals(t2)) {
-            // 时间为今天
-            dateFormat = new SimpleDateFormat("HH:mm");
-            return dateFormat.format(ti);
-        }
-        dateFormat = new SimpleDateFormat("yyyy");
-        String t3 = dateFormat.format(ti);
-        String t4 = dateFormat.format(System.currentTimeMillis());
-        if (t3.equals(t4)) {
-            // 今年
-            dateFormat = new SimpleDateFormat("MM-dd");
-            return dateFormat.format(ti);
-        } else {
-            dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            return dateFormat.format(ti);
-        }
     }
 }
