@@ -12,7 +12,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_bg_item"
-        android:paddingLeft="10dip"
+        android:paddingStart="10dip"
         android:textColor="@color/primary_text"
         android:visibility="gone"/>
 
@@ -37,9 +37,8 @@
         android:textSize="@dimen/text_size_middle"
         android:textColor="@color/primary_text"
         android:layout_below="@id/alpha"
-        android:layout_toRightOf="@id/qcb"
         android:layout_toEndOf="@id/qcb"
         android:layout_marginTop="12dp"
-        android:paddingLeft="10dp"/>
+        android:paddingStart="10dp"/>
 
 </RelativeLayout>
