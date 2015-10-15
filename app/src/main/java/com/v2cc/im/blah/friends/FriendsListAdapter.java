@@ -157,7 +157,7 @@ public class FriendsListAdapter extends BaseAdapter {
     }
 
     /**
-     * 设置监听事件的组件写在下面这方法里
+     * 将一个 item 设置多个组件的监听事件写在下面这方法里
      */
 //    public void addListener(View convertView) {
 //        ((TextView)convertView.findViewById(R.id.text_view)).setOnClickListener(

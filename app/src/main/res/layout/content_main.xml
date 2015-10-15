@@ -51,8 +51,8 @@
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:title="@string/toolbar_title"/>
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            android:title="@string/toolbar_title"/>
 
         <!--
             Tabs选项卡，和ViewPager搭配使用可以增大界面的内容展示量，实现各种个性化分类内容展示而不互相干扰！

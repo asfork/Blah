@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
@@ -124,6 +125,7 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
 
         // Todo determines whether it should send message by sms
         SMSUtil.sendSMS(phoneNum);
+        Log.d("postMessage", phoneNum);
 
         saveMessage(name, phoneNum, "blah blah", "0");
     }

@@ -113,28 +113,28 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
 
         // Todo insert testing data
         db.execSQL("insert into RecentChat (name,phoneNum,time,content,source)" +
-                " values ('HAL', 9000, 1444806933688, 'Blah blah', 0)");
+                " values ('HAL9000', 1850009000, 1444806933688, 'Blah blah', 0)");
         db.execSQL("insert into RecentChat (name,phoneNum,time,content,source)" +
-                " values ('Hubot', 10101, 1442806920125, 'Blah blah', 0)");
+                " values ('Hubot', 1850010101, 1442806920125, 'Blah blah', 0)");
         db.execSQL("insert into RecentChat (name,phoneNum,time,content,source)" +
-                " values ('Peter', 233, 1444816922125, 'Blah blah', 0)");
+                " values ('Peter', 1850000233, 1444816922125, 'Blah blah', 0)");
 
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('HAL', 9000, 1444805933688, 'Blah blah', 0)");
+                " values ('HAL9000', 1850009000, 1444805933688, 'Blah blah', 0)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('HAL', 9000, 1444806533688, 'Blah blah', 1)");
+                " values ('HAL9000', 1850009000, 1444806533688, 'Blah blah', 1)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('HAL', 9000, 1444806833688, 'Blah blah', 1)");
+                " values ('HAL9000', 1850009000, 1444806833688, 'Blah blah', 1)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('HAL', 9000, 1444806933688, 'Blah blah', 0)");
+                " values ('HAL9000', 1850009000, 1444806933688, 'Blah blah', 0)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('Hubot', 10101, 1444806720125, 'Blah blah', 0)");
+                " values ('Hubot', 1850010101, 1444806720125, 'Blah blah', 0)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('Peter', 233, 1444803922125, 'Blah blah', 1)");
+                " values ('Peter', 1850000233, 1444803922125, 'Blah blah', 1)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('Hubot', 10101, 1442806920125, 'Blah blah', 0)");
+                " values ('Hubot', 1850010101, 1442806920125, 'Blah blah', 0)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('Peter', 233, 1444816922125, 'Blah blah', 0)");
+                " values ('Peter', 1850000233, 1444816922125, 'Blah blah', 0)");
     }
 
     /**
