@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,7 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     private Toolbar mToolbar;
     private String name;// 昵称
     private String phoneNum;
-    private DataBaseHelperUtil util;
+    private DataBaseHelperUtil dbUtil;
     private final static int DATA_SUCCESS = 10000;
     private ArrayList<MessageBean> messageHistories;// 聊天信息集合
     private ListView mListView;// 聊天信息列表
@@ -83,16 +82,16 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
 //        passName = getIntent().getStringExtra("passName");
         name = getIntent().getStringExtra("name");
         phoneNum = getIntent().getStringExtra("phoneNum");
-        util = DataBaseHelperUtil.getInstance(this);
+        dbUtil = DataBaseHelperUtil.getInstance(this);
 
         // 打开数据库
-        util.openDataBase();
+        dbUtil.openDataBase();
 
         // 获取当前对象的聊天信息
         searchCurrentChatRecord();
 
         // 关闭数据库
-        util.closeDataBase();
+        dbUtil.closeDataBase();
     }
 
     private void searchCurrentChatRecord() {
@@ -105,7 +104,7 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
                     messageHistories = new ArrayList<>();
                 }
                 messageHistories.clear();
-                messageHistories.addAll(util.searchMessageHistory(name));
+                messageHistories.addAll(dbUtil.searchMessageHistory(name));
 //                mListView.setSelection(messageHistories.size() - 1);
             }
         };
@@ -116,13 +115,30 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
         messageHistories.add(messageBean);
         mAdapter.notifyDataSetChanged();
 //        mListView.setSelection(messageHistories.size() - 1);
+
+        // Todo determines whether it should send message by sms
         SMSUtil.sendSMS(phoneNum);
-        Toast.makeText(this, name + System.currentTimeMillis(), Toast.LENGTH_LONG).show();
+
+        saveMessage(name, phoneNum, "blah blah", "0");
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("MessageActivity", "onDestroy2");
+    private void saveMessage(final String name, final String phoneNum, final String content, final String source) {
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                MessageBean messageBean = new MessageBean();
+                messageBean.setContent(content);
+                messageBean.setName(name);
+                messageBean.setPhoneNum(phoneNum);
+                messageBean.setSource(source);
+                messageBean.setTime(System.currentTimeMillis() + "");
+                messageBean.setStatus("0");
+                dbUtil.insertToTable(DataBaseHelperUtil.TABLE_NAME_MESSAGE,
+                        messageBean);
+                dbUtil.insertRecentChat(messageBean);
+            }
+        };
+        ThreadPoolUtil.insertTaskToCatchPool(runnable);
     }
 }
