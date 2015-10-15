@@ -1,4 +1,4 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.chat;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
+import com.v2cc.im.blah.message.MessageBean;
+import com.v2cc.im.blah.R;
+import com.v2cc.im.blah.base.utils.TimeFormattingUtil;
+
 import java.util.ArrayList;
 
 /**

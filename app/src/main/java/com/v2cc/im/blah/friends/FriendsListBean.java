@@ -1,4 +1,4 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.friends;
 
 /**
  * Created by Steve ZHANG (stevzhg@gmail.com)

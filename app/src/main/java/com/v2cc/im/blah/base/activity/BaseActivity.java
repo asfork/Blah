@@ -1,8 +1,10 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.base.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.v2cc.im.blah.base.utils.ActivityCollector;
 
 /**
  * Created by Steve ZHANG (stevzhg@gmail.com)

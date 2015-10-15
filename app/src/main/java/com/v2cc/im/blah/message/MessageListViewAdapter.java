@@ -1,4 +1,4 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.message;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.v2cc.im.blah.R;
 
 import java.util.ArrayList;
 

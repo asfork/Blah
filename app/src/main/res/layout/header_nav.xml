@@ -6,7 +6,7 @@
               android:background="@color/primary"
               android:orientation="vertical">
 
-    <com.v2cc.im.blah.RoundedImageView
+    <com.v2cc.im.blah.base.view.RoundedImageView
         android:id="@+id/id_header_face"
         android:layout_width="110dp"
         android:layout_height="110dp"

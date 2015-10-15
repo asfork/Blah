@@ -1,4 +1,4 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.message;
 
 import android.database.Cursor;
 

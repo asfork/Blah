@@ -1,9 +1,16 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.chat;
 
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+
+import com.v2cc.im.blah.db.DataBaseHelperUtil;
+import com.v2cc.im.blah.message.MessageActivity;
+import com.v2cc.im.blah.message.MessageBean;
+import com.v2cc.im.blah.R;
+import com.v2cc.im.blah.base.utils.ThreadPoolUtil;
+import com.v2cc.im.blah.base.fragment.BaseFragment;
 
 import java.util.ArrayList;
 

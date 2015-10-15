@@ -1,4 +1,4 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.friends;
 
 import android.content.ContentUris;
 import android.content.Context;
@@ -12,7 +12,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.v2cc.im.blah.R;
 
 import java.io.InputStream;
 import java.util.ArrayList;

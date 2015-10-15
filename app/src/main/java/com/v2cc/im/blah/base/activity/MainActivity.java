@@ -1,4 +1,4 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.base.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -10,13 +10,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.v2cc.im.blah.R;
+import com.v2cc.im.blah.base.fragment.FragmentTest;
+import com.v2cc.im.blah.base.view.StatusBarCompat;
+import com.v2cc.im.blah.base.adapter.ViewPagerAdapter;
+import com.v2cc.im.blah.friends.FriendsListFragment;
 
 import java.util.ArrayList;
 import java.util.List;

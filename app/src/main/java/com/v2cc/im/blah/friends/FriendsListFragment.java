@@ -1,4 +1,4 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.friends;
 
 import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
@@ -9,6 +9,10 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+
+import com.v2cc.im.blah.message.MessageActivity;
+import com.v2cc.im.blah.R;
+import com.v2cc.im.blah.base.fragment.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;

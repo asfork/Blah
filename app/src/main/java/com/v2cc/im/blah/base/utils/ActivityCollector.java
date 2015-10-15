@@ -1,6 +1,5 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.base.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;

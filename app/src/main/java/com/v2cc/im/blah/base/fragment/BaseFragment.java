@@ -1,4 +1,4 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.base.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;

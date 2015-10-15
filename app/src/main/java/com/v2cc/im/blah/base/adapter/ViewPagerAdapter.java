@@ -1,8 +1,12 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.base.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.v2cc.im.blah.base.fragment.FragmentTest;
+import com.v2cc.im.blah.chat.ChatListFragment;
+import com.v2cc.im.blah.friends.FriendsListFragment;
 
 import java.util.List;
 

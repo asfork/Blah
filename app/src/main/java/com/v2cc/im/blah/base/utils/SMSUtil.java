@@ -1,4 +1,4 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.base.utils;
 
 import android.telephony.SmsManager;
 import android.widget.Toast;

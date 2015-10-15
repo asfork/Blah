@@ -1,4 +1,4 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.base.view;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

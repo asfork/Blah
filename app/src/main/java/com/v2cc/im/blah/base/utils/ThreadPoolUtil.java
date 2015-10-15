@@ -1,4 +1,4 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.base.utils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

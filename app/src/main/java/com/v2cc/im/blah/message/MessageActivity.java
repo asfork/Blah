@@ -1,4 +1,4 @@
-package com.v2cc.im.blah;
+package com.v2cc.im.blah.message;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,10 +6,16 @@ import android.os.Bundle;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
+
+import com.v2cc.im.blah.db.DataBaseHelperUtil;
+import com.v2cc.im.blah.R;
+import com.v2cc.im.blah.base.utils.SMSUtil;
+import com.v2cc.im.blah.base.view.StatusBarCompat;
+import com.v2cc.im.blah.base.utils.ThreadPoolUtil;
+import com.v2cc.im.blah.base.activity.BaseActivity;
 
 import java.util.ArrayList;
 
