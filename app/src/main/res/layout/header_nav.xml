@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:text="@string/header_author_name"
         android:textColor="@color/icons"
-        android:textSize="16sp"/>
+        android:textSize="@dimen/text_size_small"/>
 
     <TextView
         android:id="@+id/id_header_email"
@@ -27,6 +27,6 @@
         android:layout_height="wrap_content"
         android:text="@string/header_author_email"
         android:textColor="@color/icons"
-        android:textSize="18sp"/>
+        android:textSize="@dimen/text_size_middle"/>
 
 </LinearLayout>

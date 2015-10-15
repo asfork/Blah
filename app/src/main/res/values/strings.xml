@@ -15,4 +15,6 @@
     <string name="plusone">+1</string>
     <string name="item_clicked">item clicked！</string>
     <string name="item_longclicked">item long clicked！</string>
+
+    <string name="fragment_tv">More inspirations are coming soon!</string>
 </resources>
