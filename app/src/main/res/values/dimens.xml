@@ -5,15 +5,13 @@
     <!-- 字体大小-很小 -->
     <dimen name="text_size_vsmall">14sp</dimen>
     <!-- 字体大小-小 -->
-    <dimen name="text_size_chat">16sp</dimen>
-    <!-- 字体大小-小 -->
     <dimen name="text_size_small">16sp</dimen>
     <!-- 字体大小-中等 -->
     <dimen name="text_size_middle">18sp</dimen>
     <!-- 字体大小-大 -->
     <dimen name="text_size_big">20sp</dimen>
     <!-- 字体大小-巨大 -->
-    <dimen name="text_size_lage">22sp</dimen>
+    <dimen name="text_size_large">30sp</dimen>
     <!-- 聊天信息框宽度 -->
     <dimen name="width_chat_tv">270dp</dimen>
     <!-- 聊天信息框宽度 -->

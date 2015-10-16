@@ -27,7 +27,7 @@
             android:paddingTop="10dp"
             android:textColor="@color/primary_text"
             android:textScaleX="1"
-            android:textSize="@dimen/text_size_chat"/>
+            android:textSize="@dimen/text_size_small"/>
 
         <ImageView
             android:id="@+id/img_chat_input_head"
@@ -62,7 +62,7 @@
             android:paddingTop="10dp"
             android:textColor="@color/primary_text"
             android:textScaleX="1"
-            android:textSize="@dimen/text_size_chat"/>
+            android:textSize="@dimen/text_size_small"/>
 
         <ImageView
             android:id="@+id/img_chat_output_head"

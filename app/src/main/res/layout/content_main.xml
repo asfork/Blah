@@ -108,6 +108,7 @@
         android:src="@mipmap/plus"
         app:backgroundTint="@color/accent"
         app:elevation="6dp"
-        app:pressedTranslationZ="12dp"/>
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="@color/gray_item_bg_p"/>
 
 </android.support.design.widget.CoordinatorLayout>

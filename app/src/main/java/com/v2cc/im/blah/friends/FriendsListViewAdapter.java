@@ -28,14 +28,14 @@ import java.util.regex.Pattern;
  * 2015/9/23.
  * If it works, I created this. If not, I didn't.
  */
-public class FriendsListAdapter extends BaseAdapter {
+public class FriendsListViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
-    private List<FriendsListBean> list;
+    private List<FriendsBean> list;
     private HashMap<String, Integer> alphaIndexer; // 字母索引
     private String[] sections; // 存储每个章节
     private Context ctx; // 上下文
 
-    public FriendsListAdapter(Context context, List<FriendsListBean> list) {
+    public FriendsListViewAdapter(Context context, List<FriendsBean> list) {
         this.ctx = context;
         this.inflater = LayoutInflater.from(context);
         this.list = list;
@@ -91,7 +91,7 @@ public class FriendsListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        FriendsListBean contact = list.get(position);
+        FriendsBean contact = list.get(position);
         String name = contact.getDesplayName();
 //        String number = contact.getPhoneNum();
         holder.name.setText(name);

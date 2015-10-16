@@ -1,7 +1,7 @@
 package com.v2cc.im.blah.base.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +12,13 @@ import android.view.ViewGroup;
  * 2015/9/30.
  * If it works, I created this. If not, I didn't.
  */
-public class BaseFragment extends ListFragment {
+public abstract class BaseFragment extends Fragment {
     protected View rootView;
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -22,6 +27,7 @@ public class BaseFragment extends ListFragment {
         rootView = inflater.inflate(setRootViewId(), container, false);
         initViews(rootView);
         initData();
+        configViews();
         return rootView;
     }
 
@@ -36,6 +42,12 @@ public class BaseFragment extends ListFragment {
      * 初始化组件
      */
     protected void initViews(View rootView) {
+    }
+
+    /**
+     * 配置组件
+     */
+    protected void configViews() {
     }
 
     /**

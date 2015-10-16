@@ -113,28 +113,28 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
 
         // Todo insert testing data
         db.execSQL("insert into RecentChat (name,phoneNum,time,content,source)" +
-                " values ('HAL9000', 1850009000, 1444806933688, 'Blah blah', 0)");
+                " values ('HAL9000', 9000, 1444806933688, 'Blah blah', 0)");
         db.execSQL("insert into RecentChat (name,phoneNum,time,content,source)" +
-                " values ('Hubot', 1850010101, 1442806920125, 'Blah blah', 0)");
+                " values ('Hubot', 10101, 1442806920125, 'Blah blah', 0)");
         db.execSQL("insert into RecentChat (name,phoneNum,time,content,source)" +
-                " values ('Peter', 1850000233, 1444816922125, 'Blah blah', 0)");
+                " values ('Peter', 233, 1444816922125, 'Blah blah', 0)");
 
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('HAL9000', 1850009000, 1444805933688, 'Blah blah', 0)");
+                " values ('HAL9000', 9000, 1444805933688, 'Blah blah', 0)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('HAL9000', 1850009000, 1444806533688, 'Blah blah', 1)");
+                " values ('HAL9000', 9000, 1444806533688, 'Blah blah', 1)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('HAL9000', 1850009000, 1444806833688, 'Blah blah', 1)");
+                " values ('HAL9000', 9000, 1444806833688, 'Blah blah', 1)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('HAL9000', 1850009000, 1444806933688, 'Blah blah', 0)");
+                " values ('HAL9000', 9000, 1444806933688, 'Blah blah', 0)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('Hubot', 1850010101, 1444806720125, 'Blah blah', 0)");
+                " values ('Hubot', 10101, 1444806720125, 'Blah blah', 0)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('Peter', 1850000233, 1444803922125, 'Blah blah', 1)");
+                " values ('Peter', 233, 1444803922125, 'Blah blah', 1)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('Hubot', 1850010101, 1442806920125, 'Blah blah', 0)");
+                " values ('Hubot', 10101, 1442806920125, 'Blah blah', 0)");
         db.execSQL("insert into Message (name,phoneNum,time,content,source)" +
-                " values ('Peter', 1850000233, 1444816922125, 'Blah blah', 0)");
+                " values ('Peter', 233, 1444816922125, 'Blah blah', 0)");
     }
 
     /**
@@ -194,7 +194,7 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
      * @date 2015-8-5 上午11:31:34
      * @version V1.0
      */
-    public synchronized ArrayList<MessageBean> searchRecentChat() {
+    public synchronized ArrayList<MessageBean> getRecentChat() {
         ArrayList<MessageBean> cList = new ArrayList<MessageBean>();
         Cursor cursor = database.rawQuery("select * from " + TABLE_NAME_RECENT_CHAT
                 + " order by time desc", null);
@@ -210,16 +210,16 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
     /**
      * 获取当前账户人的聊天记录
      *
-     * @param name
+     * @param pNum
      * @return ArrayList<ChatRecord>
      * @author yeliangliang
      * @date 2015-8-6 下午6:19:15
      * @version V1.0
      */
-    public synchronized ArrayList<MessageBean> searchMessageHistory(String name) {
+    public synchronized ArrayList<MessageBean> getMessageHistory(String pNum) {
         ArrayList<MessageBean> mList = new ArrayList<MessageBean>();
         Cursor cursor = database.rawQuery("select * from " + TABLE_NAME_MESSAGE
-                + " where name = ?", new String[]{name});
+                + " where phoneNum = ?", new String[]{pNum});
         while (cursor != null && cursor.moveToNext()) {
             mList.add(new MessageBean(cursor));
         }
@@ -231,7 +231,7 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
     }
 
     /**
-     * 更具用户名删除聊天记录
+     * 根据用户名删除聊天记录
      * <p/>
      * 2015-8-21 下午6:05:11
      */

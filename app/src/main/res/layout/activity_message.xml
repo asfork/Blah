@@ -5,7 +5,7 @@
             2.在其中可以放置浮动的View，就像Floating Action Button。
 -->
 <android.support.design.widget.CoordinatorLayout
-    android:id="@+id/id_coordinatorlayout_chat"
+    android:id="@+id/id_coordinatorlayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/id_toolbar_message"
+            android:id="@+id/id_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -27,14 +27,14 @@
     </android.support.design.widget.AppBarLayout>
 
     <ListView
-        android:id="@+id/listView_message"
+        android:id="@+id/id_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/id_floatingactionbutton_send"
+        android:id="@+id/id_floatingactionbutton"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_gravity="bottom|right"

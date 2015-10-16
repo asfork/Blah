@@ -20,7 +20,8 @@ import com.v2cc.im.blah.R;
 import com.v2cc.im.blah.base.fragment.FragmentTest;
 import com.v2cc.im.blah.base.view.StatusBarCompat;
 import com.v2cc.im.blah.base.adapter.ViewPagerAdapter;
-import com.v2cc.im.blah.friends.FriendsListFragment;
+import com.v2cc.im.blah.db.DataBaseHelperUtil;
+import com.v2cc.im.blah.friends.FriendsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,9 +81,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                     mFragments.add(i, fragmentTest);
                     break;
                 case 1:
-                    FriendsListFragment friendsListFragment = new FriendsListFragment();
-                    friendsListFragment.setArguments(mBundle);
-                    mFragments.add(i, friendsListFragment);
+                    FriendsFragment friendsFragment = new FriendsFragment();
+                    friendsFragment.setArguments(mBundle);
+                    mFragments.add(i, friendsFragment);
                     break;
                 default:
                     FragmentTest mFragment = new FragmentTest();
@@ -120,7 +121,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mViewPager.setOffscreenPageLimit(5);
 
         // 给ViewPager添加页面动态监听器（为了让Toolbar中的Title可以变化相应的Tab的标题）
-//        mViewPager.addOnPageChangeListener(this);
+        mViewPager.addOnPageChangeListener(this);
 
         mTabLayout.setTabMode(MODE_SCROLLABLE);
         // 将TabLayout和ViewPager进行关联，让两者联动起来
@@ -211,5 +212,19 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 打开数据库
+        DataBaseHelperUtil.getInstance(this).openDataBase();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // 关闭数据库
+        DataBaseHelperUtil.getInstance(this).closeDataBase();
     }
 }

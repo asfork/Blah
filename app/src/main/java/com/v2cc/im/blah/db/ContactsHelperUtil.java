@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
 
-import com.v2cc.im.blah.friends.FriendsListBean;
+import com.v2cc.im.blah.friends.FriendsBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,8 +21,8 @@ import java.util.Map;
  */
 public class ContactsHelperUtil {
 
-    private static List<FriendsListBean> mList;
-    private static Map<Integer, FriendsListBean> friendIdMap = null;
+    private static List<FriendsBean> mList;
+    private static Map<Integer, FriendsBean> friendIdMap = null;
 
     // 根据电话号码取得联系人姓名
     public synchronized static String getContactNameByPhoneNumber(Context context, String address) {
@@ -74,8 +74,8 @@ public class ContactsHelperUtil {
                 null, null, "sort_key COLLATE LOCALIZED asc");
 
         if (cursor != null && cursor.getCount() > 0) {
-            friendIdMap = new HashMap<Integer, FriendsListBean>();
-            mList = new ArrayList<FriendsListBean>();
+            friendIdMap = new HashMap<Integer, FriendsBean>();
+            mList = new ArrayList<FriendsBean>();
             cursor.moveToFirst(); // 游标移动到第一项
             for (int i = 0; i < cursor.getCount(); i++) {
                 cursor.moveToPosition(i);
@@ -90,7 +90,7 @@ public class ContactsHelperUtil {
                     // 无操作
                 } else {
                     // 创建联系人对象
-                    FriendsListBean contact = new FriendsListBean();
+                    FriendsBean contact = new FriendsBean();
                     contact.setDesplayName(name);
                     contact.setPhoneNum(number);
                     contact.setSortKey(sortKey);

@@ -14,7 +14,7 @@ import com.v2cc.im.blah.R;
  * 2015/9/22.
  * If it works, I created this. If not, I didn't.
  */
-public class FragmentTest extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class FragmentTest extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static FragmentTest newInstance() {
         FragmentTest fragmentTest = new FragmentTest();
@@ -22,9 +22,10 @@ public class FragmentTest extends Fragment implements SwipeRefreshLayout.OnRefre
         fragmentTest.setArguments(bundle);
         return fragmentTest;
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.frag_test, container, false);
+    protected int setRootViewId() {
+        return R.layout.frag_test;
     }
 
     @Override

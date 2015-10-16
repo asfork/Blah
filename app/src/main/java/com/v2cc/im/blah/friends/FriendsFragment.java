@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.v2cc.im.blah.message.MessageActivity;
@@ -24,29 +25,32 @@ import java.util.Map;
  * 2015/9/23.
  * If it works, I created this. If not, I didn't.
  */
-public class FriendsListFragment extends BaseFragment {
+public class FriendsFragment extends BaseFragment implements AdapterView.OnItemClickListener {
     private ListView mListView;
-    private List<FriendsListBean> mList;
+    private List<FriendsBean> mList;
     private AsyncQueryHandler asyncQueryHandler; // 异步查询数据库类对象
-    private Map<Integer, FriendsListBean> friendIdMap = null;
-    private FriendsListAdapter mAdapter;
+    private Map<Integer, FriendsBean> friendIdMap = null;
+    private FriendsListViewAdapter mAdapter;
 
-    public static FriendsListFragment newInstance(int position) {
-        FriendsListFragment friendsListFragment = new FriendsListFragment();
+    public static FriendsFragment newInstance(int position) {
+        FriendsFragment friendsFragment = new FriendsFragment();
         Bundle bundle = new Bundle();
 //        bundle.putInt(ARG_POSITION, position);
-        friendsListFragment.setArguments(bundle);
-        return friendsListFragment;
+        friendsFragment.setArguments(bundle);
+        return friendsFragment;
     }
 
     @Override
     protected int setRootViewId() {
-        return R.layout.frag_friends_list;
+        return R.layout.frag_friends;
     }
 
     @Override
     protected void initViews(View rootView) {
         mListView = (ListView) rootView.findViewById(android.R.id.list);
+
+        mListView.setOnItemClickListener(this);
+        mListView.setSelected(true);
     }
 
     @Override
@@ -79,8 +83,8 @@ public class FriendsListFragment extends BaseFragment {
             super.onQueryComplete(token, cookie, cursor);
 
             if (cursor != null && cursor.getCount() > 0) {
-                friendIdMap = new HashMap<Integer, FriendsListBean>();
-                mList = new ArrayList<FriendsListBean>();
+                friendIdMap = new HashMap<Integer, FriendsBean>();
+                mList = new ArrayList<FriendsBean>();
                 cursor.moveToFirst(); // 游标移动到第一项
                 for (int i = 0; i < cursor.getCount(); i++) {
                     cursor.moveToPosition(i);
@@ -95,7 +99,7 @@ public class FriendsListFragment extends BaseFragment {
                         // 无操作
                     } else {
                         // 创建联系人对象
-                        FriendsListBean contact = new FriendsListBean();
+                        FriendsBean contact = new FriendsBean();
                         contact.setDesplayName(name);
                         contact.setPhoneNum(number);
                         contact.setSortKey(sortKey);
@@ -113,14 +117,12 @@ public class FriendsListFragment extends BaseFragment {
         }
     }
 
-    private void setMyAdapter(List<FriendsListBean> list) {
-        mAdapter = new FriendsListAdapter(getActivity(), list);
-        setListAdapter(mAdapter);
+    private void setMyAdapter(List<FriendsBean> list) {
+        mAdapter = new FriendsListViewAdapter(getActivity(), list);
+        mListView.setAdapter(mAdapter);
     }
 
-    @Override
-    public void onListItemClick(ListView listView, View view, int position, long id) {
-        super.onListItemClick(listView, view, position, id);
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle bundle = new Bundle();
         bundle.putString("name", mList.get(position).getDesplayName());
         bundle.putString("phoneNum", mList.get(position).getPhoneNum());
