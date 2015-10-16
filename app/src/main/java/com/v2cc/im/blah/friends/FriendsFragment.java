@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,8 +26,9 @@ import java.util.Map;
  * 2015/9/23.
  * If it works, I created this. If not, I didn't.
  */
-public class FriendsFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class FriendsFragment extends BaseFragment implements AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
     private ListView mListView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private List<FriendsBean> mList;
     private AsyncQueryHandler asyncQueryHandler; // 异步查询数据库类对象
     private Map<Integer, FriendsBean> friendIdMap = null;
@@ -47,7 +49,8 @@ public class FriendsFragment extends BaseFragment implements AdapterView.OnItemC
 
     @Override
     protected void initViews(View rootView) {
-        mListView = (ListView) rootView.findViewById(android.R.id.list);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.id_swiperefreshlayout);
+        mListView = (ListView) rootView.findViewById(R.id.id_listview);
 
         mListView.setOnItemClickListener(this);
         mListView.setSelected(true);
@@ -69,6 +72,18 @@ public class FriendsFragment extends BaseFragment implements AdapterView.OnItemC
         // 按照sort_key升序查詢
         asyncQueryHandler.startQuery(0, null, uri, projection, null, null,
                 "sort_key COLLATE LOCALIZED asc");
+    }
+
+    @Override
+    protected void configViews() {
+        // 刷新时，指示器旋转后变化的颜色
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_light, R.color.primary);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 
     private class MyAsyncQueryHandler extends AsyncQueryHandler {

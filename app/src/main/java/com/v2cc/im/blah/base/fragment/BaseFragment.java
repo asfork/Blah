@@ -45,15 +45,15 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * 配置组件
-     */
-    protected void configViews() {
-    }
-
-    /**
      * 初始化数据
      */
     protected void initData() {
+    }
+
+    /**
+     * 配置组件
+     */
+    protected void configViews() {
     }
 
     @Override

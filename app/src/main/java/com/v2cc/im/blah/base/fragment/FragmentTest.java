@@ -16,6 +16,8 @@ import com.v2cc.im.blah.R;
  */
 public class FragmentTest extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
     public static FragmentTest newInstance() {
         FragmentTest fragmentTest = new FragmentTest();
         Bundle bundle = new Bundle();
@@ -26,6 +28,18 @@ public class FragmentTest extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     protected int setRootViewId() {
         return R.layout.frag_test;
+    }
+
+    @Override
+    protected void initViews(View rootView) {
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.id_swiperefreshlayout);
+    }
+
+    @Override
+    protected void configViews() {
+        // 刷新时，指示器旋转后变化的颜色
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_light, R.color.primary);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
