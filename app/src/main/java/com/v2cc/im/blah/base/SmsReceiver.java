@@ -40,13 +40,14 @@ public class SmsReceiver extends BroadcastReceiver {
                 fullMessage += message.getMessageBody();
             }
 
+            // TODO number formatting
             PhoneNumberUtils phoneNumberUtils = new PhoneNumberUtils();
             String phoneNum = phoneNumberUtils.formatNumber(address);
 
             String name = ContactsHelperUtil.getContactNameByPhoneNumber(context, phoneNum);
 
             if (fullMessage.equals("blah blah") && name != null) {
-                // Todo notification
+                // TODO notification
                 messageNotification(name, phoneNum);
 
                 // TODO send sms to db

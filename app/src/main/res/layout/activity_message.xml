@@ -23,7 +23,7 @@
             android:background="?attr/colorPrimary"
             android:fitsSystemWindows="true"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="Blah"/>
+            android:title="@string/app_name"/>
     </android.support.design.widget.AppBarLayout>
 
     <ListView
