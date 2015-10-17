@@ -6,18 +6,18 @@
                 android:paddingTop="10dp">
 
     <RelativeLayout
-        android:id="@+id/rl_chat_input"
+        android:id="@+id/rl_chat_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/tv_chat_input"
+            android:id="@+id/tv_chat_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="65dp"
-            android:background="@drawable/selector_chat_input"
+            android:background="@drawable/selector_chat_send"
             android:gravity="start|center_vertical"
             android:lineSpacingExtra="3dp"
             android:maxWidth="@dimen/width_chat_tv"
@@ -30,7 +30,7 @@
             android:textSize="@dimen/text_size_small"/>
 
         <ImageView
-            android:id="@+id/img_chat_input_head"
+            android:id="@+id/img_chat_send_head"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_alignParentEnd="true"
@@ -41,18 +41,18 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rl_chat_output"
+        android:id="@+id/rl_chat_receive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/tv_chat_output"
+            android:id="@+id/tv_chat_receive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginStart="65dp"
-            android:background="@drawable/selector_chat_output"
+            android:background="@drawable/selector_chat_receive"
             android:lineSpacingExtra="3dp"
             android:maxWidth="@dimen/width_chat_tv"
             android:paddingBottom="10dp"
@@ -65,7 +65,7 @@
             android:textSize="@dimen/text_size_small"/>
 
         <ImageView
-            android:id="@+id/img_chat_output_head"
+            android:id="@+id/img_chat_receive_head"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_alignParentStart="true"
