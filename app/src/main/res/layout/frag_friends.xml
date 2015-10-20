@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<!--
-
-SwipeRefreshLayout是伟大的Google在v4包中给出的下拉刷新组件。
-
--->
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                              xmlns:app="http://schemas.android.com/apk/res-auto"
-                                              android:id="@+id/id_swiperefreshlayout"
-                                              android:layout_width="match_parent"
-                                              android:layout_height="match_parent"
-                                              app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    <ListView
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/id_listview"
         android:layout_marginStart="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
         android:visibility="visible"/>
-
-
-</android.support.v4.widget.SwipeRefreshLayout>

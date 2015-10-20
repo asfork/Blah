@@ -14,9 +14,7 @@ import com.v2cc.im.blah.R;
  * 2015/9/22.
  * If it works, I created this. If not, I didn't.
  */
-public class FragmentTest extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
-
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+public class FragmentTest extends BaseFragment {
 
     public static FragmentTest newInstance() {
         FragmentTest fragmentTest = new FragmentTest();
@@ -32,18 +30,5 @@ public class FragmentTest extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected void initViews(View rootView) {
-        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.id_swiperefreshlayout);
-    }
-
-    @Override
-    protected void configViews() {
-        // 刷新时，指示器旋转后变化的颜色
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_light, R.color.primary);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-    }
-
-    @Override
-    public void onRefresh() {
-
     }
 }

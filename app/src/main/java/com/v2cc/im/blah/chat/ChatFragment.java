@@ -20,12 +20,11 @@ import java.util.ArrayList;
  * 2015/9/23.
  * If it works, I created this. If not, I didn't.
  */
-public class ChatFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, ChatStaggeredViewAdapter.OnItemClickListener {
+public class ChatFragment extends BaseFragment implements ChatStaggeredViewAdapter.OnItemClickListener {
 
     private ArrayList<MessageBean> mList;
     private ChatStaggeredViewAdapter mAdapter;
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -49,7 +48,6 @@ public class ChatFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected void initViews(View rootView) {
-        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.id_swiperefreshlayout);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.id_recyclerview);
 
         mList = new ArrayList<MessageBean>();
@@ -62,19 +60,7 @@ public class ChatFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    protected void configViews() {
-        // 刷新时，指示器旋转后变化的颜色
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_light, R.color.primary);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-    }
-
-    @Override
     protected void initData() {
-
-    }
-
-    @Override
-    public void onRefresh() {
 
     }
 

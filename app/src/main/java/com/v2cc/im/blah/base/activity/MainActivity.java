@@ -36,7 +36,6 @@ import static android.support.design.widget.TabLayout.*;
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
     //初始化各种控件，照着xml中的顺序写
     private DrawerLayout mDrawerLayout;
-    private CoordinatorLayout mCoordinatorLayout;
     private AppBarLayout mAppBarLayout;
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
@@ -54,14 +53,13 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     public void initViews() {
         setContentView(R.layout.activity_main);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.id_drawerlayout);
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.id_coordinatorlayout);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.id_appbarlayout);
-        mToolbar = (Toolbar) findViewById(R.id.id_toolbar);
-        mTabLayout = (TabLayout) findViewById(R.id.id_tablayout);
-        mViewPager = (ViewPager) findViewById(R.id.id_viewpager);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.id_floatingactionbutton);
-        mNavigationView = (NavigationView) findViewById(R.id.id_navigationview);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.appbarlayout);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mTabLayout = (TabLayout) findViewById(R.id.tablayout);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        mNavigationView = (NavigationView) findViewById(R.id.navigationview);
     }
 
     @Override
