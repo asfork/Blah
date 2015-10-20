@@ -78,8 +78,10 @@ public class SmsReceiver extends BroadcastReceiver {
         mb.setTime(System.currentTimeMillis() + "");
         mb.setStatus("0");
 
+        DataBaseHelperUtil.getInstance(context).openDataBase();
         util = DataBaseHelperUtil.getInstance(context);
         util.insertToTable(DataBaseHelperUtil.TABLE_NAME_MESSAGE, mb);
         util.insertRecentChat(mb);
+        DataBaseHelperUtil.getInstance(context).closeDataBase();
     }
 }
