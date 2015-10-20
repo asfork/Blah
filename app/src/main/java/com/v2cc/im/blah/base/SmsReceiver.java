@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.v2cc.im.blah.db.ContactsHelperUtil;
 import com.v2cc.im.blah.db.DataBaseHelperUtil;
+import com.v2cc.im.blah.message.MessageBean;
 
 /**
  * Created by Steve ZHANG (stevzhg@gmail.com)
@@ -35,9 +36,9 @@ public class SmsReceiver extends BroadcastReceiver {
                 mMessage[i] = SmsMessage.createFromPdu((byte[]) smsExtra[i]);
             }
             String address = mMessage[0].getOriginatingAddress();
-            String fullMessage = "";
+            String fullSms = "";
             for (SmsMessage message : mMessage) {
-                fullMessage += message.getMessageBody();
+                fullSms += message.getMessageBody();
             }
 
             // TODO number formatting
@@ -46,16 +47,18 @@ public class SmsReceiver extends BroadcastReceiver {
 
             String name = ContactsHelperUtil.getContactNameByPhoneNumber(context, phoneNum);
 
-            if (fullMessage.equals("blah blah") && name != null) {
+            if (fullSms.equals("blah blah") && name != null) {
                 // TODO notification
                 messageNotification(name, phoneNum);
 
-                // TODO send sms to db
+                saveSMStoDB(context, name, phoneNum, fullSms, "1");
 
                 // If you uncomment next line then received SMS will not be put to incoming
-                abortBroadcast();
-            } else if (fullMessage.equals("blah blah") && name == null) {
-                // TODO How to respond sms from unknown people
+                //  4.4 版本后，只有默认短信应用才能操作短息数据库和拦截广播
+//                smsUtil = new SMSUtil();
+//                smsUtil.deleteSMS(context, fullSms);
+//                abortBroadcast();
+            } else if (fullSms.equals("blah blah") && name == null) {
                 messageNotification("unknown", phoneNum);
             }
         }
@@ -63,5 +66,20 @@ public class SmsReceiver extends BroadcastReceiver {
 
     private void messageNotification(String name, String phoneNum) {
         Log.d("SmsReceiver", name + phoneNum);
+    }
+
+    private void saveSMStoDB(final Context context, final String name, final String phoneNum, final String content, final String source) {
+
+        MessageBean mb = new MessageBean();
+        mb.setContent(content);
+        mb.setName(name);
+        mb.setPhoneNum(phoneNum);
+        mb.setSource(source);
+        mb.setTime(System.currentTimeMillis() + "");
+        mb.setStatus("0");
+
+        util = DataBaseHelperUtil.getInstance(context);
+        util.insertToTable(DataBaseHelperUtil.TABLE_NAME_MESSAGE, mb);
+        util.insertRecentChat(mb);
     }
 }

@@ -30,11 +30,12 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     private Toolbar mToolbar;
     private String name;// 昵称
     private String phoneNum;
-    private DataBaseHelperUtil util;
+    private FloatingActionButton mFloatingActionButton;
     private ArrayList<MessageBean> messageHistories;// 聊天信息集合
     private ListView mListView;// 聊天信息列表
     private MessageListViewAdapter mAdapter;// 聊天信息列表适配器
-    private FloatingActionButton mFloatingActionButton;
+    private DataBaseHelperUtil util;
+    private SMSUtil smsUtil;
 
     public static void actionStart(Context context, Bundle bundle) {
         Intent intent = new Intent(context, MessageActivity.class);
@@ -113,13 +114,14 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
 //        mListView.setSelection(messageHistories.size() - 1);
 
         // Todo determines whether it should send message by sms
-        SMSUtil.sendSMS(phoneNum);
+        smsUtil = new SMSUtil();
+        smsUtil.sendSMS(phoneNum);
         Log.d("postMessage", phoneNum);
 
-        saveMessage(name, phoneNum, "blah blah", "0");
+        saveSMStoDB(name, phoneNum, "blah blah", "0");
     }
 
-    private void saveMessage(final String name, final String phoneNum, final String content, final String source) {
+    private void saveSMStoDB(final String name, final String phoneNum, final String content, final String source) {
 
         MessageBean mb = new MessageBean();
         mb.setContent(content);

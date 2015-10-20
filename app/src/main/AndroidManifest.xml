@@ -20,6 +20,13 @@
         <activity
             android:name=".message.MessageActivity"
             android:screenOrientation="portrait"/>
+
+        <receiver
+            android:name=".base.SmsReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
