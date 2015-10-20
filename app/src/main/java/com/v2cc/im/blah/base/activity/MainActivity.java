@@ -2,7 +2,6 @@ package com.v2cc.im.blah.base.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -13,7 +12,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.v2cc.im.blah.R;
@@ -33,14 +31,13 @@ import static android.support.design.widget.TabLayout.*;
  * 2015/9/22.
  * If it works, I created this. If not, I didn't.
  */
-public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     //初始化各种控件，照着xml中的顺序写
     private DrawerLayout mDrawerLayout;
     private AppBarLayout mAppBarLayout;
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private FloatingActionButton mFloatingActionButton;
     private NavigationView mNavigationView;
 
     // TabLayout中的tab标题
@@ -58,7 +55,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mTabLayout = (TabLayout) findViewById(R.id.tablayout);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
         mNavigationView = (NavigationView) findViewById(R.id.navigationview);
     }
 
@@ -127,20 +123,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         // 设置Tablayout的Tab显示ViewPager的适配器中的getPageTitle函数获取到的标题
         mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
 
-        // 设置FloatingActionButton的点击事件
-        mFloatingActionButton.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            // FloatingActionButton的点击事件
-            case R.id.id_floatingactionbutton:
-//                SnackbarUtil.show(v, getString(R.string.plusone), 0);
-                Toast.makeText(this, "FLoating Action Button is clicked.", Toast.LENGTH_LONG).show();
-                Log.d(String.valueOf(v), getString(R.string.plusone));
-                break;
-        }
     }
 
     /**
