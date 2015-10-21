@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -137,47 +138,40 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                 String msgString = "";
 
                 switch (menuItem.getItemId()) {
-                    case R.id.nav_menu_home:
+                    case R.id.nav_home:
                         msgString = (String) menuItem.getTitle();
+                        Log.d("MainActivity", msgString);
                         break;
-//                    case R.id.nav_menu_categories:
-//                        msgString = (String) menuItem.getTitle();
-//                        break;
-//                    case R.id.nav_menu_feedback:
-//                        msgString = (String) menuItem.getTitle();
-//                        break;
-//                    case R.id.nav_menu_setting:
-//                        msgString = (String) menuItem.getTitle();
-//                        break;
+                    case R.id.nav_discover:
+                        msgString = (String) menuItem.getTitle();
+                        Log.d("MainActivity", msgString);
+                        break;
                 }
 
                 // Menu item点击后选中，并关闭Drawerlayout
                 menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
 
-                // android-support-design兼容包中新添加的一个类似Toast的控件。
-//                SnackbarUtil.show(mViewPager, msgString, 0);
-                Toast.makeText(MainActivity.this, "Menu item is clicked.", Toast.LENGTH_LONG).show();
-                Log.d(String.valueOf(mViewPager), msgString);
-
                 return true;
             }
         });
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//
-//        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-//
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Log.d("MainActivity", "Settings");
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onPageSelected(int position) {

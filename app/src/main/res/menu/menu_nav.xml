@@ -2,8 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_menu_home"
-            android:icon="@mipmap/ic_launcher"
-            android:title="@string/home"/>
+            android:id="@+id/nav_home"
+            android:title="@string/nav_home"/>
+        <item
+            android:id="@+id/nav_discover"
+            android:title="@string/nav_discover"/>
     </group>
+
+    <item android:title="@string/nav_inspiration">
+        <menu>
+            <item
+                android:id="@+id/ic_random"
+                android:title="@string/ic_random"/>
+        </menu>
+    </item>
 </menu>

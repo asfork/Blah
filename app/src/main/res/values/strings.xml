@@ -10,9 +10,11 @@
     <!--Navigation Menu-->
     <string name="header_author_name">Steve ZHANG</string>
     <string name="header_author_email">stevzhg@gmail.com</string>
-    <string name="home">Blah</string>
+    <string name="nav_home">Blah</string>
+    <string name="nav_discover">Discover</string>
+    <string name="nav_inspiration">Inspirations</string>
+    <string name="ic_random">Random</string>
 
-    <string name="plusone">+1</string>
     <string name="item_clicked">item clicked！</string>
     <string name="item_longclicked">item long clicked！</string>
 
