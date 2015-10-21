@@ -114,7 +114,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mNavigationView.inflateMenu(R.menu.menu_nav);
 
         // 自己写的方法，设置NavigationView中menu的item被选中后要执行的操作
-        onNavgationViewMenuItemSelected(mNavigationView);
+        onNavigationViewMenuItemSelected(mNavigationView);
 
         // 初始化ViewPager的适配器，并设置给它
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), mTitles, mFragments);
@@ -138,12 +138,13 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
      *
      * @param mNav Navigation
      */
-    private void onNavgationViewMenuItemSelected(NavigationView mNav) {
+    private void onNavigationViewMenuItemSelected(NavigationView mNav) {
         mNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 String msgString = "";
 
+                // TODO add navigation menu functions
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
                         msgString = (String) menuItem.getTitle();

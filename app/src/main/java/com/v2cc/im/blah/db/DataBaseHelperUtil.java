@@ -1,7 +1,5 @@
 package com.v2cc.im.blah.db;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.v2cc.im.blah.message.MessageBean;
+
+import java.util.ArrayList;
 
 
 /**
@@ -162,13 +162,13 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
      */
     public synchronized void insertRecentChat(MessageBean messageBean) {
         Cursor cursor = database.rawQuery("select * from " + TABLE_NAME_RECENT_CHAT
-                + " where name = ? ", new String[]{messageBean.getName()});
+                + " where phoneNum = ? ", new String[]{messageBean.getPhoneNum()});
         if (cursor.moveToNext()) {
             // 存在数据 修改时间和内容、来源即可
             database.execSQL(
                     "update " + TABLE_NAME_RECENT_CHAT
-                            + " set time= ? , content = ? , source = ? where name = '"
-                            + messageBean.getName() + "'", new Object[]{messageBean.getTime(),
+                            + " set time= ? , content = ? , source = ? where phoneNum = '"
+                            + messageBean.getPhoneNum() + "'", new Object[]{messageBean.getTime(),
                             messageBean.getContent(), messageBean.getSource()});
         } else {
             // 不存在，新创建
