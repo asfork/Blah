@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,11 +13,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
 
-import com.v2cc.im.blah.db.DataBaseHelperUtil;
 import com.v2cc.im.blah.R;
+import com.v2cc.im.blah.base.activity.BaseActivity;
 import com.v2cc.im.blah.base.utils.SMSUtil;
 import com.v2cc.im.blah.base.view.StatusBarCompat;
-import com.v2cc.im.blah.base.activity.BaseActivity;
+import com.v2cc.im.blah.db.DataBaseHelperUtil;
 
 import java.util.ArrayList;
 
@@ -67,7 +66,6 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
 
     @Override
     public void configViews() {
-        mToolbar.setTitle(getIntent().getStringExtra("name"));
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -105,7 +103,8 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     public void onResume() {
         super.onResume();
 
-        name = getIntent().getStringExtra("name");
+        // TODO 从数据库取 name 并设置 Toolbar 标题
+//        mToolbar.setTitle(getIntent().getStringExtra("name"));
 
         // TODO phone number formatting
         String s = getIntent().getStringExtra("phoneNum");

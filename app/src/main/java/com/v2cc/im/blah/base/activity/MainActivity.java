@@ -2,7 +2,6 @@ package com.v2cc.im.blah.base.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,19 +12,20 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.v2cc.im.blah.R;
+import com.v2cc.im.blah.base.adapter.ViewPagerAdapter;
+import com.v2cc.im.blah.base.app.Constants;
 import com.v2cc.im.blah.base.fragment.FragmentTest;
 import com.v2cc.im.blah.base.view.StatusBarCompat;
-import com.v2cc.im.blah.base.adapter.ViewPagerAdapter;
 import com.v2cc.im.blah.db.DataBaseHelperUtil;
 import com.v2cc.im.blah.friends.FriendsFragment;
+import com.v2cc.im.blah.message.MessageActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.support.design.widget.TabLayout.*;
+import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 
 /**
  * Created by Steve ZHANG (stevzhg@gmail.com)
@@ -57,6 +57,13 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mTabLayout = (TabLayout) findViewById(R.id.tablayout);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mNavigationView = (NavigationView) findViewById(R.id.navigationview);
+
+        Bundle bundle = getIntent().getBundleExtra(Constants.EXTRA_BUNDLE);
+        if (bundle != null) {
+//            SystemUtil.startMessageActivity(this, phoneNum);
+            MessageActivity.actionStart(this, bundle);
+            Log.d("MainActivity", "launchParam exists, redirect to MessageActivity");
+        }
     }
 
     @Override
