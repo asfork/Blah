@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.v2cc.im.blah.R;
 import com.v2cc.im.blah.base.fragment.BaseFragment;
+import com.v2cc.im.blah.message.MessageActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ import java.util.Map;
  * 2015/9/23.
  * If it works, I created this. If not, I didn't.
  */
-public class FriendsFragment extends BaseFragment {
+public class FriendsFragment extends BaseFragment implements FriendsRecyclerViewAdapter.OnItemClickListener {
 
     private List<FriendsBean> mList;
     private Map<Integer, FriendsBean> friendIdMap = null;
@@ -49,6 +50,11 @@ public class FriendsFragment extends BaseFragment {
     @Override
     protected void initViews(View rootView) {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
+
+        mList = new ArrayList<FriendsBean>();
+        adapter = new FriendsRecyclerViewAdapter(getActivity(), mList);
+        adapter.setOnItemClickListener(this);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -87,7 +93,6 @@ public class FriendsFragment extends BaseFragment {
 
             if (cursor != null && cursor.getCount() > 0) {
                 friendIdMap = new HashMap<Integer, FriendsBean>();
-                mList = new ArrayList<FriendsBean>();
                 cursor.moveToFirst(); // 游标移动到第一项
                 for (int i = 0; i < cursor.getCount(); i++) {
                     cursor.moveToPosition(i);
@@ -114,23 +119,27 @@ public class FriendsFragment extends BaseFragment {
                     }
                 }
                 if (mList.size() > 0) {
-                    setMyAdapter(mList);
+                    updateUI();
                 }
             }
         }
     }
 
-    private void setMyAdapter(List<FriendsBean> list) {
-        adapter = new FriendsRecyclerViewAdapter(getActivity(), list);
-        recyclerView.setAdapter(adapter);
+    private void updateUI() {
+        adapter.notifyDataSetChanged();
     }
 
-    // TODO add click event
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        Bundle bundle = new Bundle();
-//        bundle.putString("name", mList.get(position).getDesplayName());
-//        bundle.putString("phoneNum", mList.get(position).getPhoneNum());
-//        // start up MessageActivity
-//        MessageActivity.actionStart(getActivity(), bundle);
-//    }
+    @Override
+    public void onItemClick(View view, int position) {
+        Bundle bundle = new Bundle();
+        bundle.putString("name", mList.get(position).getDesplayName());
+        bundle.putString("phoneNum", mList.get(position).getPhoneNum());
+        // start up MessageActivity
+        MessageActivity.actionStart(getActivity(), bundle);
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position) {
+
+    }
 }
