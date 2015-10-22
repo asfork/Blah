@@ -21,8 +21,6 @@
         android:layout_width="@dimen/contact_badge_avatar_size"
         android:layout_height="@dimen/contact_badge_avatar_size"
         android:layout_below="@id/alpha"
-        android:layout_marginBottom="3dip"
-        android:layout_marginTop="3dip"
         android:paddingStart="@dimen/item_margin"
         android:visibility="visible"/>
 
@@ -35,7 +33,7 @@
         android:textColor="@color/primary_text"
         android:layout_below="@id/alpha"
         android:layout_toEndOf="@id/qcb"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:paddingStart="@dimen/item_margin"/>
 
 </RelativeLayout>

@@ -47,14 +47,14 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     @Override
     public void initViews() {
         setContentView(R.layout.activity_message);
-        mListView = (ListView) findViewById(R.id.id_lv);
+        mListView = (ListView) findViewById(R.id.lv);
 
         messageHistories = new ArrayList<MessageBean>();
         mAdapter = new MessageListViewAdapter(MessageActivity.this, messageHistories);
         mListView.setAdapter(mAdapter);
 
-        mToolbar = (Toolbar) findViewById(R.id.id_toolbar);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.id_floatingactionbutton);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
 
         // 设置FloatingActionButton的点击事件
         mFloatingActionButton.setOnClickListener(this);
@@ -92,7 +92,7 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.id_floatingactionbutton:// 发送按钮
+            case R.id.fab:// 发送按钮
                 postMessage(new MessageBean("", name, phoneNum,
                         System.currentTimeMillis() + "", "blah blah", "", "0", "0"));
                 break;

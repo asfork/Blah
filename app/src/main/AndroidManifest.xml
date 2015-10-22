@@ -23,12 +23,12 @@
             android:screenOrientation="portrait"/>
 
         <receiver
-            android:name=".base.SmsReceiver">
+            android:name=".base.receiver.SmsReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".base.NotificationReceiver"/>
+        <receiver android:name=".base.receiver.NotificationReceiver"/>
     </application>
 
     <uses-permission android:name="android.permission.READ_CONTACTS"/>

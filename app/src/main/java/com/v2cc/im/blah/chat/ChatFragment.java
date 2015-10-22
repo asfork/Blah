@@ -2,16 +2,15 @@ package com.v2cc.im.blah.chat;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.v2cc.im.blah.R;
+import com.v2cc.im.blah.base.fragment.BaseFragment;
 import com.v2cc.im.blah.db.DataBaseHelperUtil;
 import com.v2cc.im.blah.message.MessageActivity;
 import com.v2cc.im.blah.message.MessageBean;
-import com.v2cc.im.blah.base.fragment.BaseFragment;
 
 import java.util.ArrayList;
 
@@ -29,7 +28,6 @@ public class ChatFragment extends BaseFragment implements ChatStaggeredViewAdapt
     private RecyclerView.LayoutManager mLayoutManager;
 
     private static final int SPAN_COUNT = 2;
-    private final static int DATA_SUCCESS = 10000;// 数据查询成功标识
 
     private DataBaseHelperUtil util;
 
@@ -43,12 +41,12 @@ public class ChatFragment extends BaseFragment implements ChatStaggeredViewAdapt
 
     @Override
     protected int setRootViewId() {
-        return R.layout.frag_chat;
+        return R.layout.frag_common;
     }
 
     @Override
     protected void initViews(View rootView) {
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.id_recyclerview);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
 
         mList = new ArrayList<MessageBean>();
         mAdapter = new ChatStaggeredViewAdapter(getActivity(), mList);

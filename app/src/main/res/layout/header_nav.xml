@@ -8,9 +8,8 @@
 
     <com.v2cc.im.blah.base.view.RoundedImageView
         android:id="@+id/id_header_face"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:scaleType="fitXY"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:src="@drawable/logo"/>
 
     <TextView

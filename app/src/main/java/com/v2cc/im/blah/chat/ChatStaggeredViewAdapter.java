@@ -20,10 +20,9 @@ import java.util.List;
  */
 public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggeredViewAdapter.ViewHolder> {
 
-    private Context mContext;
-    private ArrayList<MessageBean> mList;
+    private Context context;
+    private ArrayList<MessageBean> list;
     private List<Integer> mHeights;
-    private LayoutInflater mLayoutInflater;
 
     // Provide a reference to the type of views that you are using
     // (custom viewholder)
@@ -37,9 +36,8 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
     }
 
     public ChatStaggeredViewAdapter(Context context, ArrayList<MessageBean> list) {
-        this.mContext = context;
-        this.mList = list;
-        mLayoutInflater = LayoutInflater.from(context);
+        this.context = context;
+        this.list = list;
 
         mHeights = new ArrayList<>();
         if (list != null) {
@@ -54,9 +52,9 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
      */
     @Override
     public ChatStaggeredViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View mView = mLayoutInflater.inflate(R.layout.item_chat, parent, false);
-        ViewHolder mViewHolder = new ViewHolder(mView);
-        return mViewHolder;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_chat, parent, false);
+        return new ViewHolder(view);
     }
 
     /**
@@ -82,8 +80,8 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
 
         }
 
-        if (mList.size() != mHeights.size()) {
-            for (int i = mHeights.size(); i < mList.size(); i++) {
+        if (list.size() != mHeights.size()) {
+            for (int i = mHeights.size(); i < list.size(); i++) {
                 mHeights.add((int) (Math.random() * 300) + 200);
             }
         }
@@ -91,12 +89,12 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
         ViewGroup.LayoutParams mLayoutParams = holder.mTextView.getLayoutParams();
         mLayoutParams.height = mHeights.get(position);
         holder.mTextView.setLayoutParams(mLayoutParams);
-        holder.mTextView.setText(mList.get(position).getName());
+        holder.mTextView.setText(list.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return list.size();
     }
 
     public interface OnItemClickListener {

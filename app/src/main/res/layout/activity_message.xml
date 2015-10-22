@@ -5,7 +5,7 @@
             2.在其中可以放置浮动的View，就像Floating Action Button。
 -->
 <android.support.design.widget.CoordinatorLayout
-    android:id="@+id/id_coordinatorlayout"
+    android:id="@+id/coordinatorlayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -18,16 +18,14 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/id_toolbar"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:fitsSystemWindows="true"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     </android.support.design.widget.AppBarLayout>
 
     <ListView
-        android:id="@+id/id_lv"
+        android:id="@+id/lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
@@ -35,15 +33,11 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/id_floatingactionbutton"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="25dp"
-        android:layout_marginRight="20dp"
-        android:src="@mipmap/plus"
-        app:backgroundTint="@color/accent"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"/>
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/item_margin"
+        android:src="@mipmap/plus"/>
 
 </android.support.design.widget.CoordinatorLayout>

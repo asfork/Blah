@@ -1,4 +1,4 @@
-package com.v2cc.im.blah.base;
+package com.v2cc.im.blah.base.receiver;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;

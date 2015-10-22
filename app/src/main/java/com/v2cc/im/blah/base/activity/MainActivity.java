@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     public void initViews() {
         setContentView(R.layout.activity_main);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         mAppBarLayout = (AppBarLayout) findViewById(R.id.appbarlayout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mTabLayout = (TabLayout) findViewById(R.id.tablayout);
