@@ -1,78 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingTop="10dp">
+              android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_chat_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone">
+        >
 
         <TextView
             android:id="@+id/tv_chat_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="65dp"
-            android:background="@drawable/selector_chat_send"
-            android:gravity="start|center_vertical"
-            android:lineSpacingExtra="3dp"
-            android:maxWidth="@dimen/width_chat_tv"
-            android:paddingBottom="10dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="15dp"
-            android:paddingTop="10dp"
-            android:textColor="@color/primary_text"
-            android:textScaleX="1"
-            android:textSize="@dimen/text_size_small"/>
+            />
 
         <ImageView
             android:id="@+id/img_chat_send_head"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="5dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_head_04"/>
+            />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_chat_receive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone">
+        >
 
         <TextView
             android:id="@+id/tv_chat_receive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="65dp"
-            android:background="@drawable/selector_chat_receive"
-            android:lineSpacingExtra="3dp"
-            android:maxWidth="@dimen/width_chat_tv"
-            android:paddingBottom="10dp"
-            android:paddingStart="15dp"
-            android:gravity="center_vertical"
-            android:paddingEnd="10dp"
-            android:paddingTop="10dp"
-            android:textColor="@color/primary_text"
-            android:textScaleX="1"
-            android:textSize="@dimen/text_size_small"/>
+            />
 
         <ImageView
             android:id="@+id/img_chat_receive_head"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="5dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/icon_head_03"/>
+            />
     </RelativeLayout>
 
-</RelativeLayout>
+</LinearLayout>

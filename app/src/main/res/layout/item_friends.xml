@@ -11,7 +11,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/item_margin"
-        android:textColor="@color/primary_text"
         android:visibility="gone"/>
 
     <!-- 联系人信息 -->
@@ -25,12 +24,10 @@
         android:visibility="visible"/>
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:singleLine="true"
         android:textSize="@dimen/text_size_middle"
-        android:textColor="@color/primary_text"
         android:layout_below="@id/alpha"
         android:layout_toEndOf="@id/qcb"
         android:layout_marginTop="12dp"

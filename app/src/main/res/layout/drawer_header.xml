@@ -2,30 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="220dp"
-              android:gravity="center"
-              android:background="@color/primary"
-              android:orientation="vertical">
+              android:background="?attr/colorPrimary"
+              android:orientation="vertical"
+              android:gravity="center">
 
     <com.v2cc.im.blah.base.view.RoundedImageView
-        android:id="@+id/id_header_face"
+        android:id="@+id/drawer_header_face"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/logo"/>
 
     <TextView
-        android:id="@+id/id_header_authorname"
+        android:id="@+id/tv_header_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/header_author_name"
-        android:textColor="@color/icons"
-        android:textSize="@dimen/text_size_small"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
-        android:id="@+id/id_header_email"
+        android:id="@+id/tv_header_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/header_author_email"
-        android:textColor="@color/icons"
-        android:textSize="@dimen/text_size_middle"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
 </LinearLayout>

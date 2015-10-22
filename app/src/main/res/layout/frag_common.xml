@@ -4,10 +4,9 @@
         使用RecyclerView需要在build.gradle中添加
        compile 'com.android.support:recyclerview-v7'
 -->
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/recyclerview"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+                                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                                        android:id="@+id/recyclerview"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>

@@ -28,13 +28,13 @@ import java.util.ArrayList;
  * If it works, I created this. If not, I didn't.
  */
 public class MessageActivity extends BaseActivity implements OnClickListener {
-    private Toolbar mToolbar;
+    private Toolbar toolbar;
     private String name;// 昵称
     private String phoneNum;
-    private FloatingActionButton mFloatingActionButton;
+    private FloatingActionButton mFAB;
     private ArrayList<MessageBean> messageHistories;// 聊天信息集合
-    private ListView mListView;// 聊天信息列表
-    private MessageListViewAdapter mAdapter;// 聊天信息列表适配器
+    private ListView listView;// 聊天信息列表
+    private MessageListViewAdapter adapter;// 聊天信息列表适配器
     private DataBaseHelperUtil util;
     private SMSUtil smsUtil;
 
@@ -47,17 +47,17 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     @Override
     public void initViews() {
         setContentView(R.layout.activity_message);
-        mListView = (ListView) findViewById(R.id.lv);
+        listView = (ListView) findViewById(R.id.lv);
 
         messageHistories = new ArrayList<MessageBean>();
-        mAdapter = new MessageListViewAdapter(MessageActivity.this, messageHistories);
-        mListView.setAdapter(mAdapter);
+        adapter = new MessageListViewAdapter(MessageActivity.this, messageHistories);
+        listView.setAdapter(adapter);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mFAB = (FloatingActionButton) findViewById(R.id.fab);
 
         // 设置FloatingActionButton的点击事件
-        mFloatingActionButton.setOnClickListener(this);
+        mFAB.setOnClickListener(this);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
 
     @Override
     public void configViews() {
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // 透明状态栏
@@ -104,7 +104,7 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
         super.onResume();
 
         // TODO 从数据库取 name 并设置 Toolbar 标题
-//        mToolbar.setTitle(getIntent().getStringExtra("name"));
+//        toolbar.setTitle(getIntent().getStringExtra("name"));
 
         // TODO phone number formatting
         String s = getIntent().getStringExtra("phoneNum");
@@ -130,8 +130,8 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
 
     private void postMessage(final MessageBean messageBean) {
         messageHistories.add(messageBean);
-        mAdapter.notifyDataSetChanged();
-//        mListView.setSelection(messageHistories.size() - 1);
+        adapter.notifyDataSetChanged();
+//        listView.setSelection(messageHistories.size() - 1);
 
         // Todo determines whether it should send message by sms
         smsUtil = new SMSUtil();
@@ -166,7 +166,7 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     }
 
     private void updateUI() {
-        mAdapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
 }

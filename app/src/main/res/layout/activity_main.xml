@@ -1,7 +1,7 @@
 <android.support.v4.widget.DrawerLayout
-    android:id="@+id/drawerlayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,7 +11,7 @@
         例如：LinearLayout布局或者RelativeLayout布局；
     也可以是单个控件，
         如 TextView等  -->
-    <include layout="@layout/content_main"/>
+    <include layout="@layout/include_viewpager"/>
 
 
     <!-- 第二个位置 -->
@@ -39,11 +39,10 @@
             app:itemBackground:
     -->
     <android.support.design.widget.NavigationView
-        android:id="@+id/navigationview"
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:itemTextColor="@color/selector_nav_menu_textcolor"/>
+        app:itemTextColor="@color/selector_drawer_menu_textcolor"/>
 
 </android.support.v4.widget.DrawerLayout>

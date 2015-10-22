@@ -65,7 +65,7 @@ public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecy
             super(itemView);
             quickContactBadge = (QuickContactBadge) itemView.findViewById(R.id.qcb);
             alphaView = (TextView) itemView.findViewById(R.id.alpha);
-            nameView = (TextView) itemView.findViewById(R.id.name);
+            nameView = (TextView) itemView.findViewById(R.id.tv_name);
         }
     }
 

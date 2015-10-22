@@ -1,7 +1,6 @@
 package com.v2cc.im.blah.base.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -35,7 +34,6 @@ import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     //初始化各种控件，照着xml中的顺序写
     private DrawerLayout mDrawerLayout;
-    private AppBarLayout mAppBarLayout;
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -51,12 +49,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     public void initViews() {
         setContentView(R.layout.activity_main);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.appbarlayout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mTabLayout = (TabLayout) findViewById(R.id.tablayout);
+        mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mNavigationView = (NavigationView) findViewById(R.id.navigationview);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
 
         Bundle bundle = getIntent().getBundleExtra(Constants.EXTRA_BUNDLE);
         if (bundle != null) {
@@ -108,10 +105,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mActionBarDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
 
-        //给NavigationView填充顶部区域，也可在xml中使用app:headerLayout="@layout/header_nav"来设置
-        mNavigationView.inflateHeaderView(R.layout.header_nav);
-        //给NavigationView填充Menu菜单，也可在xml中使用app:menu="@menu/menu_nav"来设置
-        mNavigationView.inflateMenu(R.menu.menu_nav);
+        //给NavigationView填充顶部区域，也可在xml中使用app:headerLayout="@layout/drawer_header"来设置
+        mNavigationView.inflateHeaderView(R.layout.drawer_header);
+        //给NavigationView填充Menu菜单，也可在xml中使用app:menu="@menu/drawer_nav"来设置
+        mNavigationView.inflateMenu(R.menu.drawer_nav);
 
         // 自己写的方法，设置NavigationView中menu的item被选中后要执行的操作
         onNavigationViewMenuItemSelected(mNavigationView);

@@ -31,7 +31,7 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTextView = (TextView) itemView.findViewById(R.id.id_textview);
+            mTextView = (TextView) itemView.findViewById(R.id.tv_name);
         }
     }
 
