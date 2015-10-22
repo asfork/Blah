@@ -6,13 +6,11 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
-import com.v2cc.im.blah.message.MessageActivity;
 import com.v2cc.im.blah.R;
 import com.v2cc.im.blah.base.fragment.BaseFragment;
 
@@ -26,12 +24,14 @@ import java.util.Map;
  * 2015/9/23.
  * If it works, I created this. If not, I didn't.
  */
-public class FriendsFragment extends BaseFragment implements AdapterView.OnItemClickListener {
-    private ListView mListView;
+public class FriendsFragment extends BaseFragment {
+
     private List<FriendsBean> mList;
-    private AsyncQueryHandler asyncQueryHandler; // 异步查询数据库类对象
     private Map<Integer, FriendsBean> friendIdMap = null;
-    private FriendsListViewAdapter mAdapter;
+    private FriendsRecyclerViewAdapter adapter;
+
+    private RecyclerView recyclerView;
+    private AsyncQueryHandler asyncQueryHandler; // 异步查询数据库类对象
 
     public static FriendsFragment newInstance(int position) {
         FriendsFragment friendsFragment = new FriendsFragment();
@@ -43,15 +43,12 @@ public class FriendsFragment extends BaseFragment implements AdapterView.OnItemC
 
     @Override
     protected int setRootViewId() {
-        return R.layout.frag_friends;
+        return R.layout.frag_common;
     }
 
     @Override
     protected void initViews(View rootView) {
-        mListView = (ListView) rootView.findViewById(R.id.id_listview);
-
-        mListView.setOnItemClickListener(this);
-        mListView.setSelected(true);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
     }
 
     @Override
@@ -70,6 +67,11 @@ public class FriendsFragment extends BaseFragment implements AdapterView.OnItemC
         // 按照sort_key升序查詢
         asyncQueryHandler.startQuery(0, null, uri, projection, null, null,
                 "sort_key COLLATE LOCALIZED asc");
+    }
+
+    @Override
+    public void configViews() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
     }
 
     private class MyAsyncQueryHandler extends AsyncQueryHandler {
@@ -119,15 +121,16 @@ public class FriendsFragment extends BaseFragment implements AdapterView.OnItemC
     }
 
     private void setMyAdapter(List<FriendsBean> list) {
-        mAdapter = new FriendsListViewAdapter(getActivity(), list);
-        mListView.setAdapter(mAdapter);
+        adapter = new FriendsRecyclerViewAdapter(getActivity(), list);
+        recyclerView.setAdapter(adapter);
     }
 
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Bundle bundle = new Bundle();
-        bundle.putString("name", mList.get(position).getDesplayName());
-        bundle.putString("phoneNum", mList.get(position).getPhoneNum());
-        // start up MessageActivity
-        MessageActivity.actionStart(getActivity(), bundle);
-    }
+    // TODO add click event
+//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        Bundle bundle = new Bundle();
+//        bundle.putString("name", mList.get(position).getDesplayName());
+//        bundle.putString("phoneNum", mList.get(position).getPhoneNum());
+//        // start up MessageActivity
+//        MessageActivity.actionStart(getActivity(), bundle);
+//    }
 }

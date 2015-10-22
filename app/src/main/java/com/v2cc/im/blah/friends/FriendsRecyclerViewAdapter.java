@@ -6,10 +6,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
@@ -25,23 +25,20 @@ import java.util.regex.Pattern;
 
 /**
  * Created by Steve ZHANG (stevzhg@gmail.com)
- * 2015/9/23.
- * If it works, I created this. If not, I didn't.
+ * 15/10/22.
+ * If this class works, I created it. If not, I didn't.
  */
-public class FriendsListViewAdapter extends BaseAdapter {
-    private LayoutInflater inflater;
+public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecyclerViewAdapter.ViewHolder> {
     private List<FriendsBean> list;
     private HashMap<String, Integer> alphaIndexer; // 字母索引
     private String[] sections; // 存储每个章节
     private Context ctx; // 上下文
 
-    public FriendsListViewAdapter(Context context, List<FriendsBean> list) {
+    public FriendsRecyclerViewAdapter(Context context, List<FriendsBean> list) {
         this.ctx = context;
-        this.inflater = LayoutInflater.from(context);
         this.list = list;
-        this.alphaIndexer = new HashMap<String, Integer>();
-        this.sections = new String[list.size()];
 
+        alphaIndexer = new HashMap<String, Integer>();
         for (int i = 0; i < list.size(); i++) {
             // 得到字母
             String name = getAlpha(list.get(i).getSortKey());
@@ -57,49 +54,38 @@ public class FriendsListViewAdapter extends BaseAdapter {
         sectionList.toArray(sections);
     }
 
-    @Override
-    public int getCount() {
-        return list.size();
-    }
+    // Provide a reference to the type of views that you are using
+    // (custom viewholder)
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public final QuickContactBadge quickContactBadge;
+        public final TextView alphaView;
+        public final TextView nameView;
 
-    @Override
-    public Object getItem(int position) {
-        return list.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    public void remove(int position) {
-        list.remove(position);
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_friends_list, null);
-            holder = new ViewHolder();
-            holder.quickContactBadge = (QuickContactBadge) convertView
-                    .findViewById(R.id.qcb);
-            holder.alpha = (TextView) convertView.findViewById(R.id.alpha);
-            holder.name = (TextView) convertView.findViewById(R.id.name);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+        public ViewHolder(View itemView) {
+            super(itemView);
+            quickContactBadge = (QuickContactBadge) itemView.findViewById(R.id.qcb);
+            alphaView = (TextView) itemView.findViewById(R.id.alpha);
+            nameView = (TextView) itemView.findViewById(R.id.name);
         }
+    }
 
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_friends, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         FriendsBean contact = list.get(position);
         String name = contact.getDesplayName();
-//        String number = contact.getPhoneNum();
-        holder.name.setText(name);
-//        holder.number.setText(number);
-        holder.quickContactBadge.assignContactUri(ContactsContract.Contacts.getLookupUri(
+        viewHolder.nameView.setText(name);
+
+        viewHolder.quickContactBadge.assignContactUri(ContactsContract.Contacts.getLookupUri(
                 contact.getContactId(), contact.getLookUpKey()));
         if (0 == contact.getPhotoId()) {
-            holder.quickContactBadge.setImageResource(R.drawable.icon_head_03);
+            viewHolder.quickContactBadge.setImageResource(R.drawable.icon_head_03);
         } else {
             Uri uri = ContentUris.withAppendedId(
                     ContactsContract.Contacts.CONTENT_URI,
@@ -107,36 +93,60 @@ public class FriendsListViewAdapter extends BaseAdapter {
             InputStream input = ContactsContract.Contacts
                     .openContactPhotoInputStream(ctx.getContentResolver(), uri);
             Bitmap contactPhoto = BitmapFactory.decodeStream(input);
-            holder.quickContactBadge.setImageBitmap(contactPhoto);
+            viewHolder.quickContactBadge.setImageBitmap(contactPhoto);
         }
+
         // 当前字母
         String currentStr = getAlpha(contact.getSortKey());
         // 前面的字母
         String previewStr = (position - 1) >= 0 ? getAlpha(list.get(
                 position - 1).getSortKey()) : " ";
-
         if (!previewStr.equals(currentStr)) {
-            holder.alpha.setVisibility(View.VISIBLE);
-            holder.alpha.setText(currentStr);
+            viewHolder.alphaView.setVisibility(View.VISIBLE);
+            viewHolder.alphaView.setText(currentStr);
         } else {
-            holder.alpha.setVisibility(View.GONE);
+            viewHolder.alphaView.setVisibility(View.GONE);
         }
-//        addListener(convertView);
-        return convertView;
+
+        if (mOnItemClickListener != null) {
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(viewHolder.itemView, position);
+                }
+            });
+
+            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mOnItemClickListener.onItemLongClick(viewHolder.itemView, position);
+                    return true;
+                }
+            });
+
+        }
     }
 
-    private static class ViewHolder {
-        QuickContactBadge quickContactBadge;
-        TextView alpha;
-        TextView name;
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+
+        void onItemLongClick(View view, int position);
+    }
+
+    public OnItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mOnItemClickListener = listener;
     }
 
     /**
      * 获取首字母
-     *
      * @return
-     *
-     *
      * Todo 分离提取首字母功能到单独的 Util 类中
      */
     private String getAlpha(String str) {
@@ -155,17 +165,4 @@ public class FriendsListViewAdapter extends BaseAdapter {
             return "#";
         }
     }
-
-    /**
-     * 将一个 item 设置多个组件的监听事件写在下面这方法里
-     */
-//    public void addListener(View convertView) {
-//        ((TextView)convertView.findViewById(R.id.text_view)).setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                }
-//    }
 }
