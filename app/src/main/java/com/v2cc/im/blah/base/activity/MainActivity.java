@@ -33,27 +33,27 @@ import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
  */
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     //初始化各种控件，照着xml中的顺序写
-    private DrawerLayout mDrawerLayout;
-    private Toolbar mToolbar;
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
-    private NavigationView mNavigationView;
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private NavigationView navigationView;
 
     // TabLayout中的tab标题
-    private String[] mTitles;
+    private String[] titles;
     // 填充到ViewPager中的Fragment
-    private List<Fragment> mFragments;
+    private List<Fragment> fragments;
     // ViewPager的数据适配器
-    ViewPagerAdapter mViewPagerAdapter;
+    ViewPagerAdapter adapter;
 
     @Override
     public void initViews() {
         setContentView(R.layout.activity_main);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mTabLayout = (TabLayout) findViewById(R.id.tabs);
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         Bundle bundle = getIntent().getBundleExtra(Constants.EXTRA_BUNDLE);
         if (bundle != null) {
@@ -66,28 +66,28 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     public void initData() {
         // Tab的标题采用string-array的方法保存，在res/values/arrays.xml中写
-        mTitles = getResources().getStringArray(R.array.tab_titles);
+        titles = getResources().getStringArray(R.array.tab_titles);
 
         //初始化填充到ViewPager中的Fragment集合
-        mFragments = new ArrayList<>();
-        for (int i = 0; i < mTitles.length; i++) {
+        fragments = new ArrayList<>();
+        for (int i = 0; i < titles.length; i++) {
             Bundle mBundle = new Bundle();
             mBundle.putInt("flag", i);
             switch (i) {
                 case 0:
                     FragmentTest fragmentTest = new FragmentTest();
                     fragmentTest.setArguments(mBundle);
-                    mFragments.add(i, fragmentTest);
+                    fragments.add(i, fragmentTest);
                     break;
                 case 1:
                     FriendsFragment friendsFragment = new FriendsFragment();
                     friendsFragment.setArguments(mBundle);
-                    mFragments.add(i, friendsFragment);
+                    fragments.add(i, friendsFragment);
                     break;
                 default:
                     FragmentTest mFragment = new FragmentTest();
                     mFragment.setArguments(mBundle);
-                    mFragments.add(i, mFragment);
+                    fragments.add(i, mFragment);
                     break;
             }
         }
@@ -96,37 +96,37 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     public void configViews() {
         // 设置显示Toolbar
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
         // 透明状态栏
         StatusBarCompat.compat(this);
 
         // 设置Drawerlayout开关指示器，即Toolbar最左边的那个icon
-        ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close);
+        ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         mActionBarDrawerToggle.syncState();
-        mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
+        drawerLayout.setDrawerListener(mActionBarDrawerToggle);
 
         //给NavigationView填充顶部区域，也可在xml中使用app:headerLayout="@layout/drawer_header"来设置
-        mNavigationView.inflateHeaderView(R.layout.drawer_header);
+        navigationView.inflateHeaderView(R.layout.drawer_header);
         //给NavigationView填充Menu菜单，也可在xml中使用app:menu="@menu/drawer_nav"来设置
-        mNavigationView.inflateMenu(R.menu.drawer_nav);
+        navigationView.inflateMenu(R.menu.drawer_nav);
 
         // 自己写的方法，设置NavigationView中menu的item被选中后要执行的操作
-        onNavigationViewMenuItemSelected(mNavigationView);
+        onNavigationViewMenuItemSelected(navigationView);
 
         // 初始化ViewPager的适配器，并设置给它
-        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), mTitles, mFragments);
-        mViewPager.setAdapter(mViewPagerAdapter);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), titles, fragments);
+        viewPager.setAdapter(adapter);
         // 设置ViewPager最大缓存的页面个数
-        mViewPager.setOffscreenPageLimit(5);
+        viewPager.setOffscreenPageLimit(5);
 
         // 给ViewPager添加页面动态监听器（为了让Toolbar中的Title可以变化相应的Tab的标题）
-        mViewPager.addOnPageChangeListener(this);
+        viewPager.addOnPageChangeListener(this);
 
-        mTabLayout.setTabMode(MODE_SCROLLABLE);
+        tabLayout.setTabMode(MODE_SCROLLABLE);
         // 将TabLayout和ViewPager进行关联，让两者联动起来
-        mTabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setupWithViewPager(viewPager);
         // 设置Tablayout的Tab显示ViewPager的适配器中的getPageTitle函数获取到的标题
-        mTabLayout.setTabsFromPagerAdapter(mViewPagerAdapter);
+        tabLayout.setTabsFromPagerAdapter(adapter);
 
     }
 
@@ -155,7 +155,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
                 // Menu item点击后选中，并关闭Drawerlayout
                 menuItem.setChecked(true);
-                mDrawerLayout.closeDrawers();
+                drawerLayout.closeDrawers();
 
                 return true;
             }
@@ -180,7 +180,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     @Override
     public void onPageSelected(int position) {
-        mToolbar.setTitle(mTitles[position]);
+        toolbar.setTitle(titles[position]);
     }
 
     @Override
