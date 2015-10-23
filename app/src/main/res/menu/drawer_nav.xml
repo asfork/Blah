@@ -10,14 +10,10 @@
             android:id="@+id/nav_discover"
             android:title="@string/nav_discover"
             android:icon="@mipmap/ic_discover"/>
-    </group>
 
-    <item android:title="@string/nav_inspiration">
-        <menu>
-            <item
-                android:id="@+id/ic_random"
-                android:title="@string/ic_random"
-                android:icon="@mipmap/ic_random"/>
-        </menu>
-    </item>
+        <item
+            android:id="@+id/nav_random"
+            android:title="@string/nav_random"
+            android:icon="@mipmap/ic_random"/>
+    </group>
 </menu>

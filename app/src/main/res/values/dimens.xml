@@ -13,12 +13,6 @@
     <!-- 字体大小-巨大 -->
     <dimen name="text_size_large">30sp</dimen>
 
-    <!-- 聊天信息框宽度 -->
-    <dimen name="width_chat_tv">270dp</dimen>
-    <!-- 聊天信息框宽度 -->
-    <dimen name="actionbar_height">48dp</dimen>
-
-    <dimen name="detail_backdrop_height">256dp</dimen>
     <dimen name="item_margin">16dp</dimen>
     <dimen name="contact_badge_avatar_size">50dp</dimen>
 </resources>

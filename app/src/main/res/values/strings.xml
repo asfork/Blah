@@ -2,7 +2,6 @@
     <string name="app_name">Blah</string>
 
     <!--Toolbar-->
-    <string name="toolbar_title">Blah</string>
     <string name="action_settings">Settings</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
@@ -12,8 +11,8 @@
     <string name="header_author_email">stevzhg@gmail.com</string>
     <string name="nav_home">Blah</string>
     <string name="nav_discover">Discover</string>
-    <string name="nav_inspiration">Inspirations</string>
-    <string name="ic_random">Random</string>
+    <string name="nav_random">Random</string>
+    <string name="image_des">Image</string>
 
-    <string name="welcome">More inspirations are coming soon!</string>
+    <string name="welcome_to_here">More inspirations are coming soon!</string>
 </resources>

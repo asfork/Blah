@@ -20,7 +20,7 @@
             android:id="@+id/img_chat_send_head"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            />
+            android:contentDescription="@string/image_des"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -39,7 +39,7 @@
             android:id="@+id/img_chat_receive_head"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            />
+            android:contentDescription="@string/image_des"/>
     </RelativeLayout>
 
 </LinearLayout>

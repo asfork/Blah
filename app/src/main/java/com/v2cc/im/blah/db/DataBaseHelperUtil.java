@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class DataBaseHelperUtil extends SQLiteOpenHelper {
 
-    private static Context mContext;
+    static Context mContext;
     private static DataBaseHelperUtil mInstance;
     //    private static final String DB_NAME = "MessageHistory" + User.getInstance().getUserName() + ".db";// 数据库名称
     private static final String DB_NAME = "MessageHistoryTester.db";

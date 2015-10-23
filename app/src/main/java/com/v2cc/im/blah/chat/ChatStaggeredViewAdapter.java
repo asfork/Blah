@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggeredViewAdapter.ViewHolder> {
 
-    private Context context;
+    Context context;
     private ArrayList<MessageBean> list;
     private List<Integer> mHeights;
 

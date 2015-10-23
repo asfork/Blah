@@ -21,8 +21,8 @@ import java.util.Map;
  */
 public class ContactsHelperUtil {
 
-    private static List<FriendsBean> mList;
-    private static Map<Integer, FriendsBean> friendIdMap = null;
+    static List<FriendsBean> mList;
+    static Map<Integer, FriendsBean> friendIdMap = null;
 
     // 根据电话号码取得联系人姓名
     public synchronized static String getContactNameByPhoneNumber(Context context, String address) {

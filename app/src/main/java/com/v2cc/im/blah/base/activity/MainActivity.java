@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     // 填充到ViewPager中的Fragment
     private List<Fragment> mFragments;
     // ViewPager的数据适配器
-    private ViewPagerAdapter mViewPagerAdapter;
+    ViewPagerAdapter mViewPagerAdapter;
 
     @Override
     public void initViews() {

@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ActivityCollector {
     public static List<AppCompatActivity> activities = new ArrayList<>();
-    private long exitTime = 0;
+    long exitTime = 0;
     private long lastTime = 0;
 
     public static void addActivity(AppCompatActivity activity) {

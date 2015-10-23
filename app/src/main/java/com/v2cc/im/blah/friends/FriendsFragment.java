@@ -27,12 +27,12 @@ import java.util.Map;
  */
 public class FriendsFragment extends BaseFragment implements FriendsRecyclerViewAdapter.OnItemClickListener {
 
-    private List<FriendsBean> mList;
-    private Map<Integer, FriendsBean> friendIdMap = null;
-    private FriendsRecyclerViewAdapter adapter;
+    private static List<FriendsBean> mList;
+    static Map<Integer, FriendsBean> friendIdMap = null;
+    private static FriendsRecyclerViewAdapter adapter;
 
     private RecyclerView recyclerView;
-    private AsyncQueryHandler asyncQueryHandler; // 异步查询数据库类对象
+    AsyncQueryHandler asyncQueryHandler; // 异步查询数据库类对象
 
     public static FriendsFragment newInstance(int position) {
         FriendsFragment friendsFragment = new FriendsFragment();
@@ -80,7 +80,7 @@ public class FriendsFragment extends BaseFragment implements FriendsRecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
     }
 
-    private class MyAsyncQueryHandler extends AsyncQueryHandler {
+    private static class MyAsyncQueryHandler extends AsyncQueryHandler {
 
         public MyAsyncQueryHandler(ContentResolver cr) {
             super(cr);
@@ -125,7 +125,7 @@ public class FriendsFragment extends BaseFragment implements FriendsRecyclerView
         }
     }
 
-    private void updateUI() {
+    private static void updateUI() {
         adapter.notifyDataSetChanged();
     }
 

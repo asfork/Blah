@@ -24,8 +24,8 @@ public class ChatFragment extends BaseFragment implements ChatStaggeredViewAdapt
     private ArrayList<MessageBean> mList;
     private ChatStaggeredViewAdapter mAdapter;
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
+    RecyclerView mRecyclerView;
+    public RecyclerView.LayoutManager mLayoutManager;
 
     private static final int SPAN_COUNT = 2;
 

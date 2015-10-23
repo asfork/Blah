@@ -21,9 +21,9 @@ import java.util.ArrayList;
  */
 public class MessageListViewAdapter extends BaseAdapter {
     private ArrayList<MessageBean> mList;
-    private Context mContext;
+    Context mContext;
     private LayoutInflater inflater;
-    private ViewHolder holder;
+    ViewHolder holder;
 //    private FaceUtil faceUtil;
 
     public MessageListViewAdapter(Context context, ArrayList<MessageBean> list) {

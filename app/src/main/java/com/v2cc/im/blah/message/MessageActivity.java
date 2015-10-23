@@ -31,12 +31,12 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     private Toolbar toolbar;
     private String name;// 昵称
     private String phoneNum;
-    private FloatingActionButton mFAB;
+    FloatingActionButton mFAB;
     private ArrayList<MessageBean> messageHistories;// 聊天信息集合
-    private ListView listView;// 聊天信息列表
+    ListView listView;// 聊天信息列表
     private MessageListViewAdapter adapter;// 聊天信息列表适配器
     private DataBaseHelperUtil util;
-    private SMSUtil smsUtil;
+    SMSUtil smsUtil;
 
     public static void actionStart(Context context, Bundle bundle) {
         Intent intent = new Intent(context, MessageActivity.class);

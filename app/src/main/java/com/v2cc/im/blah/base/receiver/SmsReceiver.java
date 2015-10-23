@@ -24,7 +24,7 @@ import com.v2cc.im.blah.message.MessageBean;
 public class SmsReceiver extends BroadcastReceiver {
 
     private static final String SMS_EXTRA_NAME = "pdus";
-    private DataBaseHelperUtil util;
+    DataBaseHelperUtil util;
 
     public void onReceive(Context context, Intent intent) {
         // Get SMS map from Intent

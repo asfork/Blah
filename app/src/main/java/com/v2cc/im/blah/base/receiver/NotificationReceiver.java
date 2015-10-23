@@ -18,7 +18,7 @@ import com.v2cc.im.blah.message.MessageActivity;
  */
 public class NotificationReceiver extends BroadcastReceiver {
 
-    private String phoneNum;
+    String phoneNum;
 
     public void onReceive(Context context, Intent intent) {
 

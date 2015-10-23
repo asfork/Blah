@@ -30,8 +30,8 @@ import java.util.regex.Pattern;
  */
 public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecyclerViewAdapter.ViewHolder> {
     private List<FriendsBean> list;
-    private HashMap<String, Integer> alphaIndexer; // 字母索引
-    private String[] sections; // 存储每个章节
+    HashMap<String, Integer> alphaIndexer; // 字母索引
+    String[] sections; // 存储每个章节
     private Context ctx; // 上下文
 
     public FriendsRecyclerViewAdapter(Context context, List<FriendsBean> list) {

@@ -13,7 +13,6 @@
         如 TextView等  -->
     <include layout="@layout/include_viewpager"/>
 
-
     <!-- 第二个位置 -->
     <!-- 用来放Drawerlayout中的内容，
     这里使用NavigationView来实现类似Google pLay中的侧滑栏效果，
