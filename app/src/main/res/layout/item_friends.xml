@@ -28,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_middle"
+        android:textColor="@color/primary_text"
         android:layout_below="@id/alpha"
         android:layout_toEndOf="@id/qcb"
         android:layout_marginTop="12dp"
