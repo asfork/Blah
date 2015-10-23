@@ -1,7 +1,10 @@
 package com.v2cc.im.blah.chat;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +25,19 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
 
     Context context;
     private ArrayList<MessageBean> list;
-    private List<Integer> mHeights;
+    private List<Integer> heights;
+    private ArrayList<String> colors;
 
     // Provide a reference to the type of views that you are using
     // (custom viewholder)
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mTextView;
+        public TextView textView;
+        public CardView cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTextView = (TextView) itemView.findViewById(R.id.tv_name);
+            cardView = (CardView) itemView.findViewById(R.id.card_view);
+            textView = (TextView) itemView.findViewById(R.id.tv_name);
         }
     }
 
@@ -39,12 +45,15 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
         this.context = context;
         this.list = list;
 
-        mHeights = new ArrayList<>();
-        if (list != null) {
-            for (int i = 0; i < list.size(); i++) {
-                mHeights.add((int) (Math.random() * 300) + 200);
-            }
-        }
+
+        heights = new ArrayList<>();
+        colors = new ArrayList<>();
+        Log.d("ChatStaggered", "start" + list.size());
+//        if (list != null) {
+//            for (int i = 0; i < list.size(); i++) {
+//                heights.add((int) (Math.random() * 300) + 300);
+//            }
+//        }
     }
 
     /**
@@ -77,19 +86,39 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
                     return true;
                 }
             });
-
         }
 
-        if (list.size() != mHeights.size()) {
-            for (int i = mHeights.size(); i < list.size(); i++) {
-                mHeights.add((int) (Math.random() * 300) + 200);
+        if (list.size() != heights.size()) {
+            Log.d("ChatStaggered", "repeat" + list.size());
+            for (int i = heights.size(); i < list.size(); i++) {
+                heights.add((int) (Math.random() * 300) + 300);
+
+                // TODO add more colors
+                switch (i % 5) {
+                    case 0:
+                        colors.add("#004D40");
+                        break;
+                    case 1:
+                        colors.add("#880E4F");
+                        break;
+                    case 2:
+                        colors.add("#b71c1c");
+                        break;
+                    case 3:
+                        colors.add("#5D4037");
+                        break;
+                    case 4:
+                        colors.add("#F57F17");
+                        break;
+                }
             }
         }
+        holder.cardView.setCardBackgroundColor(Color.parseColor(colors.get(position)));
 
-        ViewGroup.LayoutParams mLayoutParams = holder.mTextView.getLayoutParams();
-        mLayoutParams.height = mHeights.get(position);
-        holder.mTextView.setLayoutParams(mLayoutParams);
-        holder.mTextView.setText(list.get(position).getName());
+        ViewGroup.LayoutParams mLayoutParams = holder.textView.getLayoutParams();
+        mLayoutParams.height = heights.get(position);
+        holder.textView.setLayoutParams(mLayoutParams);
+        holder.textView.setText(list.get(position).getName());
     }
 
     @Override
