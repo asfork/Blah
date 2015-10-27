@@ -1,5 +1,7 @@
 package com.v2cc.im.blah.base.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -46,6 +48,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     // ViewPager的数据适配器
     ViewPagerAdapter adapter;
 
+    public static void actionStart(Context context, Bundle bundle) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
+
     @Override
     public void initViews() {
         setContentView(R.layout.activity_main);
@@ -57,7 +65,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
         Bundle bundle = getIntent().getBundleExtra(Constants.EXTRA_BUNDLE);
         if (bundle != null) {
-//            SystemUtil.startMessageActivity(this, phoneNum);
             MessageActivity.actionStart(this, bundle);
             Log.d("MainActivity", "launchParam exists, redirect to MessageActivity");
         }
@@ -139,7 +146,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                String msgString = "";
+                String msgString;
 
                 // TODO add navigation menu functions
                 switch (menuItem.getItemId()) {

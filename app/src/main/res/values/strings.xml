@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">Blah</string>
 
-    <!--Toolbar-->
+    <string name="title_activity_login">Join</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_username">Please input your phone number</string>
+    <string name="action_sign_in">Join</string>
+    <string name="action_sign_in_short">Join</string>
+    <string name="error_field_required">This field is required</string>
+
+    <!--Toolbar strings related to main-->
     <string name="action_settings">Settings</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
