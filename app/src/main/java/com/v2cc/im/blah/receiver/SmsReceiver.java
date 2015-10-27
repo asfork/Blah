@@ -1,4 +1,4 @@
-package com.v2cc.im.blah.base.receiver;
+package com.v2cc.im.blah.receiver;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
-import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
@@ -45,14 +44,13 @@ public class SmsReceiver extends BroadcastReceiver {
                 fullSms += message.getMessageBody();
             }
 
-            // TODO number formatting
-            PhoneNumberUtils phoneNumberUtils = new PhoneNumberUtils();
-            String phoneNum = phoneNumberUtils.formatNumber(address);
+            DataBaseHelperUtil.getInstance(context).openDataBase();
+            util = DataBaseHelperUtil.getInstance(context);
+            String name = util.getNamebyPhone(address);
 
-            String name = ContactsHelperUtil.getContactNameByPhoneNumber(context, phoneNum);
             if (fullSms.equals("blah blah") && name != null) {
-                showNotification(context, name, phoneNum);
-                saveSMStoDB(context, name, phoneNum, fullSms, "1");
+                showNotification(context, name, address);
+                saveSMStoDB(context, address, fullSms, "1");
 
                 // If you uncomment next line then received SMS will not be put to incoming
                 //  4.4 版本后，只有默认短信应用才能操作短息数据库和拦截广播
@@ -60,17 +58,20 @@ public class SmsReceiver extends BroadcastReceiver {
 //                smsUtil.deleteSMS(context, fullSms);
 //                abortBroadcast();
             } else if (fullSms.equals("blah blah") && name == null) {
-                showNotification(context, "unknown", phoneNum);
+                showNotification(context, "unknown", address);
             }
+
+            DataBaseHelperUtil.getInstance(context).closeDataBase();
         }
     }
 
-    private void showNotification(Context context, String name, String phoneNum) {
+    private void showNotification(Context context, String name, String phone) {
         Log.d("SmsReceiver", "showNotification");
 
         //设置点击通知栏的动作为启动另外一个广播
         Intent broadcastIntent = new Intent(context, NotificationReceiver.class);
-        broadcastIntent.putExtra("phoneNum", phoneNum);
+        broadcastIntent.putExtra("phone", phone);
+        broadcastIntent.putExtra("name", name);
         PendingIntent pendingIntent = PendingIntent.
                 getBroadcast(context, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -90,19 +91,15 @@ public class SmsReceiver extends BroadcastReceiver {
         manager.notify(2, builder.build());
     }
 
-    private void saveSMStoDB(final Context context, final String name, final String phoneNum, final String content, final String source) {
+    private void saveSMStoDB(Context context, String phone, String content, String source) {
         MessageBean mb = new MessageBean();
         mb.setContent(content);
-        mb.setName(name);
-        mb.setPhoneNum(phoneNum);
+        mb.setPhone(phone);
         mb.setSource(source);
         mb.setTime(System.currentTimeMillis() + "");
         mb.setStatus("0");
 
-        DataBaseHelperUtil.getInstance(context).openDataBase();
-        util = DataBaseHelperUtil.getInstance(context);
-        util.insertToTable(DataBaseHelperUtil.TABLE_NAME_MESSAGE, mb);
-        util.insertRecentChat(mb);
-        DataBaseHelperUtil.getInstance(context).closeDataBase();
+        util.insertToTable(DataBaseHelperUtil.TABLE_NAME_MESSAGE_LOGS, mb);
+        util.insertRecentChats(mb);
     }
 }

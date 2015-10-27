@@ -1,4 +1,4 @@
-package com.v2cc.im.blah.base.receiver;
+package com.v2cc.im.blah.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,11 +18,11 @@ import com.v2cc.im.blah.message.MessageActivity;
  */
 public class NotificationReceiver extends BroadcastReceiver {
 
-    String phoneNum;
+    String phone;
 
     public void onReceive(Context context, Intent intent) {
 
-        phoneNum = intent.getStringExtra("phoneNum");
+        phone = intent.getStringExtra("phone");
 
         //判断app进程是否存活
         if (SystemUtil.isAppAlive(context, "com.v2cc.im.blah")) {
@@ -38,7 +38,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             Intent mIntent = new Intent(context, MessageActivity.class);
-            mIntent.putExtra("phoneNum", phoneNum);
+            mIntent.putExtra("phone", phone);
             Intent[] intents = {mainIntent, mIntent};
             context.startActivities(intents);
         } else {
@@ -49,7 +49,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage("com.v2cc.im.blah");
             launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             Bundle args = new Bundle();
-            args.putString("phoneNum", phoneNum);
+            args.putString("phone", phone);
             launchIntent.putExtra(Constants.EXTRA_BUNDLE, args);
             context.startActivity(launchIntent);
         }

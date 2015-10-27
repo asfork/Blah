@@ -33,12 +33,12 @@
             android:screenOrientation="portrait"/>
 
         <receiver
-            android:name=".base.receiver.SmsReceiver">
+            android:name=".receiver.SmsReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".base.receiver.NotificationReceiver"/>
+        <receiver android:name=".receiver.NotificationReceiver"/>
     </application>
 
 </manifest>
