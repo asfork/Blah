@@ -26,12 +26,12 @@ public class ActivityCollector {
         activities.remove(activity);
     }
 
-    public void finishActivity(AppCompatActivity activity) {
+    public static void finishActivity(AppCompatActivity activity) {
         activities.remove(activity);
         activity.finish();
     }
 
-    public void exitApp(Context oldActivity) {
+    public void exitApp(Context context) {
         exitTime = System.currentTimeMillis() - lastTime;
         if (exitTime <= 2000) {
             // 释放所有Activity
@@ -43,7 +43,7 @@ public class ActivityCollector {
             System.exit(0);
         } else {
             lastTime = System.currentTimeMillis();
-            Toast.makeText(oldActivity, "Please click again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Please click again.", Toast.LENGTH_SHORT).show();
         }
     }
 }

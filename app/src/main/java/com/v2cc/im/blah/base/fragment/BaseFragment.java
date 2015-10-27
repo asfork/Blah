@@ -22,7 +22,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("BaseFragment", "onCreateView...");
+        Log.d(getClass().getSimpleName(), "onCreateView...");
 
         rootView = inflater.inflate(setRootViewId(), container, false);
         initViews(rootView);
@@ -58,49 +58,49 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("BaseFragment", "onCreate...");
+        Log.d(getClass().getSimpleName(), "on Create");
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public void onStart() {
-        Log.d("BaseFragment", "onStart...");
+        Log.d(getClass().getSimpleName(), "on Start");
         super.onStart();
     }
 
     @Override
     public void onResume() {
-        Log.d("BaseFragment", "onResume...");
+        Log.d(getClass().getSimpleName(), "on Resume");
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        Log.d("BaseFragment", "onPause...");
+        Log.d(getClass().getSimpleName(), "on Pause");
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        Log.d("BaseFragment", "onStop...");
+        Log.d(getClass().getSimpleName(), "on Stop");
         super.onStop();
     }
 
     @Override
     public void onDestroyView() {
-        Log.d("BaseFragment", "onDestroyView...");
+        Log.d(getClass().getSimpleName(), "on Destroy View");
         super.onDestroyView();
     }
 
     @Override
     public void onDestroy() {
-        Log.d("BaseFragment", "onDestroy...");
+        Log.d(getClass().getSimpleName(), "on Destroy");
         super.onDestroy();
     }
 
     @Override
     public void onDetach() {
-        Log.d("BaseFragment", "onDetach...");
+        Log.d(getClass().getSimpleName(), "on Detach");
         super.onDetach();
     }
 }

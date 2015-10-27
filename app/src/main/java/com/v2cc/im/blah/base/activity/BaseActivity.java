@@ -18,7 +18,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("BaseActivity", getClass().getSimpleName());
+        Log.d(getClass().getSimpleName(), getClass().getSimpleName());
 
         // 创建了新的Activity，将其存入集合
         if (!ActivityCollector.activities.contains(this)) {
@@ -45,37 +45,37 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("BaseActivity", "onStart");
+        Log.d(getClass().getSimpleName(), " on Start");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("BaseActivity", "onResume");
+        Log.d(getClass().getSimpleName(), " on Resume");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("BaseActivity", "onStop");
+        Log.d(getClass().getSimpleName(), " on Stop");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("BaseActivity", "onPause");
+        Log.d(getClass().getSimpleName(), " on Pause");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("BaseActivity", "onDestroy");
+        Log.d(getClass().getSimpleName(), " on Destroy");
         ActivityCollector.removeActivity(this);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("BaseActivity", "onRestart");
+        Log.d(getClass().getSimpleName(), " on Restart");
     }
 }
