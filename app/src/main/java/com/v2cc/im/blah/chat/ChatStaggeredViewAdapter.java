@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.v2cc.im.blah.R;
+import com.v2cc.im.blah.base.utils.TimeFormattingUtil;
 import com.v2cc.im.blah.message.MessageBean;
 
 import java.util.ArrayList;
@@ -31,13 +32,15 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
     // Provide a reference to the type of views that you are using
     // (custom viewholder)
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
+        public TextView tvName;
+        public TextView tvTime;
         public CardView cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
-            textView = (TextView) itemView.findViewById(R.id.tv_name);
+            tvName = (TextView) itemView.findViewById(R.id.tv_name);
+            tvTime = (TextView) itemView.findViewById(R.id.tv_time);
         }
     }
 
@@ -91,7 +94,7 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
         if (list.size() != heights.size()) {
             Log.d("ChatStaggered", "repeat" + list.size());
             for (int i = heights.size(); i < list.size(); i++) {
-                heights.add((int) (Math.random() * 300) + 300);
+                heights.add((int) (Math.random() * 300) + 200);
 
                 // TODO add more colors
                 switch (i % 5) {
@@ -115,10 +118,11 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
         }
         holder.cardView.setCardBackgroundColor(Color.parseColor(colors.get(position)));
 
-        ViewGroup.LayoutParams mLayoutParams = holder.textView.getLayoutParams();
+        ViewGroup.LayoutParams mLayoutParams = holder.tvName.getLayoutParams();
         mLayoutParams.height = heights.get(position);
-        holder.textView.setLayoutParams(mLayoutParams);
-        holder.textView.setText(list.get(position).getName());
+        holder.tvName.setLayoutParams(mLayoutParams);
+        holder.tvName.setText(list.get(position).getName());
+        holder.tvTime.setText(TimeFormattingUtil.displayTime(list.get(position).getTime()));
     }
 
     @Override
