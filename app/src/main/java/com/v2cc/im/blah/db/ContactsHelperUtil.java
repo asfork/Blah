@@ -92,7 +92,7 @@ public class ContactsHelperUtil {
                     // 创建联系人对象
                     FriendsBean contact = new FriendsBean();
                     contact.setDesplayName(name);
-                    contact.setPhoneNum(number);
+                    contact.setPhone(number);
                     contact.setSortKey(sortKey);
                     contact.setPhotoId(photoId);
                     contact.setLookUpKey(lookUpKey);

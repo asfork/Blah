@@ -109,7 +109,7 @@ public class FriendsFragment extends BaseFragment implements FriendsRecyclerView
                         // 创建联系人对象
                         FriendsBean contact = new FriendsBean();
                         contact.setDesplayName(name);
-                        contact.setPhoneNum(number);
+                        contact.setPhone(number);
                         contact.setSortKey(sortKey);
                         contact.setPhotoId(photoId);
                         contact.setLookUpKey(lookUpKey);
@@ -119,21 +119,17 @@ public class FriendsFragment extends BaseFragment implements FriendsRecyclerView
                     }
                 }
                 if (mList.size() > 0) {
-                    updateUI();
+                    adapter.notifyDataSetChanged();
                 }
             }
         }
-    }
-
-    private static void updateUI() {
-        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClick(View view, int position) {
         Bundle bundle = new Bundle();
         bundle.putString("name", mList.get(position).getDesplayName());
-        bundle.putString("phoneNum", mList.get(position).getPhoneNum());
+        bundle.putString("phone", mList.get(position).getPhone());
         // start up MessageActivity
         MessageActivity.actionStart(getActivity(), bundle);
     }

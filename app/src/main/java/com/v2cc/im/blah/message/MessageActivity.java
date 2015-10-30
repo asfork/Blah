@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class MessageActivity extends BaseActivity implements OnClickListener {
     private Toolbar toolbar;
     private String name;// 昵称
-    private String phoneNum;
+    private String phone;
     FloatingActionButton mFAB;
     private ArrayList<MessageBean> messageHistories;// 聊天信息集合
     ListView listView;// 聊天信息列表
@@ -66,8 +66,12 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
 
     @Override
     public void configViews() {
+
         setSupportActionBar(toolbar);
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setTitle(getIntent().getStringExtra("name"));
 
         // 透明状态栏
         StatusBarCompat.compat(this);
@@ -93,8 +97,9 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab:// 发送按钮
-                postMessage(new MessageBean("", name, phoneNum,
-                        System.currentTimeMillis() + "", "blah blah", "", "0", "0"));
+                postMessage(new MessageBean("", "", phone,
+                        System.currentTimeMillis() + "", MessageBean.MSG_CONTENT,
+                        MessageBean.MSG_TYPE_TEXT, MessageBean.MSG_SOURCE_SEND, ""));
                 break;
         }
     }
@@ -103,12 +108,8 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     public void onResume() {
         super.onResume();
 
-        // TODO 从数据库取 name 并设置 Toolbar 标题
-//        toolbar.setTitle(getIntent().getStringExtra("name"));
-
-        // TODO phone number formatting
-        String s = getIntent().getStringExtra("phoneNum");
-        phoneNum = s.replaceAll("-", "");
+        phone = getIntent().getStringExtra("phone");
+        name = getIntent().getStringExtra("name");
 
         util = DataBaseHelperUtil.getInstance(this);
         new AsyncTask<String, Void, Void>() {
@@ -117,56 +118,34 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
                     messageHistories = new ArrayList<>();
                 }
                 messageHistories.clear();
-                messageHistories.addAll(util.getMessageHistory(s[0]));
+                messageHistories.addAll(util.getMessageLogs(s[0]));
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void result) {
-                updateUI();
+                adapter.notifyDataSetChanged();
             }
-        }.execute(phoneNum);
+        }.execute(phone);
     }
 
-    private void postMessage(final MessageBean messageBean) {
+    private void postMessage(MessageBean messageBean) {
         messageHistories.add(messageBean);
-        adapter.notifyDataSetChanged();
-//        listView.setSelection(messageHistories.size() - 1);
+        listView.setSelection(messageHistories.size() - 1);
+        adapter.refresh(messageHistories);
 
         // Todo determines whether it should send message by sms
         smsUtil = new SMSUtil();
-        smsUtil.sendSMS(phoneNum);
-        Log.d("postMessage", phoneNum);
+        smsUtil.sendSMS(phone);
+        Log.d("postMessage", phone);
 
-        saveSMStoDB(name, phoneNum, "blah blah", "0");
-    }
-
-    private void saveSMStoDB(final String name, final String phoneNum, final String content, final String source) {
-
-        MessageBean mb = new MessageBean();
-        mb.setContent(content);
-        mb.setName(name);
-        mb.setPhoneNum(phoneNum);
-        mb.setSource(source);
-        mb.setTime(System.currentTimeMillis() + "");
-        mb.setStatus("0");
-
+        // insert sms to db
         new AsyncTask<MessageBean, Void, Void>() {
             protected Void doInBackground(MessageBean... mb) {
-                util.insertToTable(DataBaseHelperUtil.TABLE_NAME_MESSAGE, mb[0]);
-                util.insertRecentChat(mb[0]);
+                util.insertToTable(DataBaseHelperUtil.TABLE_NAME_MESSAGE_LOGS, mb[0]);
+                util.insertRecentChats(mb[0]);
                 return null;
             }
-
-            @Override
-            protected void onPostExecute(Void result) {
-                updateUI();
-            }
-        }.execute(mb);
+        }.execute(messageBean);
     }
-
-    private void updateUI() {
-        adapter.notifyDataSetChanged();
-    }
-
 }

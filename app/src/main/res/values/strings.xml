@@ -10,7 +10,7 @@
     <string name="error_field_required">This field is required</string>
 
     <!--Toolbar strings related to main-->
-    <string name="action_settings">Settings</string>
+    <string name="action_quit">Quit</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
 
@@ -21,6 +21,10 @@
     <string name="nav_discover">Discover</string>
     <string name="nav_random">Random</string>
     <string name="image_des">Image</string>
+
+    <!--Dialog strings-->
+    <string name="dialog_delete_chat_title">Delete this chat</string>
+    <string name="dialog_delete_chat_content">This chat will be permanently deleted！</string>
 
     <string name="welcome_to_here">More inspirations are coming soon!</string>
 </resources>

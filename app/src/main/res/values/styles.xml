@@ -1,7 +1,7 @@
 <resources>
 
     <style name="AppTheme" parent="BaseAppTheme"/>
-    <!-- 红色主色调 -->
+    <!-- 主色调 -->
     <style name="BaseAppTheme" parent="Theme.AppCompat.NoActionBar">
 
         <!--选中状态icon的颜色和字体颜色-->

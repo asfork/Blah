@@ -11,7 +11,6 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 
 import com.v2cc.im.blah.R;
-import com.v2cc.im.blah.db.ContactsHelperUtil;
 import com.v2cc.im.blah.db.DataBaseHelperUtil;
 import com.v2cc.im.blah.message.MessageBean;
 
@@ -97,7 +96,7 @@ public class SmsReceiver extends BroadcastReceiver {
         mb.setPhone(phone);
         mb.setSource(source);
         mb.setTime(System.currentTimeMillis() + "");
-        mb.setStatus("0");
+        mb.setState("0");
 
         util.insertToTable(DataBaseHelperUtil.TABLE_NAME_MESSAGE_LOGS, mb);
         util.insertRecentChats(mb);

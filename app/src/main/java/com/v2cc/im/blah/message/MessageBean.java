@@ -10,40 +10,52 @@ import android.database.Cursor;
  *         2015-8-5 上午10:33:52
  */
 public class MessageBean {
+    public final static String MSG_TYPE_TEXT = "1";
+    public final static String MSG_TYPE_PHOTO = "2";
+
+    public final static String MSG_SOURCE_SEND = "1";
+    public final static String MSG_SOURCE_RECEIVE = "2";
+
+    public final static String MSG_STATE_SENDING = "1";
+    public final static String MSG_STATE_SUCCESS = "2";
+    public final static String MSG_STATE_FAIL = "3";
+
+    public final static String MSG_CONTENT = "blah blah";
+
     private String id;// id
     private String name;// 姓名
-    private String phoneNum;// 账户
+    private String phone;// 账户
     private String time;// 时间
     private String content;// 内容
-    private String imgPath;// 图片地址
-    private String source;// 来源 1(input) or 0(output)
-    private String status;// 状态 0已读 1未读
+    private String type;// 0-text | 1-photo | more type ...
+    private String source;// 0-send | 1-receive
+    private String state;// 0-sending | 1-success | 2-fail
 
     public MessageBean() {
     }
 
-    public MessageBean(String id, String name, String phoneNum, String time, String content,
-                       String imgPath, String source, String status) {
+    public MessageBean(String name, String id, String phone, String time, String content,
+                       String type, String source, String state) {
         super();
         this.id = id;
         this.name = name;
-        this.phoneNum = phoneNum;
+        this.phone = phone;
         this.time = time;
         this.content = content;
-        this.imgPath = imgPath;
+        this.type = type;
         this.source = source;
-        this.status = status;
+        this.state = state;
     }
 
     public MessageBean(Cursor cursor) {
         this.id = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
         this.name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-        this.phoneNum = cursor.getString(cursor.getColumnIndexOrThrow("phoneNum"));
+        this.phone = cursor.getString(cursor.getColumnIndexOrThrow("phone"));
         this.time = cursor.getString(cursor.getColumnIndexOrThrow("time"));
         this.content = cursor.getString(cursor.getColumnIndexOrThrow("content"));
-        this.imgPath = cursor.getString(cursor.getColumnIndexOrThrow("imgPath"));
+        this.type = cursor.getString(cursor.getColumnIndexOrThrow("type"));
         this.source = cursor.getString(cursor.getColumnIndexOrThrow("source"));
-        this.status = cursor.getString(cursor.getColumnIndexOrThrow("status"));
+        this.state = cursor.getString(cursor.getColumnIndexOrThrow("state"));
     }
 
     public String getId() {
@@ -62,12 +74,12 @@ public class MessageBean {
         this.name = name;
     }
 
-    public String getPhoneNum() {
-        return phoneNum;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getTime() {
@@ -86,12 +98,12 @@ public class MessageBean {
         this.content = content;
     }
 
-    public String getImgPath() {
-        return imgPath;
+    public String getType() {
+        return type;
     }
 
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getSource() {
@@ -102,11 +114,11 @@ public class MessageBean {
         this.source = source;
     }
 
-    public String getStatus() {
-        return status;
+    public String getState() {
+        return state;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setState(String state) {
+        this.state = state;
     }
 }

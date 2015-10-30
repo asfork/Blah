@@ -8,7 +8,7 @@ package com.v2cc.im.blah.friends;
 public class FriendsBean {
     private int contactId; //id
     private String desplayName;//姓名
-    private String phoneNum; // 电话号码
+    private String phone; // 电话号码
     private String sortKey; // 排序用的
     private Long photoId; // 图片id
     private String lookUpKey;
@@ -32,12 +32,12 @@ public class FriendsBean {
         this.desplayName = desplayName;
     }
 
-    public String getPhoneNum() {
-        return phoneNum;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getSortKey() {

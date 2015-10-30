@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+    android:layout_height="wrap_content"
                 android:orientation="vertical">
 
     <!-- 首字母 -->
@@ -10,7 +10,8 @@
         android:id="@+id/alpha"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/item_margin"
+        android:layout_marginStart="@dimen/item_margin"
+        android:layout_marginTop="5dp"
         android:visibility="gone"/>
 
     <!-- 联系人信息 -->
@@ -20,7 +21,8 @@
         android:layout_width="@dimen/contact_badge_avatar_size"
         android:layout_height="@dimen/contact_badge_avatar_size"
         android:layout_below="@id/alpha"
-        android:paddingStart="@dimen/item_margin"
+        android:layout_marginStart="@dimen/item_margin"
+        android:layout_marginTop="5dp"
         android:visibility="visible"/>
 
     <TextView
@@ -28,10 +30,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_middle"
-        android:textColor="@color/primary_text"
         android:layout_below="@id/alpha"
         android:layout_toEndOf="@id/qcb"
-        android:layout_marginTop="12dp"
-        android:paddingStart="@dimen/item_margin"/>
+        android:layout_marginTop="17dp"
+        android:layout_marginStart="@dimen/item_margin"
+        android:background="?android:attr/selectableItemBackground" />
 
 </RelativeLayout>

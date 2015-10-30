@@ -16,8 +16,10 @@ import android.view.MenuItem;
 
 import com.v2cc.im.blah.R;
 import com.v2cc.im.blah.base.adapter.ViewPagerAdapter;
+import com.v2cc.im.blah.base.app.App;
 import com.v2cc.im.blah.base.app.Constants;
 import com.v2cc.im.blah.base.fragment.FragmentTest;
+import com.v2cc.im.blah.base.utils.ActivityCollector;
 import com.v2cc.im.blah.base.view.StatusBarCompat;
 import com.v2cc.im.blah.db.DataBaseHelperUtil;
 import com.v2cc.im.blah.friends.FriendsFragment;
@@ -34,6 +36,8 @@ import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
  * If it works, I created this. If not, I didn't.
  */
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+    private App app;
+
     //初始化各种控件，照着xml中的顺序写
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -178,8 +182,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                Log.d("MainActivity", "Settings");
+            case R.id.action_quit:
+                ActivityCollector.finishActivity(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);
