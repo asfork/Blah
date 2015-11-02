@@ -68,6 +68,7 @@ public class ChatFragment extends BaseFragment implements ChatStaggeredViewAdapt
 
     @Override
     public void onItemClick(View view, int position) {
+        Log.d(getClass().getSimpleName(), mList.get(position).getName());
         Bundle bundle = new Bundle();
         bundle.putString("name", mList.get(position).getName());
         bundle.putString("phone", mList.get(position).getPhone());

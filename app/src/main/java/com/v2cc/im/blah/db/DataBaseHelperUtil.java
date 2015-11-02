@@ -117,6 +117,10 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
                 " values (10101, 'Hobot', 0)");
         db.execSQL("insert into Friends (phone,name,state)" +
                 " values (9000, 'HAL', 0)");
+        db.execSQL("insert into Friends (phone,name,state)" +
+                " values (999, 'Boss', 0)");
+        db.execSQL("insert into Friends (phone,name,state)" +
+                " values (42, '42', 0)");
 
         db.execSQL("insert into RecentChats (phone,time,content,type,source)" +
                 " values (9000, 1444806933688, 'Blah blah', 1, 2)");
@@ -124,6 +128,10 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
                 " values (10101, 1442806920125, 'Blah blah', 1, 1)");
         db.execSQL("insert into RecentChats (phone,time,content,type,source)" +
                 " values (233, 1444816922125, 'Blah blah', 1, 2)");
+        db.execSQL("insert into RecentChats (phone,time,content,type,source)" +
+                " values (999, 1444816622125, 'Blah blah', 1, 1)");
+        db.execSQL("insert into RecentChats (phone,time,content,type,source)" +
+                " values (42, 1444818922125, 'Blah blah', 1, 2)");
 
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
                 " values (9000, 1444805933688, 'Blah blah', 1, 1)");
@@ -141,6 +149,10 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
                 " values (10101, 1442806920125, 'Blah blah', 1, 1)");
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
                 " values (233, 1444816922125, 'Blah blah', 1, 2)");
+        db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
+                " values (999, 1444816622125, 'Blah blah', 1, 1)");
+        db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
+                " values (42, 1444818922125, 'Blah blah', 1, 2)");
     }
 
     /**
