@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.v2cc.im.blah.R;
 import com.v2cc.im.blah.base.activity.BaseActivity;
+import com.v2cc.im.blah.base.utils.ActivityCollector;
 import com.v2cc.im.blah.base.utils.SMSUtil;
 import com.v2cc.im.blah.base.view.StatusBarCompat;
 import com.v2cc.im.blah.db.DataBaseHelperUtil;
@@ -67,27 +68,28 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     @Override
     public void configViews() {
 
+        toolbar.setTitle(getIntent().getStringExtra("name"));
+
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        toolbar.setTitle(getIntent().getStringExtra("name"));
 
         // 透明状态栏
         StatusBarCompat.compat(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                this.finish();
+                Log.d(getClass().getSimpleName(),"click home");
+                ActivityCollector.finishActivity(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);

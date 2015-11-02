@@ -19,7 +19,7 @@
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:focusable">false</item>
         <item name="android:layout_marginTop">5dp</item>
-        <item name="android:src">@drawable/icon_head_03</item>
+        <item name="android:src">@drawable/icons_head_00</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
 

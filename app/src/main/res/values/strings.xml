@@ -8,6 +8,7 @@
     <string name="action_sign_in">Join</string>
     <string name="action_sign_in_short">Join</string>
     <string name="error_field_required">This field is required</string>
+    <string name="error_phone_format">Please input correct number</string>
 
     <!--Toolbar strings related to main-->
     <string name="action_quit">Quit</string>

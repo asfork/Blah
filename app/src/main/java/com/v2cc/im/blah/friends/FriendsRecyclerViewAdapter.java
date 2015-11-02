@@ -85,7 +85,7 @@ public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecy
         viewHolder.quickContactBadge.assignContactUri(ContactsContract.Contacts.getLookupUri(
                 contact.getContactId(), contact.getLookUpKey()));
         if (0 == contact.getPhotoId()) {
-            viewHolder.quickContactBadge.setImageResource(R.drawable.icon_head_03);
+            viewHolder.quickContactBadge.setImageResource(R.drawable.icons_head_00);
         } else {
             Uri uri = ContentUris.withAppendedId(
                     ContactsContract.Contacts.CONTENT_URI,

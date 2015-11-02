@@ -23,7 +23,7 @@ import com.v2cc.im.blah.base.utils.ActivityCollector;
 public class LoginActivity extends BaseActivity {
     private EditText editText;
     private Button signInButton;
-    private String mUserPhone;
+    private String userPhone;
 
     @Override
     public void initViews() {
@@ -87,10 +87,10 @@ public class LoginActivity extends BaseActivity {
             // form field with an error.
             editText.setError(getString(R.string.error_field_required));
             editText.requestFocus();
-            return;
+//            return;
         }
 
-        this.mUserPhone = userPhone;
+        this.userPhone = userPhone;
 
         // perform the user login attempt.
 //        mSocket.emit("add user", userPhone)
@@ -101,6 +101,9 @@ public class LoginActivity extends BaseActivity {
             MainActivity.actionStart(this, bundle);
             Log.d("LoginActivity", userPhone);
             ActivityCollector.finishActivity(this);
+        } else {
+            editText.setError(getString(R.string.error_phone_format));
+            editText.requestFocus();
         }
 
     }
