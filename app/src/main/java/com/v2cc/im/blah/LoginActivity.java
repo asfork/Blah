@@ -14,6 +14,8 @@ import com.v2cc.im.blah.base.activity.BaseActivity;
 import com.v2cc.im.blah.base.activity.MainActivity;
 import com.v2cc.im.blah.base.app.Constants;
 import com.v2cc.im.blah.base.utils.ActivityCollector;
+import com.v2cc.im.blah.db.DataBaseHelperUtil;
+import com.v2cc.im.blah.friends.ContactsAsyncQueryHandler;
 
 /**
  * Created by Steve ZHANG (stevzhg@gmail.com)
@@ -29,6 +31,7 @@ public class LoginActivity extends BaseActivity {
     public void initViews() {
         setContentView(R.layout.activity_login);
 
+        //
         Bundle bundle = getIntent().getBundleExtra(Constants.EXTRA_BUNDLE);
         if (bundle != null) {
             MainActivity.actionStart(this, bundle);
@@ -81,7 +84,7 @@ public class LoginActivity extends BaseActivity {
         // Store values at the time of the login attempt.
         String userPhone = editText.getText().toString().trim();
 
-        // Check for a valid username.
+        // TODO　Check for a valid user phone.
         if (TextUtils.isEmpty(userPhone)) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -95,9 +98,20 @@ public class LoginActivity extends BaseActivity {
         // perform the user login attempt.
 //        mSocket.emit("add user", userPhone)
 
-        if (userPhone.equals("42")) {
-            Bundle bundle = new Bundle();
+        if (userPhone.length() == 11) {
+            DataBaseHelperUtil.getInstance(this).openDataBase();
+            // 异步读取通讯录
+            ContactsAsyncQueryHandler asyncQueryHandler; // 异步查询数据库类对象
+            // 实例化
+            asyncQueryHandler = new ContactsAsyncQueryHandler(this.getContentResolver());
+            // 按照sort_key升序查詢
+            asyncQueryHandler.startQuery(0, null, ContactsAsyncQueryHandler.CONTACTS_URI,
+                    ContactsAsyncQueryHandler.CONTACTS_INFO, null, null,
+                    "sort_key COLLATE LOCALIZED asc");
+            DataBaseHelperUtil.getInstance(this).closeDataBase();
+
             // start up MessageActivity
+            Bundle bundle = new Bundle();
             MainActivity.actionStart(this, bundle);
             Log.d("LoginActivity", userPhone);
             ActivityCollector.finishActivity(this);
@@ -105,6 +119,5 @@ public class LoginActivity extends BaseActivity {
             editText.setError(getString(R.string.error_phone_format));
             editText.requestFocus();
         }
-
     }
 }

@@ -11,6 +11,7 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 
 import com.v2cc.im.blah.R;
+import com.v2cc.im.blah.base.utils.PhoneFormatUtil;
 import com.v2cc.im.blah.db.DataBaseHelperUtil;
 import com.v2cc.im.blah.message.MessageBean;
 
@@ -22,7 +23,7 @@ import com.v2cc.im.blah.message.MessageBean;
 public class SmsReceiver extends BroadcastReceiver {
 
     private static final String SMS_EXTRA_NAME = "pdus";
-    DataBaseHelperUtil util;
+    private DataBaseHelperUtil util;
 
     public void onReceive(Context context, Intent intent) {
         // Get SMS map from Intent
@@ -45,7 +46,10 @@ public class SmsReceiver extends BroadcastReceiver {
 
             DataBaseHelperUtil.getInstance(context).openDataBase();
             util = DataBaseHelperUtil.getInstance(context);
-            String name = util.getNamebyPhone(address);
+
+            // formatting address
+            String phone = PhoneFormatUtil.removeFormatting(address);
+            String name = util.getNamebyPhone(phone);
 
             if (fullSms.equals("blah blah") && name != null) {
                 showNotification(context, name, address);

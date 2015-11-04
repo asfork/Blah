@@ -6,15 +6,15 @@ package com.v2cc.im.blah.friends;
  * If it works, I created this. If not, I didn't.
  */
 public class FriendsBean {
+    public final static String FRI_STATE_OFFLINE = "1";
+    public final static String FRI_STATE_ONLINE = "2";
+
     private int contactId; //id
-    private String desplayName;//姓名
+    private String name;//姓名
+    private String sortKey;
     private String phone; // 电话号码
-    private String sortKey; // 排序用的
-    private Long photoId; // 图片id
-    private String lookUpKey;
-    private int selected = 0;
-    private String formattedNumber;
-    private String pinyin; // 姓名拼音
+    private String imgPath; // 图片id
+    private String state; // 1-offline | 2-online
 
     public int getContactId() {
         return contactId;
@@ -24,20 +24,12 @@ public class FriendsBean {
         this.contactId = contactId;
     }
 
-    public String getDesplayName() {
-        return desplayName;
+    public String getName() {
+        return name;
     }
 
-    public void setDesplayName(String desplayName) {
-        this.desplayName = desplayName;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSortKey() {
@@ -48,44 +40,27 @@ public class FriendsBean {
         this.sortKey = sortKey;
     }
 
-    public Long getPhotoId() {
-        return photoId;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhotoId(Long photoId) {
-        this.photoId = photoId;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getLookUpKey() {
-        return lookUpKey;
+    public String getImgPath() {
+        return imgPath;
     }
 
-    public void setLookUpKey(String lookUpKey) {
-        this.lookUpKey = lookUpKey;
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 
-    public int getSelected() {
-        return selected;
+    public String getState() {
+        return state;
     }
 
-    public void setSelected(int selected) {
-        this.selected = selected;
+    public void setState(String state) {
+        this.state = state;
     }
-
-    public String getFormattedNumber() {
-        return formattedNumber;
-    }
-
-    public void setFormattedNumber(String formattedNumber) {
-        this.formattedNumber = formattedNumber;
-    }
-
-    public String getPinyin() {
-        return pinyin;
-    }
-
-    public void setPinyin(String pinyin) {
-        this.pinyin = pinyin;
-    }
-
 }

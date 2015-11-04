@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.v2cc.im.blah.friends.FriendsBean;
 import com.v2cc.im.blah.message.MessageBean;
 
 import java.util.ArrayList;
@@ -13,31 +14,36 @@ import java.util.ArrayList;
 
 /**
  * 数据库工具类
- *
+ * <p/>
  * yeliang liang
  * DataBaseHelperUtil
  * 2015-8-5 上午10:48:03
- *
+ * <p/>
  * Modify by Steve ZHANG
  * 2015-9-29
- *
+ * <p/>
  * Modify by Steve ZHANG
  * 2015-10-27
+ *
  * @version V2.0
  */
 
 public class DataBaseHelperUtil extends SQLiteOpenHelper {
 
-    static Context mContext;
-    private static DataBaseHelperUtil mInstance;
-    //    private static final String DB_NAME = "Blah" + User.getInstance().getUserName() + ".db";// 数据库名称
-    private static final String DB_NAME = "Phone.db";
-    private static final int DB_VERSION = 1;// 数据库版本
     public static final String TABLE_NAME_MESSAGE_LOGS = "MessageLogs";// 聊天记录主库
     public static final String TABLE_NAME_RECENT_CHATS = "RecentChats";// 最近聊天记录
     public static final String TABLE_NAME_FRIENDS = "Friends";
+    //    private static final String DB_NAME = "Blah" + User.getInstance().getUserName() + ".db";// 数据库名称
+    private static final String DB_NAME = "Phone.db";
+    private static final int DB_VERSION = 1;// 数据库版本
+    static Context mContext;
+    private static DataBaseHelperUtil mInstance;
     private int openCount = 0;// 数据库打开次数
     private SQLiteDatabase database;
+
+    public DataBaseHelperUtil(Context context, String name, CursorFactory factory, int version) {
+        super(context, name, factory, version);
+    }
 
     /**
      * 单例
@@ -48,10 +54,6 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
             mInstance = new DataBaseHelperUtil(mContext, DB_NAME, null, DB_VERSION);
         }
         return mInstance;
-    }
-
-    public DataBaseHelperUtil(Context context, String name, CursorFactory factory, int version) {
-        super(context, name, factory, version);
     }
 
     @Override
@@ -108,30 +110,30 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
         db.execSQL("create table "
                 + TABLE_NAME_FRIENDS
                 + " (_id integer primary key autoincrement,phone char,name char,"
-                + "imgPath char,state char)");
+                + "sortKey char,imgPath char,state char)");
 
         // Todo insert testing data
-        db.execSQL("insert into Friends (phone,name,state)" +
-                " values (233, 'Peter', 0)");
-        db.execSQL("insert into Friends (phone,name,state)" +
-                " values (10101, 'Hobot', 0)");
-        db.execSQL("insert into Friends (phone,name,state)" +
-                " values (9000, 'HAL', 0)");
-        db.execSQL("insert into Friends (phone,name,state)" +
-                " values (999, 'Boss', 0)");
-        db.execSQL("insert into Friends (phone,name,state)" +
-                " values (42, '42', 0)");
+        db.execSQL("insert into Friends (phone,name,sortKey,imgPath,state)" +
+                " values (233, 'Peter','Peter','', 0)");
+        db.execSQL("insert into Friends (phone,name,sortKey,imgPath,state)" +
+                " values (10101, 'Hobot','Hobot','', 0)");
+        db.execSQL("insert into Friends (phone,name,sortKey,imgPath,state)" +
+                " values (9000, 'HAL','HAL','', 0)");
+        db.execSQL("insert into Friends (phone,name,sortKey,imgPath,state)" +
+                " values (999, 'Boss','Boss','', 0)");
+        db.execSQL("insert into Friends (phone,name,sortKey,imgPath,state)" +
+                " values (42, '42','42','', 0)");
 
         db.execSQL("insert into RecentChats (phone,time,content,type,source)" +
                 " values (9000, 1444806933688, 'Blah blah', 1, 2)");
         db.execSQL("insert into RecentChats (phone,time,content,type,source)" +
                 " values (10101, 1442806920125, 'Blah blah', 1, 1)");
         db.execSQL("insert into RecentChats (phone,time,content,type,source)" +
-                " values (233, 1444816922125, 'Blah blah', 1, 2)");
+                " values (233, 1445116922125, 'Blah blah', 1, 2)");
         db.execSQL("insert into RecentChats (phone,time,content,type,source)" +
-                " values (999, 1444816622125, 'Blah blah', 1, 1)");
+                " values (999, 1441816622125, 'Blah blah', 1, 1)");
         db.execSQL("insert into RecentChats (phone,time,content,type,source)" +
-                " values (42, 1444818922125, 'Blah blah', 1, 2)");
+                " values (42, 1442818922125, 'Blah blah', 1, 2)");
 
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
                 " values (9000, 1444805933688, 'Blah blah', 1, 1)");
@@ -148,11 +150,11 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
                 " values (10101, 1442806920125, 'Blah blah', 1, 1)");
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
-                " values (233, 1444816922125, 'Blah blah', 1, 2)");
+                " values (233, 1445116922125, 'Blah blah', 1, 2)");
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
-                " values (999, 1444816622125, 'Blah blah', 1, 1)");
+                " values (999, 1441816622125, 'Blah blah', 1, 1)");
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
-                " values (42, 1444818922125, 'Blah blah', 1, 2)");
+                " values (42, 1442818922125, 'Blah blah', 1, 2)");
     }
 
     /**
@@ -196,6 +198,26 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
     }
 
     /**
+     * 朋友列表：插入通讯录里的联系人数据
+     */
+    public synchronized void insertFriends(FriendsBean friendsBean) {
+        Cursor cursor = database.rawQuery("select * from " + TABLE_NAME_FRIENDS
+                + " where phone = ? ", new String[]{friendsBean.getPhone()});
+        if (!cursor.moveToNext()) {
+            database.execSQL(
+                    "insert into "
+                            + TABLE_NAME_FRIENDS
+                            + " (phone,name,sortKey,imgPath,state) values(?,?,?,?,?)",
+                    new Object[]{friendsBean.getPhone(), friendsBean.getName(),
+                            friendsBean.getSortKey(), friendsBean.getImgPath(),
+                            friendsBean.getState()});
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+    }
+
+    /**
      * TODO 根据电话号码查询联系人姓名
      */
     public synchronized String getNamebyPhone(String phone) {
@@ -207,19 +229,19 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
      * 最近联系： 获取最近的一条记录
      */
     public synchronized ArrayList<MessageBean> getRecentChats() {
-        ArrayList<MessageBean> cList = new ArrayList<MessageBean>();
+        ArrayList<MessageBean> list = new ArrayList<MessageBean>();
         Cursor cursor = database.rawQuery("select " + TABLE_NAME_FRIENDS + ".name,"
                 + TABLE_NAME_RECENT_CHATS + ".* from " + TABLE_NAME_RECENT_CHATS
                 + " inner join " + TABLE_NAME_FRIENDS
                 + " on " + TABLE_NAME_RECENT_CHATS + ".phone =" + TABLE_NAME_FRIENDS
                 + ".phone order by time desc", null);
         while (cursor != null && cursor.moveToNext()) {
-            cList.add(new MessageBean(cursor));
+            list.add(new MessageBean(cursor));
         }
         if (cursor != null) {
             cursor.close();
         }
-        return cList;
+        return list;
     }
 
     /**
@@ -239,7 +261,27 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
             cursor.close();
         }
         return mList;
+    }
 
+    /**
+     * 获取当前好友列表
+     */
+    public synchronized ArrayList<FriendsBean> getFriendsList() {
+        ArrayList<FriendsBean> mList = new ArrayList<FriendsBean>();
+        Cursor cursor = database.rawQuery("select * from " + TABLE_NAME_FRIENDS, null);
+        while (cursor != null && cursor.moveToNext()) {
+            FriendsBean friendsBean = new FriendsBean();
+            friendsBean.setPhone(cursor.getString(1));
+            friendsBean.setName(cursor.getString(2));
+            friendsBean.setSortKey(cursor.getString(3));
+            friendsBean.setImgPath(cursor.getString(4));
+            friendsBean.setState(cursor.getString(5));
+            mList.add(friendsBean);
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return mList;
     }
 
     /**

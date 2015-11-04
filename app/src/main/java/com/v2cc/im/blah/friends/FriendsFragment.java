@@ -1,24 +1,18 @@
 package com.v2cc.im.blah.friends;
 
-import android.content.AsyncQueryHandler;
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.v2cc.im.blah.R;
 import com.v2cc.im.blah.base.fragment.BaseFragment;
+import com.v2cc.im.blah.db.DataBaseHelperUtil;
 import com.v2cc.im.blah.message.MessageActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Steve ZHANG (stevzhg@gmail.com)
@@ -27,12 +21,10 @@ import java.util.Map;
  */
 public class FriendsFragment extends BaseFragment implements FriendsRecyclerViewAdapter.OnItemClickListener {
 
-    private static List<FriendsBean> mList;
-    static Map<Integer, FriendsBean> friendIdMap = null;
-    private static FriendsRecyclerViewAdapter adapter;
-
+    private static DataBaseHelperUtil util;
+    private List<FriendsBean> mList;
+    private FriendsRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
-    AsyncQueryHandler asyncQueryHandler; // 异步查询数据库类对象
 
     public static FriendsFragment newInstance(int position) {
         FriendsFragment friendsFragment = new FriendsFragment();
@@ -59,20 +51,7 @@ public class FriendsFragment extends BaseFragment implements FriendsRecyclerView
 
     @Override
     protected void initData() {
-        // 实例化
-        asyncQueryHandler = new MyAsyncQueryHandler(getActivity().getContentResolver());
-
-        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI; // 联系人Uri；
-        // 查询的字段
-        String[] projection = {ContactsContract.CommonDataKinds.Phone._ID,
-                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                ContactsContract.CommonDataKinds.Phone.DATA1, "sort_key",
-                ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
-                ContactsContract.CommonDataKinds.Phone.PHOTO_ID,
-                ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY};
-        // 按照sort_key升序查詢
-        asyncQueryHandler.startQuery(0, null, uri, projection, null, null,
-                "sort_key COLLATE LOCALIZED asc");
+        util = DataBaseHelperUtil.getInstance(getActivity());
     }
 
     @Override
@@ -80,55 +59,32 @@ public class FriendsFragment extends BaseFragment implements FriendsRecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
     }
 
-    private static class MyAsyncQueryHandler extends AsyncQueryHandler {
+    @Override
+    public void onResume() {
+        super.onResume();
 
-        public MyAsyncQueryHandler(ContentResolver cr) {
-            super(cr);
-        }
-
-        @Override
-        protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
-            Log.d("FriendsFrag", "QueryComplete");
-            super.onQueryComplete(token, cookie, cursor);
-
-            if (cursor != null && cursor.getCount() > 0) {
-                friendIdMap = new HashMap<Integer, FriendsBean>();
-                cursor.moveToFirst(); // 游标移动到第一项
-                for (int i = 0; i < cursor.getCount(); i++) {
-                    cursor.moveToPosition(i);
-                    String name = cursor.getString(1);
-                    String number = cursor.getString(2);
-                    String sortKey = cursor.getString(3);
-                    int friendId = cursor.getInt(4);
-                    Long photoId = cursor.getLong(5);
-                    String lookUpKey = cursor.getString(6);
-
-                    if (friendIdMap.containsKey(friendId)) {
-                        // 无操作
-                    } else {
-                        // 创建联系人对象
-                        FriendsBean contact = new FriendsBean();
-                        contact.setDesplayName(name);
-                        contact.setPhone(number);
-                        contact.setSortKey(sortKey);
-                        contact.setPhotoId(photoId);
-                        contact.setLookUpKey(lookUpKey);
-                        mList.add(contact);
-
-                        friendIdMap.put(friendId, contact);
-                    }
-                }
-                if (mList.size() > 0) {
-                    adapter.notifyDataSetChanged();
-                }
+        new AsyncTask<Void, Void, ArrayList<FriendsBean>>() {
+            @Override
+            protected ArrayList<FriendsBean> doInBackground(Void... params) {
+                return util.getFriendsList();
             }
-        }
+
+            @Override
+            protected void onPostExecute(ArrayList<FriendsBean> result) {
+                if (mList == null) {
+                    mList = new ArrayList<FriendsBean>();
+                }
+                mList.clear();
+                mList.addAll(result);
+            }
+        }.execute();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClick(View view, int position) {
         Bundle bundle = new Bundle();
-        bundle.putString("name", mList.get(position).getDesplayName());
+        bundle.putString("name", mList.get(position).getName());
         bundle.putString("phone", mList.get(position).getPhone());
         // start up MessageActivity
         MessageActivity.actionStart(getActivity(), bundle);
