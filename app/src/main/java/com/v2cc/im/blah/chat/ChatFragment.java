@@ -24,13 +24,11 @@ public class ChatFragment extends BaseFragment implements ChatStaggeredViewAdapt
 
     private ArrayList<MessageBean> mList;
     private ChatStaggeredViewAdapter mAdapter;
-
-    RecyclerView mRecyclerView;
+    private DataBaseHelperUtil util;
+    private RecyclerView mRecyclerView;
     public RecyclerView.LayoutManager mLayoutManager;
 
     private static final int SPAN_COUNT = 2;
-
-    private DataBaseHelperUtil util;
 
     public static ChatFragment newInstance(int position) {
         ChatFragment chatFragment = new ChatFragment();
@@ -46,7 +44,7 @@ public class ChatFragment extends BaseFragment implements ChatStaggeredViewAdapt
     }
 
     @Override
-    protected void initViews(View rootView) {
+    protected void initView(View rootView) {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
 
         mList = new ArrayList<MessageBean>();
@@ -56,14 +54,9 @@ public class ChatFragment extends BaseFragment implements ChatStaggeredViewAdapt
 
         mLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
-    }
-
-    @Override
-    protected void configViews() {
 
         // 设置item动画，默认生效，可取消
 //        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
     }
 
     @Override
@@ -76,21 +69,20 @@ public class ChatFragment extends BaseFragment implements ChatStaggeredViewAdapt
         MessageActivity.actionStart(getActivity(), bundle);
     }
 
+    // TODO add long click event
     @Override
     public void onItemLongClick(View view, int position) {
         Log.d(getClass().getSimpleName(), mList.get(position).getName());
 
-        new AsyncTask<String, Void, Void>() {
-            @Override
-            protected Void doInBackground(String... phone) {
-                util.deleteMessageLogsByPhone(phone[0]);
-                return null;
-            }
-        }.execute(mList.get(position).getPhone());
-        mList.remove(position);
-        mAdapter.notifyItemRemoved(position);
-
-        // TODO snake bar
+//        new AsyncTask<String, Void, Void>() {
+//            @Override
+//            protected Void doInBackground(String... phone) {
+//                util.deleteMessageLogsByPhone(phone[0]);
+//                return null;
+//            }
+//        }.execute(mList.get(position).getPhone());
+//        mList.remove(position);
+//        mAdapter.notifyItemRemoved(position);
     }
 
     @Override
@@ -101,9 +93,7 @@ public class ChatFragment extends BaseFragment implements ChatStaggeredViewAdapt
         new AsyncTask<Void, Void, ArrayList<MessageBean>>() {
             @Override
             protected ArrayList<MessageBean> doInBackground(Void... params) {
-                ArrayList<MessageBean> list = new ArrayList<>(util.getRecentChats());
-
-                return list;
+                return util.getRecentChats();
             }
 
             @Override

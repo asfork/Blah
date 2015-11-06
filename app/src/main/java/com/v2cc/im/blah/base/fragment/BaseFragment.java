@@ -25,9 +25,8 @@ public abstract class BaseFragment extends Fragment {
         Log.d(getClass().getSimpleName(), "onCreateView...");
 
         rootView = inflater.inflate(setRootViewId(), container, false);
-        initViews(rootView);
+        initView(rootView);
         initData();
-        configViews();
         return rootView;
     }
 
@@ -41,19 +40,13 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 初始化组件
      */
-    protected void initViews(View rootView) {
+    protected void initView(View rootView) {
     }
 
     /**
      * 初始化数据
      */
     protected void initData() {
-    }
-
-    /**
-     * 配置组件
-     */
-    protected void configViews() {
     }
 
     @Override

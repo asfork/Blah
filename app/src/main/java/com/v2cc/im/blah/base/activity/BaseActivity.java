@@ -26,20 +26,15 @@ public class BaseActivity extends AppCompatActivity {
         }
 
         // 初始化各种控件
-        initViews();
+        initView();
         // 初始化mTitles、mFragments等ViewPager需要的数据
         initData();
-        // 对各种控件进行设置、适配、填充数据
-        configViews();
     }
 
-    public void initViews() {
+    public void initView() {
     }
 
     public void initData() {
-    }
-
-    public void configViews() {
     }
 
     @Override

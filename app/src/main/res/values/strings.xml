@@ -27,5 +27,9 @@
     <string name="dialog_delete_chat_title">Delete this chat</string>
     <string name="dialog_delete_chat_content">This chat will be permanently deleted！</string>
 
+    <!--Friends Detail-->
+    <string name="friends_detail_phone">Phone</string>
+    <string name="friends_detail_info">Info</string>
+
     <string name="welcome_to_here">More inspirations are coming soon!</string>
 </resources>

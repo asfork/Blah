@@ -91,11 +91,11 @@ public class ContactsHelperUtil {
                 } else {
                     // 创建联系人对象
                     FriendsBean contact = new FriendsBean();
-                    contact.setDesplayName(name);
+                    contact.setName(name);
                     contact.setPhone(number);
-                    contact.setSortKey(sortKey);
-                    contact.setPhotoId(photoId);
-                    contact.setLookUpKey(lookUpKey);
+//                    contact.setSortKey(sortKey);
+//                    contact.setImgPath(photoId);
+                    contact.setState(lookUpKey);
                     mList.add(contact);
 
                     friendIdMap.put(friendId, contact);

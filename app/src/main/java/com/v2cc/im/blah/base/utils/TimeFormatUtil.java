@@ -10,7 +10,7 @@ import java.util.Locale;
  * 15/10/14.
  * If this class works, I created it. If not, I didn't.
  */
-public class TimeFormattingUtil {
+public class TimeFormatUtil {
     public static String displayTime(String time) {
         long ti = Long.valueOf(time);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);

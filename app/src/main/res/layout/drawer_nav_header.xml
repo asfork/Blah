@@ -17,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/header_author_name"
+        android:textColor="@color/icons"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
@@ -24,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/header_author_email"
+        android:textColor="@color/icons"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
 </LinearLayout>

@@ -11,10 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.v2cc.im.blah.R;
-import com.v2cc.im.blah.base.utils.TimeFormattingUtil;
+import com.v2cc.im.blah.base.utils.TimeFormatUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 聊天内容界面的ListView适配器
@@ -69,7 +68,7 @@ public class MessageListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tv_date.setText(TimeFormattingUtil.displayTime(messageBean.getTime()));
+        holder.tv_date.setText(TimeFormatUtil.displayTime(messageBean.getTime()));
         holder.tv_date.setVisibility(View.VISIBLE);
 
         holder.tv_msg_content.setText(messageBean.getContent());

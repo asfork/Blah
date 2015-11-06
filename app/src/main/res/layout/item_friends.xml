@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-                android:orientation="vertical">
+    android:orientation="vertical">
 
     <!-- 首字母 -->
 
@@ -12,18 +12,18 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/item_margin"
         android:layout_marginTop="5dp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <!-- 联系人信息 -->
-
-    <QuickContactBadge
-        android:id="@+id/qcb"
-        android:layout_width="@dimen/contact_badge_avatar_size"
-        android:layout_height="@dimen/contact_badge_avatar_size"
+    <com.v2cc.im.blah.base.view.RoundedImageView
+        android:id="@+id/friends_item_avatar"
+        android:layout_width="@dimen/friends_item_avatar_size"
+        android:layout_height="@dimen/friends_item_avatar_size"
         android:layout_below="@id/alpha"
         android:layout_marginStart="@dimen/item_margin"
         android:layout_marginTop="5dp"
-        android:visibility="visible"/>
+        android:src="@drawable/icons_head_00"
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -31,9 +31,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_middle"
         android:layout_below="@id/alpha"
-        android:layout_toEndOf="@id/qcb"
-        android:layout_marginTop="17dp"
-        android:layout_marginStart="@dimen/item_margin"
-        android:background="?android:attr/selectableItemBackground" />
+        android:layout_toEndOf="@id/friends_item_avatar"
+        android:layout_margin="@dimen/item_margin" />
 
 </RelativeLayout>

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.v2cc.im.blah.R;
-import com.v2cc.im.blah.base.utils.TimeFormattingUtil;
+import com.v2cc.im.blah.base.utils.TimeFormatUtil;
 import com.v2cc.im.blah.message.MessageBean;
 
 import java.util.ArrayList;
@@ -47,7 +47,6 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
     public ChatStaggeredViewAdapter(Context context, ArrayList<MessageBean> list) {
         this.context = context;
         this.list = list;
-
 
         heights = new ArrayList<>();
         colors = new ArrayList<>();
@@ -122,7 +121,7 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
         mLayoutParams.height = heights.get(position);
         holder.tvName.setLayoutParams(mLayoutParams);
         holder.tvName.setText(list.get(position).getName());
-        holder.tvTime.setText(TimeFormattingUtil.displayTime(list.get(position).getTime()));
+        holder.tvTime.setText(TimeFormatUtil.displayTime(list.get(position).getTime()));
     }
 
     @Override

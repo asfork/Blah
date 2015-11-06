@@ -59,19 +59,20 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     }
 
     @Override
-    public void initViews() {
+    public void initView() {
         setContentView(R.layout.activity_main);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
 
+        // 判断是否是来自点击通知的跳转
         Bundle bundle = getIntent().getBundleExtra(Constants.EXTRA_BUNDLE);
         if (bundle != null) {
             MessageActivity.actionStart(this, bundle);
             Log.d("MainActivity", "launchParam exists, redirect to MessageActivity");
         }
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
     }
 
     @Override
@@ -102,12 +103,14 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                     break;
             }
         }
+
+        configView();
     }
 
-    @Override
-    public void configViews() {
+    private void configView() {
         // 设置显示Toolbar
         setSupportActionBar(toolbar);
+
         // 透明状态栏
         StatusBarCompat.compat(this);
 
@@ -116,8 +119,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mActionBarDrawerToggle.syncState();
         drawerLayout.setDrawerListener(mActionBarDrawerToggle);
 
-        //给NavigationView填充顶部区域，也可在xml中使用app:headerLayout="@layout/drawer_header"来设置
-        navigationView.inflateHeaderView(R.layout.drawer_header);
+        //给NavigationView填充顶部区域，也可在xml中使用app:headerLayout="@layout/drawer_nav_header"来设置
+        navigationView.inflateHeaderView(R.layout.drawer_nav_header);
         //给NavigationView填充Menu菜单，也可在xml中使用app:menu="@menu/drawer_nav"来设置
         navigationView.inflateMenu(R.menu.drawer_nav);
 
@@ -138,7 +141,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         tabLayout.setupWithViewPager(viewPager);
         // 设置Tablayout的Tab显示ViewPager的适配器中的getPageTitle函数获取到的标题
         tabLayout.setTabsFromPagerAdapter(adapter);
-
     }
 
     /**

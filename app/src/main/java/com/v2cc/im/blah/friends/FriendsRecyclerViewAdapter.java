@@ -1,26 +1,18 @@
 package com.v2cc.im.blah.friends;
 
-import android.content.ContentUris;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.QuickContactBadge;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.v2cc.im.blah.R;
+import com.v2cc.im.blah.base.app.App;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -30,35 +22,38 @@ import java.util.regex.Pattern;
  */
 public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecyclerViewAdapter.ViewHolder> {
     public OnItemClickListener mOnItemClickListener;
-    HashMap<String, Integer> alphaIndexer; // 字母索引
-    String[] sections; // 存储每个章节
+    private final TypedValue mTypedValue = new TypedValue();
+    private int mBackground;
     private List<FriendsBean> list;
-    private Context ctx; // 上下文
 
     public FriendsRecyclerViewAdapter(Context context, List<FriendsBean> list) {
-        this.ctx = context;
+        context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
+        mBackground = mTypedValue.resourceId;
         this.list = list;
+    }
 
-        alphaIndexer = new HashMap<String, Integer>();
-        for (int i = 0; i < list.size(); i++) {
-            // 得到字母
-            String name = getAlpha(list.get(i).getSortKey());
-            if (!alphaIndexer.containsKey(name)) {
-                alphaIndexer.put(name, i);
-            }
+    // Provide a reference to the type of views that you are using
+    // (custom viewholder)
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public final TextView alphaView;
+        public final ImageView img_avatar;
+        public final TextView nameView;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            alphaView = (TextView) itemView.findViewById(R.id.alpha);
+            img_avatar = (ImageView) itemView.findViewById(R.id.friends_item_avatar);
+            nameView = (TextView) itemView.findViewById(R.id.tv_name);
         }
-
-        Set<String> sectionLetters = alphaIndexer.keySet();
-        ArrayList<String> sectionList = new ArrayList<String>(sectionLetters);
-        Collections.sort(sectionList); // 根据首字母进行排序
-        sections = new String[sectionList.size()];
-        sectionList.toArray(sections);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_friends, parent, false);
+
+        // 增加点击水波纹动画
+        view.setBackgroundResource(mBackground);
         return new ViewHolder(view);
     }
 
@@ -69,19 +64,6 @@ public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecy
         viewHolder.nameView.setText(name);
 
         // TODO Friends photos
-        viewHolder.quickContactBadge.assignContactUri(ContactsContract.Contacts.getLookupUri(
-                contact.getContactId(), contact.getState()));
-        if (contact.getImgPath().equals("")) {
-            viewHolder.quickContactBadge.setImageResource(R.drawable.icons_head_00);
-        } else {
-            Uri uri = ContentUris.withAppendedId(
-                    ContactsContract.Contacts.CONTENT_URI,
-                    contact.getContactId());
-            InputStream input = ContactsContract.Contacts
-                    .openContactPhotoInputStream(ctx.getContentResolver(), uri);
-            Bitmap contactPhoto = BitmapFactory.decodeStream(input);
-            viewHolder.quickContactBadge.setImageBitmap(contactPhoto);
-        }
 
         // 当前字母
         String currentStr = getAlpha(contact.getSortKey());
@@ -95,23 +77,22 @@ public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecy
             viewHolder.alphaView.setVisibility(View.GONE);
         }
 
-        if (mOnItemClickListener != null) {
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mOnItemClickListener.onItemClick(viewHolder.itemView, position);
-                }
-            });
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemClickListener.onItemClick(viewHolder.itemView, position);
+            }
+        });
 
-            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    mOnItemClickListener.onItemLongClick(viewHolder.itemView, position);
-                    return true;
-                }
-            });
+        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mOnItemClickListener.onItemLongClick(viewHolder.itemView, position);
+                return true;
+            }
+        });
 
-        }
+
     }
 
     @Override
@@ -121,6 +102,12 @@ public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecy
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mOnItemClickListener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+
+        void onItemLongClick(View view, int position);
     }
 
     /**
@@ -142,27 +129,6 @@ public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecy
             return (c + "").toUpperCase(); // 将小写字母转换为大写
         } else {
             return "#";
-        }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-
-        void onItemLongClick(View view, int position);
-    }
-
-    // Provide a reference to the type of views that you are using
-    // (custom viewholder)
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final QuickContactBadge quickContactBadge;
-        public final TextView alphaView;
-        public final TextView nameView;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            quickContactBadge = (QuickContactBadge) itemView.findViewById(R.id.qcb);
-            alphaView = (TextView) itemView.findViewById(R.id.alpha);
-            nameView = (TextView) itemView.findViewById(R.id.tv_name);
         }
     }
 }

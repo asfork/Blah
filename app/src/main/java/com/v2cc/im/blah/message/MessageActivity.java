@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,12 +31,12 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     private Toolbar toolbar;
     private String name;// 昵称
     private String phone;
-    FloatingActionButton mFAB;
+    private FloatingActionButton mFAB;
     private ArrayList<MessageBean> messageHistories;// 聊天信息集合
-    ListView listView;// 聊天信息列表
+    private ListView listView;// 聊天信息列表
     private MessageListViewAdapter adapter;// 聊天信息列表适配器
     private DataBaseHelperUtil util;
-    SMSUtil smsUtil;
+    private SMSUtil smsUtil;
 
     public static void actionStart(Context context, Bundle bundle) {
         Intent intent = new Intent(context, MessageActivity.class);
@@ -46,33 +45,23 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
     }
 
     @Override
-    public void initViews() {
+    public void initView() {
         setContentView(R.layout.activity_message);
-        listView = (ListView) findViewById(R.id.lv);
 
+        listView = (ListView) findViewById(R.id.lv);
         messageHistories = new ArrayList<MessageBean>();
         adapter = new MessageListViewAdapter(MessageActivity.this, messageHistories);
         listView.setAdapter(adapter);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        mFAB = (FloatingActionButton) findViewById(R.id.fab);
-
-        // 设置FloatingActionButton的点击事件
-        mFAB.setOnClickListener(this);
-    }
-
-    @Override
-    public void initData() {
-    }
-
-    @Override
-    public void configViews() {
-
         toolbar.setTitle(getIntent().getStringExtra("name"));
-
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mFAB = (FloatingActionButton) findViewById(R.id.fab);
+        // 设置FloatingActionButton的点击事件
+        mFAB.setOnClickListener(this);
 
         // 透明状态栏
         StatusBarCompat.compat(this);
@@ -144,8 +133,8 @@ public class MessageActivity extends BaseActivity implements OnClickListener {
         // insert sms to db
         new AsyncTask<MessageBean, Void, Void>() {
             protected Void doInBackground(MessageBean... mb) {
-                util.insertToTable(DataBaseHelperUtil.TABLE_NAME_MESSAGE_LOGS, mb[0]);
                 util.insertRecentChats(mb[0]);
+                util.insertToTable(DataBaseHelperUtil.TABLE_NAME_MESSAGE_LOGS, mb[0]);
                 return null;
             }
         }.execute(messageBean);

@@ -9,10 +9,12 @@ import android.view.View;
 import com.v2cc.im.blah.R;
 import com.v2cc.im.blah.base.fragment.BaseFragment;
 import com.v2cc.im.blah.db.DataBaseHelperUtil;
-import com.v2cc.im.blah.message.MessageActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Steve ZHANG (stevzhg@gmail.com)
@@ -40,28 +42,19 @@ public class FriendsFragment extends BaseFragment implements FriendsRecyclerView
     }
 
     @Override
-    protected void initViews(View rootView) {
+    protected void initView(View rootView) {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
 
         mList = new ArrayList<FriendsBean>();
         adapter = new FriendsRecyclerViewAdapter(getActivity(), mList);
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    protected void initData() {
-        util = DataBaseHelperUtil.getInstance(getActivity());
-    }
-
-    @Override
-    public void configViews() {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    protected void initData(){
+        util = DataBaseHelperUtil.getInstance(getActivity());
 
         new AsyncTask<Void, Void, ArrayList<FriendsBean>>() {
             @Override
@@ -74,6 +67,16 @@ public class FriendsFragment extends BaseFragment implements FriendsRecyclerView
                 if (mList == null) {
                     mList = new ArrayList<FriendsBean>();
                 }
+                // sort list
+                if (!result.isEmpty()) {
+                    Collections.sort(result, new Comparator<FriendsBean>() {
+                        @Override
+                        public int compare(FriendsBean preObj, FriendsBean nextObj) {
+                            return preObj.getSortKey().trim().compareTo(nextObj.getSortKey().trim());
+                        }
+                    });
+                }
+
                 mList.clear();
                 mList.addAll(result);
             }
@@ -87,7 +90,7 @@ public class FriendsFragment extends BaseFragment implements FriendsRecyclerView
         bundle.putString("name", mList.get(position).getName());
         bundle.putString("phone", mList.get(position).getPhone());
         // start up MessageActivity
-        MessageActivity.actionStart(getActivity(), bundle);
+        FriendsDetailActivity.actionStart(getActivity(), bundle);
     }
 
     @Override

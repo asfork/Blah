@@ -28,15 +28,8 @@ public class LoginActivity extends BaseActivity {
     private String userPhone;
 
     @Override
-    public void initViews() {
+    public void initView() {
         setContentView(R.layout.activity_login);
-
-        //
-        Bundle bundle = getIntent().getBundleExtra(Constants.EXTRA_BUNDLE);
-        if (bundle != null) {
-            MainActivity.actionStart(this, bundle);
-            ActivityCollector.finishActivity(this);
-        }
 
         // Set up the login form.
         editText = (EditText) findViewById(R.id.phone_input);
@@ -62,13 +55,17 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
+        // 判断是否来自点击通知
+        Bundle bundle = getIntent().getBundleExtra(Constants.EXTRA_BUNDLE);
+        if (bundle != null) {
+            MainActivity.actionStart(this, bundle);
+            ActivityCollector.finishActivity(this);
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
 //        mSocket.off("login", onLogin);
     }
 
