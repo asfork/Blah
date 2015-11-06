@@ -26,12 +26,9 @@
 
         <activity
             android:name=".base.activity.MainActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
-
-        <activity
-            android:name=".message.MessageActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".message.MessageActivity" />
+        <activity android:name=".friends.FriendsDetailActivity" />
 
         <receiver
             android:name=".receiver.SmsReceiver">

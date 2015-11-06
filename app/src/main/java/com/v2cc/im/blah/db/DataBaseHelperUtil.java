@@ -116,7 +116,7 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
         db.execSQL("insert into Friends (phone,name,sortKey,imgPath,state)" +
                 " values (233, 'Peter','Peter','', 0)");
         db.execSQL("insert into Friends (phone,name,sortKey,imgPath,state)" +
-                " values (10101, 'Hobot','Hobot','', 0)");
+                " values (10101, 'Hubot','Hubot','', 0)");
         db.execSQL("insert into Friends (phone,name,sortKey,imgPath,state)" +
                 " values (9000, 'HAL','HAL','', 0)");
         db.execSQL("insert into Friends (phone,name,sortKey,imgPath,state)" +
@@ -138,17 +138,17 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
                 " values (9000, 1444805933688, 'Blah blah', 1, 1)");
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
-                " values (9000, 1444806533688, 'Blah blah', 1, 2)");
+                " values (9000, 1446806533688, 'Blah blah', 1, 2)");
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
-                " values (9000, 1444806833688, 'Blah blah', 1, 1)");
+                " values (9000, 1447206833688, 'Blah blah', 1, 1)");
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
-                " values (9000, 1444806933688, 'Blah blah', 1, 2)");
+                " values (9000, 1448106933688, 'Blah blah', 1, 2)");
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
-                " values (10101, 1444806720125, 'Blah blah', 1, 1)");
+                " values (10101, 1444806720125, 'Blah blah', 1, 2)");
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
                 " values (233, 1444803922125, 'Blah blah', 1, 2)");
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
-                " values (10101, 1442806920125, 'Blah blah', 1, 1)");
+                " values (10101, 1446806920125, 'Blah blah', 1, 1)");
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
                 " values (233, 1445116922125, 'Blah blah', 1, 2)");
         db.execSQL("insert into MessageLogs (phone,time,content,type,source)" +
@@ -203,7 +203,9 @@ public class DataBaseHelperUtil extends SQLiteOpenHelper {
     public synchronized void insertFriends(FriendsBean friendsBean) {
         Cursor cursor = database.rawQuery("select * from " + TABLE_NAME_FRIENDS
                 + " where phone = ? ", new String[]{friendsBean.getPhone()});
-        if (!cursor.moveToNext()) {
+        if (cursor.moveToNext()) {
+            // TODO update table
+        } else {
             database.execSQL(
                     "insert into "
                             + TABLE_NAME_FRIENDS
