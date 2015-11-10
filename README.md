@@ -18,7 +18,7 @@ Enjoy it!
 
 *   ScrollView
 
-![](https://raw.githubusercontent.com/v2cc/Blah/master/screenshot/login_activity.gif)
+![](https://raw.githubusercontent.com/v2cc/Blah/master/screenshot/login.gif)
 
 ---
 
@@ -27,7 +27,7 @@ Enjoy it!
 *   DrawerLayout
 *   Rounded Image View
 
-![](https://raw.githubusercontent.com/v2cc/Blah/master/screenshot/nav_drawer.gif)
+![](https://raw.githubusercontent.com/v2cc/Blah/master/screenshot/drawer.gif)
 
 ---
 
@@ -40,13 +40,30 @@ Enjoy it!
 
 ---
 
+[Friends Details Activity](https://github.com/v2cc/Blah/blob/master/app/src/main/java/com/v2cc/im/blah/friends/FriendsDetailActivity.java)
+
+*   CoordinatorLayout + AppBarLayout + CollapsingToolbarLayout
+*   ImageView + [Glide](https://github.com/bumptech/glide)
+*   FloatingActionButton
+
+![](https://raw.githubusercontent.com/v2cc/Blah/master/screenshot/friends.gif)  
+
+---
+
 [Message Activity](https://github.com/v2cc/Blah/blob/master/app/src/main/java/com/v2cc/im/blah/message/MessageActivity.java)
 
 *   FloatingActionButton
 *   ListView + Adapter + ViewHolder
 
-![](https://raw.githubusercontent.com/v2cc/Blah/master/screenshot/message_activity.gif)
+![](https://raw.githubusercontent.com/v2cc/Blah/master/screenshot/message.gif)
 
 ## Download
 
 The latest version: [Blah](https://github.com/v2cc/Blah/releases)
+
+## Reference
+
+-   [AndroidNewWidgetsDemo](https://github.com/git0pen/AndroidNewWidgetsDemo)
+-   [Wechat](http://git.oschina.net/yeliangliang/WeChat)
+-   [cheesesquare](https://github.com/chrisbanes/cheesesquare)
+-   [Glide](https://github.com/bumptech/glide)
