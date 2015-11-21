@@ -10,12 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.v2cc.im.blah.base.activity.BaseActivity;
-import com.v2cc.im.blah.base.activity.MainActivity;
-import com.v2cc.im.blah.base.app.Constants;
-import com.v2cc.im.blah.base.utils.ActivityCollector;
-import com.v2cc.im.blah.db.DataBaseHelperUtil;
-import com.v2cc.im.blah.friends.ContactsAsyncQueryHandler;
+import com.v2cc.im.blah.models.Constants;
+import com.v2cc.im.blah.db.DataBaseHelper;
+import com.v2cc.im.blah.utils.ActivityCollector;
+import com.v2cc.im.blah.managers.ContactsAsyncQueryHandler;
 
 /**
  * Created by Steve ZHANG (stevzhg@gmail.com)
@@ -81,7 +79,7 @@ public class LoginActivity extends BaseActivity {
         // Store values at the time of the login attempt.
         String userPhone = editText.getText().toString().trim();
 
-        // TODO　Check for a valid user phone.
+        // TODO　Check phone number for validity
         if (TextUtils.isEmpty(userPhone)) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -96,7 +94,7 @@ public class LoginActivity extends BaseActivity {
 //        mSocket.emit("add user", userPhone)
 
         if (userPhone.length() == 11) {
-            DataBaseHelperUtil.getInstance(this).openDataBase();
+            DataBaseHelper.getInstance(this).openDataBase();
             // 异步读取通讯录
             ContactsAsyncQueryHandler asyncQueryHandler; // 异步查询数据库类对象
             // 实例化
@@ -105,7 +103,7 @@ public class LoginActivity extends BaseActivity {
             asyncQueryHandler.startQuery(0, null, ContactsAsyncQueryHandler.CONTACTS_URI,
                     ContactsAsyncQueryHandler.CONTACTS_INFO, null, null,
                     "sort_key COLLATE LOCALIZED asc");
-            DataBaseHelperUtil.getInstance(this).closeDataBase();
+            DataBaseHelper.getInstance(this).closeDataBase();
 
             // start up MessageActivity
             Bundle bundle = new Bundle();

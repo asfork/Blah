@@ -17,7 +17,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp">
 
-        <com.v2cc.im.blah.base.view.RoundedImageView
+        <com.v2cc.im.blah.views.RoundedImageView
             android:id="@+id/message_item_avatar"
             style="@style/message_item_avatar"
             android:layout_alignParentStart="true"

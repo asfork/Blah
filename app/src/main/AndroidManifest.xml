@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
 
     <application
-        android:name="com.v2cc.im.blah.base.app.App"
+        android:name=".models.App"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,18 +25,18 @@
         </activity>
 
         <activity
-            android:name=".base.activity.MainActivity"
+            android:name=".MainActivity"
             android:launchMode="singleTask"/>
-        <activity android:name=".message.MessageActivity" />
-        <activity android:name=".friends.FriendsDetailActivity" />
+        <activity android:name=".MessageActivity" />
+        <activity android:name=".FriendsDetailActivity" />
 
         <receiver
-            android:name=".receiver.SmsReceiver">
+            android:name=".managers.SmsReceiver">
             <intent-filter android:priority="1000">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.NotificationReceiver"/>
+        <receiver android:name=".managers.NotificationReceiver"/>
     </application>
 
 </manifest>

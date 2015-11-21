@@ -15,7 +15,7 @@
         android:visibility="gone" />
 
     <!-- 联系人信息 -->
-    <com.v2cc.im.blah.base.view.RoundedImageView
+    <com.v2cc.im.blah.views.RoundedImageView
         android:id="@+id/friends_item_avatar"
         android:layout_width="@dimen/friends_item_avatar_size"
         android:layout_height="@dimen/friends_item_avatar_size"
