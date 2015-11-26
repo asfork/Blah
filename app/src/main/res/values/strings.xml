@@ -4,11 +4,19 @@
     <string name="title_activity_login">Join</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_username">Please input your phone number</string>
-    <string name="action_sign_in">Join</string>
-    <string name="action_sign_in_short">Join</string>
+    <string name="prompt_account">Please input your phone number</string>
+    <string name="action_sign_up">Sign up</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="ime_sign_in">Join</string>
     <string name="error_field_required">This field is required</string>
-    <string name="error_phone_format">Please input correct number</string>
+    <string name="error_account_format">Please input correct account</string>
+
+    <!--Registration strings-->
+    <string name="reg_photo_album">From Album</string>
+    <string name="reg_photo_camera">From Camera</string>
+    <string name="reg_photo_info">We start over until everything we touch enhances each life.</string>
+    <string name="prompt_name">Your name</string>
+    <string name="ime_sign_up">OK</string>
 
     <!--Toolbar strings related to main-->
     <string name="action_quit">Quit</string>

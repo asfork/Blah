@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fadingEdge="none"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30dip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:orientation="horizontal"
+            android:padding="1dip">
+
+            <ImageView
+                android:id="@+id/iv_userphoto"
+                android:layout_width="120dip"
+                android:layout_height="120dip"
+                android:layout_marginEnd="@dimen/item_margin"
+                android:background="@drawable/bg_reg_userhead"
+                android:padding="6dip"
+                android:src="@drawable/icons_head_00" />
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_marginStart="1dip"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layout_selectphoto"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="3dip"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_default"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@mipmap/ic_album" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="0.5dip"
+                        android:layout_weight="1.0"
+                        android:text="@string/reg_photo_album"
+                        android:textColor="@color/primary_text" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_takepicture"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="3dip"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_default"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:src="@mipmap/ic_camera" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="0.5dip"
+                        android:layout_weight="1"
+                        android:text="@string/reg_photo_camera"
+                        android:textColor="@color/primary_text" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dip"
+            android:layout_marginEnd="8dip"
+            android:layout_marginTop="@dimen/item_margin"
+            android:gravity="center"
+            android:text="@string/reg_photo_info"
+            android:textSize="@dimen/text_size_vsmall" />
+
+        <EditText
+            android:id="@+id/et_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_account"
+            android:inputType="phone"
+            android:maxLength="15"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_name"
+            android:imeActionId="@+id/login"
+            android:imeActionLabel="@string/ime_sign_up"
+            android:imeOptions="actionUnspecified"
+            android:maxLength="18"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/btn_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_sign_up" />
+    </LinearLayout>
+</ScrollView>
