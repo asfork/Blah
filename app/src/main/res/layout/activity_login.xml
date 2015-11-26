@@ -11,19 +11,19 @@
 
     tools:context="com.v2cc.im.blah.LoginActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/phone_input"
+            android:id="@+id/et_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/prompt_username"
+            android:hint="@string/prompt_account"
             android:imeActionId="@+id/login"
-            android:imeActionLabel="@string/action_sign_in_short"
+            android:imeActionLabel="@string/ime_sign_in"
             android:imeOptions="actionUnspecified"
             android:maxLength="14"
             android:maxLines="1"
@@ -31,13 +31,24 @@
             android:inputType="phone"/>
 
         <Button
-            android:id="@+id/sign_in_button"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
+            android:id="@+id/btn_sign_in"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_below="@id/et_account"
+            android:layout_alignParentEnd="true"
             android:text="@string/action_sign_in"
-            android:textStyle="bold"/>
+            style="?android:textAppearanceSmall" />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/btn_sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin"
+            android:layout_toStartOf="@id/btn_sign_in"
+            android:layout_below="@id/et_account"
+            android:text="@string/action_sign_up"
+            style="?android:textAppearanceSmall" />
+
+    </RelativeLayout>
 </ScrollView>
