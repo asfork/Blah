@@ -1,6 +1,7 @@
 package com.v2cc.im.blah.views.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -10,7 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.v2cc.im.blah.R;
-import com.v2cc.im.blah.models.FriendsBean;
+import com.v2cc.im.blah.bean.ApplicationData;
+import com.v2cc.im.blah.bean.User;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -22,27 +24,28 @@ import java.util.regex.Pattern;
  */
 public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecyclerViewAdapter.ViewHolder> {
     public OnItemClickListener mOnItemClickListener;
-    private final TypedValue mTypedValue = new TypedValue();
     private int mBackground;
-    private List<FriendsBean> list;
+    private List<User> mFriendsList;
 
-    public FriendsRecyclerViewAdapter(Context context, List<FriendsBean> list) {
+    private final TypedValue mTypedValue = new TypedValue();
+
+    public FriendsRecyclerViewAdapter(Context context, List<User> mFriendsList) {
         context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
         mBackground = mTypedValue.resourceId;
-        this.list = list;
+        this.mFriendsList = mFriendsList;
     }
 
     // Provide a reference to the type of views that you are using
     // (custom viewholder)
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView alphaView;
-        public final ImageView img_avatar;
+        public final ImageView avatarView;
         public final TextView nameView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             alphaView = (TextView) itemView.findViewById(R.id.alpha);
-            img_avatar = (ImageView) itemView.findViewById(R.id.friends_item_avatar);
+            avatarView = (ImageView) itemView.findViewById(R.id.roundediv_avatar);
             nameView = (TextView) itemView.findViewById(R.id.tv_name);
         }
     }
@@ -59,17 +62,21 @@ public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecy
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        FriendsBean contact = list.get(position);
-        String name = contact.getName();
+        User friend = mFriendsList.get(position);
+
+        String name = friend.getUserName();
         viewHolder.nameView.setText(name);
 
-        // TODO Friends photos
+        Bitmap photo = (ApplicationData.getInstance().getFriendPhotoMap()).get(friend.getId());
+        if (photo != null) {
+            viewHolder.avatarView.setImageBitmap(photo);
+        }
 
         // 当前字母
-        String currentStr = getAlpha(contact.getSortKey());
+        String currentStr = getAlpha(friend.getUserName());
         // 前面的字母
-        String previewStr = (position - 1) >= 0 ? getAlpha(list.get(
-                position - 1).getSortKey()) : " ";
+        String previewStr = (position - 1) >= 0 ? getAlpha(mFriendsList.get(
+                position - 1).getAccount()) : " ";
         if (!previewStr.equals(currentStr)) {
             viewHolder.alphaView.setVisibility(View.VISIBLE);
             viewHolder.alphaView.setText(currentStr);
@@ -97,7 +104,7 @@ public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecy
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return mFriendsList.size();
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

@@ -48,7 +48,7 @@ public class ClientListenThread extends Thread {
                 System.out.println(mReceived.getTranType());
                 switch (mReceived.getTranType()) {
                     case REGISTER_ACCOUNT:
-//                        RegistrationActivity.setRegisterInfo(mReceived, true);
+                        RegistrationActivity.setRegisterInfo(mReceived, true);
                         System.out.println("账号可用");
                         break;
                     case REGISTER:

@@ -7,9 +7,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
 
-import com.v2cc.im.blah.models.App;
-import com.v2cc.im.blah.db.DataBaseHelper;
-import com.v2cc.im.blah.models.FriendsBean;
+import com.v2cc.im.blah.bean.FriendsBean;
 import com.v2cc.im.blah.utils.PhoneFormatUtil;
 
 /**
@@ -35,7 +33,7 @@ public class ContactsAsyncQueryHandler extends AsyncQueryHandler {
         Log.d(getClass().getSimpleName(), "QueryComplete");
         super.onQueryComplete(token, cookie, cursor);
 
-        DataBaseHelper util = DataBaseHelper.getInstance(App.getContext());
+//        DataBaseHelper util = DataBaseHelper.getInstance(App.getContext());
         if (cursor != null && cursor.getCount() > 0) {
             // 创建联系人对象
             FriendsBean contact = new FriendsBean();
@@ -53,7 +51,7 @@ public class ContactsAsyncQueryHandler extends AsyncQueryHandler {
                 contact.setImgPath("");
                 contact.setState(FriendsBean.FRI_STATE_OFFLINE);
 
-                util.insertFriends(contact);
+//                util.insertFriend(contact);
             }
         }
     }

@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.v2cc.im.blah.fragments.ChatsListFragment;
 import com.v2cc.im.blah.fragments.FragmentTest;
-import com.v2cc.im.blah.fragments.ChatFragment;
 import com.v2cc.im.blah.fragments.FriendsFragment;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return ChatFragment.newInstance(position);
+                return ChatsListFragment.newInstance(position);
             case 1:
                 return FriendsFragment.newInstance(position);
             default:

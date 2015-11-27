@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.v2cc.im.blah.utils.ActivityCollector;
+import com.v2cc.im.blah.managers.ActivityCollector;
 
 /**
  * Created by Steve ZHANG (stevzhg@gmail.com)
@@ -12,8 +12,7 @@ import com.v2cc.im.blah.utils.ActivityCollector;
  * If it works, I created this. If not, I didn't.
  */
 
-public class BaseActivity extends AppCompatActivity {
-
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +25,15 @@ public class BaseActivity extends AppCompatActivity {
         }
 
         // 初始化各种控件
-        initView();
+        initViews();
         // 初始化mTitles、mFragments等ViewPager需要的数据
-        initData();
+        initEvents();
     }
 
-    public void initView() {
+    public void initViews() {
     }
 
-    public void initData() {
+    public void initEvents() {
     }
 
     @Override

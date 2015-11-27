@@ -30,6 +30,8 @@ import com.v2cc.im.blah.managers.ActivityCollector;
 import com.v2cc.im.blah.network.NetService;
 import com.v2cc.im.blah.utils.PhotoUtil;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by Steve Zhang
  * 15-11-26
@@ -192,6 +194,12 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
 
         new AsyncTask<User, Void, Integer>() {
             @Override
+            protected void onCancelled() {
+                super.onCancelled();
+                progressDialog.dismiss();
+            }
+
+            @Override
             protected Integer doInBackground(User... users) {
                 try {
                     mIsReceived = false;
@@ -204,6 +212,7 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                         // 如果没收到的话就会一直阻塞;
                         while (!mIsReceived) {
                             // TODO add standby time
+                            TimeUnit.SECONDS.sleep(2);
                         }
                         mNetService.closeConnection();
                         if (mReceivedInfo.getResult() == Result.REGISTER_SUCCESS)
@@ -226,10 +235,11 @@ public class RegistrationActivity extends BaseActivity implements View.OnClickLi
                     Toast.makeText(RegistrationActivity.this, "Server error", Toast.LENGTH_SHORT).show();
                 } else {
                     if (result == 1) {
-                        Toast.makeText(RegistrationActivity.this, "Successful registration", Toast.LENGTH_SHORT).show();
+                        Log.d("register", "注册成功");
+                        Toast.makeText(RegistrationActivity.this, "Successful registration", Toast.LENGTH_LONG).show();
                         ActivityCollector.finishActivity(RegistrationActivity.this);
                     } else if (result == 2) {
-                        Toast.makeText(RegistrationActivity.this, "Successful failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegistrationActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

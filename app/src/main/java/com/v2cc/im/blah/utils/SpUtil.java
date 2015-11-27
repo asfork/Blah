@@ -10,7 +10,7 @@ import android.content.SharedPreferences;
  * If it works, I created it. If not, I didn't.
  */
 public class SpUtil {
-    private static final String NAME = "QQ";
+    private static final String NAME = "Blah";
     private static SpUtil instance;
 
     static {

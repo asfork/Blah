@@ -1,6 +1,7 @@
 package com.v2cc.im.blah.views.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.v2cc.im.blah.R;
-import com.v2cc.im.blah.models.MessageBean;
-import com.v2cc.im.blah.utils.TimeFormatUtil;
+import com.v2cc.im.blah.bean.ApplicationData;
+import com.v2cc.im.blah.bean.ChatEntity;
+import com.v2cc.im.blah.bean.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 聊天内容界面的ListView适配器
@@ -24,39 +27,35 @@ import java.util.ArrayList;
  * @date 2015-7-31 上午10:44:02
  */
 public class MessageListViewAdapter extends BaseAdapter {
-    private ArrayList<MessageBean> mList;
-    Context mContext;
-    private LayoutInflater inflater;
-    ViewHolder holder;
-//    private FaceUtil faceUtil;
+    private List<ChatEntity> mMessageList;
+    private Context mContext;
+    private LayoutInflater mInflater;
+    private ViewHolder holder;
 
-    public MessageListViewAdapter(Context context, ArrayList<MessageBean> list) {
+    public MessageListViewAdapter(Context context, List<ChatEntity> list) {
         this.mContext = context;
-        this.mList = list;
-        inflater = LayoutInflater.from(mContext);
-//        faceUtil = FaceUtil.getInstance(mContext);
-    }
-
-    public void refresh(ArrayList<MessageBean> datas) {
-        if (datas == null) {
-            datas = new ArrayList<MessageBean>(0);
-        }
-        this.mList = datas;
-        notifyDataSetChanged();
+        this.mMessageList = list;
+        mInflater = LayoutInflater.from(mContext);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         holder = new ViewHolder();
-        MessageBean messageBean = mList.get(position);
+        ChatEntity messageEntity = mMessageList.get(position);
+        User user = ApplicationData.getInstance().getUserInfo();
 
         if (convertView == null) {
             // 判断是接收还是发送
-            if (messageBean.getSource().equals(MessageBean.MSG_SOURCE_RECEIVE)) {
-                convertView = inflater.inflate(R.layout.item_message_left, null);
+            if (messageEntity.getMessageType() == ChatEntity.RECEIVE) {
+                convertView = mInflater.inflate(R.layout.item_message_left, null);
+                Bitmap photo = ApplicationData.getInstance().getFriendPhotoMap()
+                        .get(messageEntity.getSenderId());
                 holder.img_avatar = (ImageView) convertView.findViewById(R.id.message_item_avatar);
+                if (photo != null) {
+                    holder.img_avatar.setImageBitmap(photo);
+                }
             } else {
-                convertView = inflater.inflate(R.layout.item_message_right, null);
+                convertView = mInflater.inflate(R.layout.item_message_right, null);
             }
 
             holder.layout_content = (RelativeLayout) convertView.findViewById(R.id.message_item_layout_content);
@@ -69,20 +68,17 @@ public class MessageListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.tv_date.setText(TimeFormatUtil.displayTime(messageBean.getTime()));
+        holder.tv_date.setText(messageEntity.getSendTime());
         holder.tv_date.setVisibility(View.VISIBLE);
 
-        holder.tv_msg_content.setText(messageBean.getContent());
+        holder.tv_msg_content.setText(messageEntity.getContent());
 
         //判断是发送还是接收
-        if (messageBean.getSource().equals(MessageBean.MSG_SOURCE_RECEIVE)) {
+        if (messageEntity.getMessageType() == ChatEntity.RECEIVE) {
             holder.layout_content.setBackgroundResource(R.drawable.message_left_bg_selector);
         } else {
             holder.layout_content.setBackgroundResource(R.drawable.message_right_bg_selector);
         }
-
-        //显示头像
-//        holder.img_avatar.setImageResource();
 
         //消息发送的状态
         holder.progress.setVisibility(View.GONE);
@@ -102,17 +98,26 @@ public class MessageListViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mList == null ? 0 : mList.size();
+        return mMessageList == null ? 0 : mMessageList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mList == null ? null : mList.get(position);
+        return mMessageList == null ? null : mMessageList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+
+    public void refresh(List<ChatEntity> data) {
+        if (data == null) {
+            data = new ArrayList<ChatEntity>(0);
+        }
+        this.mMessageList = data;
+        notifyDataSetChanged();
     }
 
 }

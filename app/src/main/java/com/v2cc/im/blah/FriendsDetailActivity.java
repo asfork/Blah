@@ -13,20 +13,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.v2cc.im.blah.models.User;
-import com.v2cc.im.blah.utils.ActivityCollector;
+import com.v2cc.im.blah.bean.User;
+import com.v2cc.im.blah.managers.ActivityCollector;
 
 /**
  * Created by steve on 11/4/15.
  * If it works, I created this. If not, I didn't.
  */
 public class FriendsDetailActivity extends BaseActivity implements View.OnClickListener {
-    private CollapsingToolbarLayout collapsingToolbar;
-    private Toolbar toolbar;
-    private ImageView imageView;
-    private TextView phoneTextView;
+    private CollapsingToolbarLayout mCollapsingToolbar;
+    private Toolbar mToolbar;
+    private ImageView mImageView;
+    private TextView accountTextView;
     private TextView infoTextView;
-    private FloatingActionButton fab;
+    private FloatingActionButton mFab;
+
+    private User friend;
 
     public static void actionStart(Context context, Bundle bundle) {
         Intent intent = new Intent(context, FriendsDetailActivity.class);
@@ -35,33 +37,32 @@ public class FriendsDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
-    public void initView(){
+    public void initViews() {
         setContentView(R.layout.activity_friends_detail);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mImageView = (ImageView) findViewById(R.id.backdrop);
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
+        accountTextView = (TextView) findViewById(R.id.tv_phone);
+        infoTextView = (TextView) findViewById(R.id.tv_intro);
+    }
+
+    @Override
+    public void initEvents() {
+        friend = (User) getIntent().getSerializableExtra("friend");
+        setSupportActionBar(mToolbar);
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        collapsingToolbar =
-                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(getIntent().getStringExtra("name"));
-
-        imageView = (ImageView) findViewById(R.id.backdrop);
-
-        phoneTextView = (TextView) findViewById(R.id.tv_phone);
-        phoneTextView.setText(getIntent().getStringExtra("phone"));
-
-        infoTextView = (TextView) findViewById(R.id.tv_intro);
+        mCollapsingToolbar.setTitle(friend.getUserName());
+        accountTextView.setText(friend.getAccount());
         infoTextView.setText("What's on your mind?");
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
         // 设置FloatingActionButton的点击事件
-        fab.setOnClickListener(this);
+        mFab.setOnClickListener(this);
 
-        // 载入头像
-        imageView = (ImageView) findViewById(R.id.backdrop);
-        Glide.with(this).load(User.getRandomPhotosDrawable()).centerCrop().into(imageView);
+        Glide.with(this).load(friend.getPhoto()).centerCrop().into(mImageView);
     }
 
     @Override
@@ -69,8 +70,9 @@ public class FriendsDetailActivity extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.fab:// 发送按钮
                 Bundle bundle = getIntent().getExtras();
-                // start up MessageActivity
-                MessageActivity.actionStart(this, bundle);
+                bundle.putString("friendName", friend.getUserName());
+                bundle.putInt("friendId", friend.getId());
+                ChatActivity.actionStart(this, bundle);
                 break;
         }
     }

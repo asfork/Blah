@@ -1,8 +1,10 @@
-package com.v2cc.im.blah.utils;
+package com.v2cc.im.blah.managers;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
+import com.v2cc.im.blah.utils.ThreadPoolUtil;
 
 import java.util.ArrayList;
 import java.util.List;

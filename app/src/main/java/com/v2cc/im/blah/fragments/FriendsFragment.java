@@ -1,20 +1,18 @@
 package com.v2cc.im.blah.fragments;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.v2cc.im.blah.FriendsDetailActivity;
 import com.v2cc.im.blah.R;
-import com.v2cc.im.blah.db.DataBaseHelper;
-import com.v2cc.im.blah.models.FriendsBean;
+import com.v2cc.im.blah.bean.ApplicationData;
+import com.v2cc.im.blah.bean.User;
 import com.v2cc.im.blah.views.adapters.FriendsRecyclerViewAdapter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -23,11 +21,10 @@ import java.util.List;
  * If it works, I created this. If not, I didn't.
  */
 public class FriendsFragment extends BaseFragment implements FriendsRecyclerViewAdapter.OnItemClickListener {
-
-    private static DataBaseHelper util;
-    private List<FriendsBean> mList;
-    private FriendsRecyclerViewAdapter adapter;
-    private RecyclerView recyclerView;
+    private List<User> mFriendsList;
+    private RecyclerView mFriendsListView;
+    private FriendsRecyclerViewAdapter mAdapter;
+    private Handler handler;
 
     public static FriendsFragment newInstance(int position) {
         FriendsFragment friendsFragment = new FriendsFragment();
@@ -43,54 +40,43 @@ public class FriendsFragment extends BaseFragment implements FriendsRecyclerView
     }
 
     @Override
-    protected void initView(View rootView) {
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
-
-        mList = new ArrayList<FriendsBean>();
-        adapter = new FriendsRecyclerViewAdapter(getActivity(), mList);
-        adapter.setOnItemClickListener(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+    protected void initViews(View rootView) {
+        mFriendsListView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
     }
 
     @Override
-    protected void initData(){
-        util = DataBaseHelper.getInstance(getActivity());
+    protected void init() {
+        mFriendsList = ApplicationData.getInstance().getFriendList();
+        mAdapter = new FriendsRecyclerViewAdapter(getActivity(), mFriendsList);
+        mFriendsListView.setAdapter(mAdapter);
+        mFriendsListView.setLayoutManager(new LinearLayoutManager(mFriendsListView.getContext()));
 
-        new AsyncTask<Void, Void, ArrayList<FriendsBean>>() {
-            @Override
-            protected ArrayList<FriendsBean> doInBackground(Void... params) {
-                return util.getFriendsList();
-            }
-
-            @Override
-            protected void onPostExecute(ArrayList<FriendsBean> result) {
-                if (mList == null) {
-                    mList = new ArrayList<FriendsBean>();
+        handler = new Handler() {
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 1:
+                        mAdapter.notifyDataSetChanged();
+//                        mFriendsListView.setSelection(mFriendsList.size());
+                        break;
+                    default:
+                        break;
                 }
-                // sort list
-                if (!result.isEmpty()) {
-                    Collections.sort(result, new Comparator<FriendsBean>() {
-                        @Override
-                        public int compare(FriendsBean preObj, FriendsBean nextObj) {
-                            return preObj.getSortKey().trim().compareTo(nextObj.getSortKey().trim());
-                        }
-                    });
-                }
-
-                mList.clear();
-                mList.addAll(result);
             }
-        }.execute();
-        adapter.notifyDataSetChanged();
+        };
+        ApplicationData.getInstance().setfriendListHandler(handler);
+
+        mAdapter.setOnItemClickListener(this);
     }
 
     @Override
     public void onItemClick(View view, int position) {
         Bundle bundle = new Bundle();
-        bundle.putString("name", mList.get(position).getName());
-        bundle.putString("phone", mList.get(position).getPhone());
-        // start up MessageActivity
+        User friend = new User();
+        friend.setId(mFriendsList.get(position).getId());
+        friend.setUserName(mFriendsList.get(position).getUserName());
+        friend.setAccount(mFriendsList.get(position).getAccount());
+        friend.setPhoto(mFriendsList.get(position).getPhoto());
+        bundle.putSerializable("friend", friend);
         FriendsDetailActivity.actionStart(getActivity(), bundle);
     }
 

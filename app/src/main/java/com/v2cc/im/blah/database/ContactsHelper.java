@@ -1,4 +1,4 @@
-package com.v2cc.im.blah.db;
+package com.v2cc.im.blah.database;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
 
-import com.v2cc.im.blah.models.FriendsBean;
+import com.v2cc.im.blah.bean.FriendsBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;

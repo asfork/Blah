@@ -1,4 +1,4 @@
-package com.v2cc.im.blah.models;
+package com.v2cc.im.blah.bean;
 
 /**
  * Created by Steve ZHANG (stevzhg@gmail.com)

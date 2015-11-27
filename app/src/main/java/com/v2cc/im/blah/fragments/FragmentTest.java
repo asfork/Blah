@@ -25,6 +25,6 @@ public class FragmentTest extends BaseFragment {
     }
 
     @Override
-    protected void initView(View rootView) {
+    protected void initViews(View rootView) {
     }
 }

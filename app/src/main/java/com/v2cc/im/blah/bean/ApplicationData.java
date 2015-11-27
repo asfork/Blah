@@ -5,10 +5,11 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 
-import com.v2cc.im.blah.db.DB;
+import com.v2cc.im.blah.database.ImDB;
 import com.v2cc.im.blah.global.Result;
 import com.v2cc.im.blah.utils.PhotoUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +29,8 @@ public class ApplicationData {
 	private Context mContext;
 	private List<User> mFriendSearched;
 	private Bitmap mUserPhoto;
-	private List<MessageTabEntity> mMessageEntities;// messageFragment显示的列表
-	private Map<Integer, List<ChatEntity>> mChatMessagesMap;
+    private ArrayList<MessageTabEntity> mMessageEntities;// messageFragment显示的列表
+    private Map<Integer, List<ChatEntity>> mChatMessagesMap;
 
     private ApplicationData() {
     }
@@ -59,19 +60,18 @@ public class ApplicationData {
 		mReceivedMessage = (TranObject) tranObject;
 		Result loginResult = mReceivedMessage.getResult();
 		if (loginResult == Result.LOGIN_SUCCESS) {
-			mUser = (User) mReceivedMessage.getObject();
-			mFriendList = mUser.getFriendList();// 根据从服务器得到的信息，设置好友是否在线
-			mUserPhoto = PhotoUtil.getBitmap(mUser.getPhoto());
-			List<User> friendListLocal = DB.getInstance(mContext)
-					.getAllFriend();
-			mFriendPhotoMap = new HashMap<Integer, Bitmap>();
+            mUser = (User) mReceivedMessage.getObject(); // 获取好友
+            mFriendList = mUser.getFriendList(); // 根据从服务器得到的信息，设置好友是否在线
+            mUserPhoto = PhotoUtil.getBitmap(mUser.getPhoto());
+            List<User> friendListLocal = ImDB.getInstance(mContext).getAllFriend();
+            mFriendPhotoMap = new HashMap<Integer, Bitmap>();
 			for (int i = 0; i < friendListLocal.size(); i++) {
 				User friend = friendListLocal.get(i);
 				Bitmap photo = PhotoUtil.getBitmap(friend.getPhoto());
 				mFriendPhotoMap.put(friend.getId(), photo);
 			}
-			mMessageEntities = DB.getInstance(mContext).getAllMessage();
-		} else {
+            mMessageEntities = ImDB.getInstance(mContext).getAllMessage();
+        } else {
 
 			mUser = null;
 			mFriendList = null;
@@ -143,8 +143,8 @@ public class ApplicationData {
 				message.what = 1;
 				friendListHandler.sendMessage(message);
 			}
-			DB.getInstance(mContext).saveFriend(newFriend);
-		} else {
+            ImDB.getInstance(mContext).saveFriend(newFriend);
+        } else {
 			messageEntity
 					.setMessageType(MessageTabEntity.MAKE_FRIEND_RESPONSE_REJECT);
 			messageEntity.setContent("拒绝了你的好友请求");
@@ -153,8 +153,8 @@ public class ApplicationData {
 		messageEntity.setSendTime(mReceivedRequest.getSendTime());
 		messageEntity.setSenderId(mReceivedRequest.getSendId());
 		messageEntity.setUnReadCount(1);
-		DB.getInstance(mContext).saveMessage(messageEntity);
-		mMessageEntities.add(messageEntity);
+        ImDB.getInstance(mContext).saveMessage(messageEntity);
+        mMessageEntities.add(messageEntity);
 		if (messageHandler != null) {
 			Message message = new Message();
 			message.what = 1;
@@ -174,8 +174,8 @@ public class ApplicationData {
 				messageTab.setUnReadCount(messageTab.getUnReadCount() + 1);
 				messageTab.setContent(chat.getContent());
 				messageTab.setSendTime(chat.getSendTime());
-				DB.getInstance(mContext).updateMessages(messageTab);
-				hasMessageTab = true;
+                ImDB.getInstance(mContext).updateMessages(messageTab);
+                hasMessageTab = true;
 			}
 		}
 		if (!hasMessageTab) {
@@ -187,18 +187,18 @@ public class ApplicationData {
 			messageTab.setSendTime(chat.getSendTime());
 			messageTab.setUnReadCount(1);
 			mMessageEntities.add(messageTab);
-			DB.getInstance(mContext).saveMessage(messageTab);
-		}
+            ImDB.getInstance(mContext).saveMessage(messageTab);
+        }
 		chat.setMessageType(ChatEntity.RECEIVE);
 		List<ChatEntity> chatList = mChatMessagesMap.get(chat.getSenderId());
 		if (chatList == null) {
-			chatList = DB.getInstance(mContext).getChatMessage(
-					chat.getSenderId());
+            chatList = ImDB.getInstance(mContext).getChatMessage(
+                    chat.getSenderId());
 			getChatMessagesMap().put(chat.getSenderId(), chatList);
 		}
 		chatList.add(chat);
-		DB.getInstance(mContext).saveChatMessage(chat);
-		if (messageHandler != null) {
+        ImDB.getInstance(mContext).saveChatMessage(chat);
+        if (messageHandler != null) {
 			Message message = new Message();
 			message.what = 1;
 			messageHandler.sendMessage(message);
@@ -218,12 +218,12 @@ public class ApplicationData {
 		this.mUserPhoto = mUserPhoto;
 	}
 
-	public List<MessageTabEntity> getMessageEntities() {
-		return mMessageEntities;
+    public ArrayList<MessageTabEntity> getMessageEntities() {
+        return mMessageEntities;
 	}
 
-	public void setMessageEntities(List<MessageTabEntity> mMessageEntities) {
-		this.mMessageEntities = mMessageEntities;
+    public void setMessageEntities(ArrayList<MessageTabEntity> mMessageEntities) {
+        this.mMessageEntities = mMessageEntities;
 	}
 
 	public void setMessageHandler(Handler handler) {

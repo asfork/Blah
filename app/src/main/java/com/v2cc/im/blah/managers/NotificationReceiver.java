@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.v2cc.im.blah.ChatActivity;
 import com.v2cc.im.blah.MainActivity;
-import com.v2cc.im.blah.models.Constants;
+import com.v2cc.im.blah.global.App;
 import com.v2cc.im.blah.utils.SystemUtil;
-import com.v2cc.im.blah.MessageActivity;
 
 /**
  * Created by Steve ZHANG (stevzhg@gmail.com)
@@ -18,17 +18,15 @@ import com.v2cc.im.blah.MessageActivity;
  */
 public class NotificationReceiver extends BroadcastReceiver {
 
-    String phone;
-
     public void onReceive(Context context, Intent intent) {
 
-        phone = intent.getStringExtra("phone");
+        String phone = intent.getStringExtra("phone");
 
         //判断app进程是否存活
         if (SystemUtil.isAppAlive(context, "com.v2cc.im.blah")) {
             //如果存活的话，就直接启动MessageActivity，但要考虑一种情况，就是app的进程虽然仍然在
             //但Task栈已经空了，比如用户点击Back键退出应用，但进程还没有被系统回收，如果直接启动
-            //MessageActivity,再按Back键就不会返回MainActivity了。所以在启动
+            //ChatActivity,再按Back键就不会返回MainActivity了。所以在启动
             //MessageActivity前，要先启动MainActivity。
             Log.d("NotificationReceiver", "the app process is alive");
             Intent mainIntent = new Intent(context, MainActivity.class);
@@ -37,7 +35,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             //如果Task栈不存在MainActivity实例，则在栈顶创建
             mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            Intent mIntent = new Intent(context, MessageActivity.class);
+            Intent mIntent = new Intent(context, ChatActivity.class);
             mIntent.putExtra("phone", phone);
             Intent[] intents = {mainIntent, mIntent};
             context.startActivities(intents);
@@ -50,7 +48,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             Bundle args = new Bundle();
             args.putString("phone", phone);
-            launchIntent.putExtra(Constants.EXTRA_BUNDLE, args);
+            launchIntent.putExtra(App.EXTRA_BUNDLE, args);
             context.startActivity(launchIntent);
         }
     }

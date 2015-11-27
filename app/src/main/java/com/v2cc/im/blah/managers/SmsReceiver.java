@@ -11,9 +11,8 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 
 import com.v2cc.im.blah.R;
-import com.v2cc.im.blah.db.DataBaseHelper;
+import com.v2cc.im.blah.bean.MessageTabEntity;
 import com.v2cc.im.blah.utils.PhoneFormatUtil;
-import com.v2cc.im.blah.models.MessageBean;
 
 /**
  * Created by Steve ZHANG (stevzhg@gmail.com)
@@ -23,7 +22,6 @@ import com.v2cc.im.blah.models.MessageBean;
 public class SmsReceiver extends BroadcastReceiver {
 
     private static final String SMS_EXTRA_NAME = "pdus";
-    private DataBaseHelper util;
 
     public void onReceive(Context context, Intent intent) {
         // Get SMS map from Intent
@@ -44,12 +42,13 @@ public class SmsReceiver extends BroadcastReceiver {
                 fullSms += message.getMessageBody();
             }
 
-            DataBaseHelper.getInstance(context).openDataBase();
-            util = DataBaseHelper.getInstance(context);
+//            DataBaseHelper.getInstance(context).openDataBase();
+//            util = DataBaseHelper.getInstance(context);
 
             // formatting address
             String phone = PhoneFormatUtil.removeFormatting(address);
-            String name = util.getNamebyPhone(phone);
+//            String name = util.getNamebyPhone(phone);
+            String name = "Seve";
 
             if (fullSms.equals("blah blah") && name != null) {
                 showNotification(context, name, address);
@@ -64,7 +63,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 showNotification(context, "unknown", address);
             }
 
-            DataBaseHelper.getInstance(context).closeDataBase();
+//            DataBaseHelper.getInstance(context).closeDataBase();
         }
     }
 
@@ -95,14 +94,14 @@ public class SmsReceiver extends BroadcastReceiver {
     }
 
     private void saveSMStoDB(Context context, String phone, String content, String source) {
-        MessageBean mb = new MessageBean();
+        MessageTabEntity mb = new MessageTabEntity();
         mb.setContent(content);
-        mb.setPhone(phone);
-        mb.setSource(source);
-        mb.setTime(System.currentTimeMillis() + "");
-        mb.setState("0");
+//        mb.s(phone);
+//        mb.setSource(source);
+//        mb.setTime(System.currentTimeMillis() + "");
+//        mb.setState("0");
 
-        util.insertToTable(DataBaseHelper.TABLE_NAME_MESSAGE_LOGS, mb);
-        util.insertRecentChats(mb);
+//        util.insertMessage(mb);
+//        util.insertRecentChats(mb);
     }
 }

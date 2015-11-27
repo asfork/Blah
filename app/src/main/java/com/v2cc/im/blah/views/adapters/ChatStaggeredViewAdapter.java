@@ -11,8 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.v2cc.im.blah.R;
-import com.v2cc.im.blah.utils.TimeFormatUtil;
-import com.v2cc.im.blah.models.MessageBean;
+import com.v2cc.im.blah.bean.MessageTabEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ import java.util.List;
 public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggeredViewAdapter.ViewHolder> {
 
     Context context;
-    private ArrayList<MessageBean> list;
+    private ArrayList<MessageTabEntity> mChatsList;
     private List<Integer> heights;
     private ArrayList<String> colors;
 
@@ -44,15 +43,15 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
         }
     }
 
-    public ChatStaggeredViewAdapter(Context context, ArrayList<MessageBean> list) {
+    public ChatStaggeredViewAdapter(Context context, ArrayList<MessageTabEntity> mChatsList) {
         this.context = context;
-        this.list = list;
+        this.mChatsList = mChatsList;
 
         heights = new ArrayList<>();
         colors = new ArrayList<>();
-        Log.d("ChatStaggered", "start" + list.size());
-//        if (list != null) {
-//            for (int i = 0; i < list.size(); i++) {
+//        Log.d("ChatStaggered", "start" + mChatsList.size());
+//        if (mChatsList != null) {
+//            for (int i = 0; i < mChatsList.size(); i++) {
 //                heights.add((int) (Math.random() * 300) + 300);
 //            }
 //        }
@@ -90,9 +89,9 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
             });
         }
 
-        if (list.size() != heights.size()) {
-            Log.d("ChatStaggered", "repeat" + list.size());
-            for (int i = heights.size(); i < list.size(); i++) {
+        if (mChatsList.size() != heights.size()) {
+            Log.d("ChatStaggered", "repeat" + mChatsList.size());
+            for (int i = heights.size(); i < mChatsList.size(); i++) {
                 heights.add((int) (Math.random() * 300) + 200);
 
                 // TODO add more colors
@@ -120,13 +119,13 @@ public class ChatStaggeredViewAdapter extends RecyclerView.Adapter<ChatStaggered
         ViewGroup.LayoutParams mLayoutParams = holder.tvName.getLayoutParams();
         mLayoutParams.height = heights.get(position);
         holder.tvName.setLayoutParams(mLayoutParams);
-        holder.tvName.setText(list.get(position).getName());
-        holder.tvTime.setText(TimeFormatUtil.displayTime(list.get(position).getTime()));
+        holder.tvName.setText(mChatsList.get(position).getName());
+        holder.tvTime.setText(mChatsList.get(position).getSendTime());
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return mChatsList.size();
     }
 
     public interface OnItemClickListener {

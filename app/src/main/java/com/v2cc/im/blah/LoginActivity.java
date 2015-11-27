@@ -131,6 +131,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             protected void onCancelled() {
                 super.onCancelled();
+                mNetService.closeConnection();
                 progressDialog.dismiss();
             }
 

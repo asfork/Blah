@@ -13,7 +13,7 @@ import android.view.ViewGroup;
  * If it works, I created this. If not, I didn't.
  */
 public abstract class BaseFragment extends Fragment {
-    protected View rootView;
+    protected View mRootView;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -24,10 +24,10 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(getClass().getSimpleName(), "onCreateView...");
 
-        rootView = inflater.inflate(setRootViewId(), container, false);
-        initView(rootView);
-        initData();
-        return rootView;
+        mRootView = inflater.inflate(setRootViewId(), container, false);
+        initViews(mRootView);
+        init();
+        return mRootView;
     }
 
     /**
@@ -40,13 +40,13 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 初始化组件
      */
-    protected void initView(View rootView) {
+    protected void initViews(View rootView) {
     }
 
     /**
      * 初始化数据
      */
-    protected void initData() {
+    protected void init() {
     }
 
     @Override

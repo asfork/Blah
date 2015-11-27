@@ -1,4 +1,4 @@
-package com.v2cc.im.blah.models;
+package com.v2cc.im.blah.global;
 
 import android.app.Application;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.content.Context;
  * If this class works, I created it. If not, I didn't.
  */
 public class App extends Application {
+    public static final String EXTRA_BUNDLE = "launchBundle";
 
     public static Context mContext;
 
